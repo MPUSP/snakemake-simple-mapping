@@ -1,0 +1,9 @@
+results/**
+resources/**
+logs/**
+.snakemake
+.snakemake/**
+.test/results/*
+.vscode/*
+*.Rdata
+*.RData
