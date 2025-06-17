@@ -7,6 +7,7 @@ configfile: "config/config.yml"
 # -----------------------------------------------------
 include: "rules/common.smk"
 include: "rules/process_reads.smk"
+include: "rules/bowtie2.smk"
 include: "rules/qc.smk"
 
 
