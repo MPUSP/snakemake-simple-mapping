@@ -1,3 +1,5 @@
+# build bowtie2 index
+# -----------------------------------------------------
 rule bowtie2_build:
     input:
         ref=rules.get_genome.output.fasta,
@@ -14,12 +16,14 @@ rule bowtie2_build:
     log:
         "results/bowtie2/build/build.log",
     params:
-        extra="",
+        extra=config["mapping"]["bowtie2"]["index"],
     threads: 8
     wrapper:
         "v7.0.0/bio/bowtie2/build"
 
 
+# make bowtie2 alignment
+# -----------------------------------------------------
 rule bowtie2_align:
     input:
         sample=[
@@ -32,7 +36,7 @@ rule bowtie2_align:
     log:
         "results/bowtie2/align/{sample}.log",
     params:
-        extra="",
+        extra=config["mapping"]["bowtie2"]["extra"],
     threads: 4
     wrapper:
         "v7.0.0/bio/bowtie2/align"

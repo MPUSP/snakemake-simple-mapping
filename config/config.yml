@@ -12,3 +12,17 @@ get_genome:
       "RefSeq": "CDS",
       "Protein Homology": "CDS",
     ]
+
+fastp:
+  extra: ""
+
+mapping:
+  tool: "bwa_mem2"
+  bowtie2:
+    index: ""
+    extra: ""
+  bwa_mem2:
+    extra: ""
+    sort: "samtools"
+    sort_order: "coordinate"
+    sort_extra: ""

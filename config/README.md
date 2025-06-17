@@ -8,9 +8,9 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 3. Trim adapters and apply quality filtering (`fastp`)
 4. Determine experiment type (`rseqc`)
 5. Map reads to reference genome using:
-   1. Bowtie2 _or_
-   2. BWA-MEM2 _or_
-   3. STAR
+   1. (`Bowtie2`)[http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml] _or_
+   2. (`BWA-MEM2`)[https://github.com/bwa-mem2/bwa-mem2] _or_
+   3. (`STAR`)[https://github.com/alexdobin/STAR] (not implemented yet)
 6. Evaluate mapping quality, quantify variations
 7. Collect statistics from tool output (`MultiQC`)
 
@@ -23,7 +23,7 @@ The sample sheet listing read input files needs to have the following layout:
 
 | sample  | description | read1               | read2               |
 | ------- | ----------- | ------------------- | ------------------- |
-| sample1 | strain XY   | sample1.R1.fastq.gz | sample1.R2.fastq.gz |
+| sample1 | strain XY   | sample1_R1.fastq.gz | sample1_R2.fastq.gz |
 | ...     | ...         | ...                 | ...                 |
 
 ### Parameters

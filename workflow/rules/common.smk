@@ -57,8 +57,9 @@ def get_multiqc_input(wildcards):
             ext=["html", "zip"],
         )
         result += expand(
-            "results/bowtie2/align/{sample}.bam",
+            "results/{tool}/align/{sample}.bam",
             sample=s[1]["sample"],
+            tool=config["mapping"]["tool"]
         )
         result += expand(
             "results/fastp/{sample}.json",
