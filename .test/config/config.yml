@@ -41,3 +41,12 @@ mapping_stats:
   deeptools_coverage:
     genome_size: 1000
     extra: ""
+
+variant_calling:
+  bcftools_pileup:
+    uncompressed: False
+    extra: "--max-depth 1000 --min-BQ 20"
+  bcftools_call:
+    uncompressed: False
+    caller: "-c"
+    extra: ""

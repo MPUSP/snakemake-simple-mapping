@@ -83,4 +83,9 @@ def get_multiqc_input(wildcards):
             "results/deeptools/coverage/{sample}.bw",
             sample=s[1]["sample"],
         )
+        result += expand(
+            "results/bcftools/call/{sample}{ext}",
+            sample=s[1]["sample"],
+            ext=["_stats.txt", ".vcf"],
+        )
     return result
