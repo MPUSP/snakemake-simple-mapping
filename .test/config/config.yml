@@ -28,6 +28,8 @@ mapping:
     sort_extra: ""
   samtools_sort:
     extra: "-m 4G"
+  samtools_index:
+    extra: ""
 
 mapping_stats:
   gffread:
@@ -35,4 +37,7 @@ mapping_stats:
   rseqc_infer_experiment:
     extra: ""
   rseqc_bam_stat:
+    extra: ""
+  deeptools_coverage:
+    genome_size: 1000
     extra: ""

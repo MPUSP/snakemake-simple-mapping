@@ -14,6 +14,22 @@ rule samtools_sort:
         "v7.0.0/bio/samtools/sort"
 
 
+# index reads
+# -----------------------------------------------------
+rule samtools_index:
+    input:
+        "results/samtools/sort/{sample}.bam",
+    output:
+        "results/samtools/sort/{sample}.bai",
+    log:
+        "results/samtools/sort/{sample}_index.log",
+    params:
+        extra=config["mapping"]["samtools_index"]["extra"],
+    threads: 4
+    wrapper:
+        "v7.0.0/bio/samtools/index"
+
+
 # convert genome annotation from GFF to BED format
 # -----------------------------------------------------
 rule gffread_gff:
@@ -54,10 +70,30 @@ rule rseqc_bam_stat:
         "results/samtools/sort/{sample}.bam",
     output:
         "results/rseqc/bam_stat/{sample}.txt",
-    threads: 1
+    threads: 2
     params:
         extra="--mapq 5",
     log:
         "results/rseqc/bam_stat/{sample}.log",
     wrapper:
         "v7.0.0/bio/rseqc/bam_stat"
+
+
+# collect statistics from mapping
+# -----------------------------------------------------
+rule deeptools_coverage:
+    input:
+        bam="results/samtools/sort/{sample}.bam",
+        bai="results/samtools/sort/{sample}.bai",
+    output:
+        "results/deeptools/coverage/{sample}.bw",
+    threads: 4
+    params:
+        effective_genome_size=config["mapping_stats"]["deeptools_coverage"][
+            "genome_size"
+        ],
+        extra=config["mapping_stats"]["deeptools_coverage"]["extra"],
+    log:
+        "results/deeptools/coverage/{sample}.log",
+    wrapper:
+        "v7.0.0/bio/deeptools/bamcoverage"

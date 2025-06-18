@@ -11,8 +11,9 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
    2. (`BWA-MEM2`)[https://github.com/bwa-mem2/bwa-mem2] _or_
    3. (`STAR`)[https://github.com/alexdobin/STAR] (not implemented yet)
 5. Determine experiment type, get mapping stats (`rseqc`)
-6. Quantify variations and SNPs (``)
-7. Collect statistics from tool output (`MultiQC`)
+6. Generate `bigwig` or `bedgaph` coverage profiles (`deeptools`)
+7. Quantify variations and SNPs (``)
+8. Collect statistics from tool output (`MultiQC`)
 
 ## Running the workflow
 
