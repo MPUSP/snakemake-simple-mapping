@@ -22,10 +22,10 @@ rule bwa_mem2_index:
 # -----------------------------------------------------
 rule bwa_mem2:
     input:
-        reads=[
-            "results/fastp/{sample}_read1.fastq.gz",
-            "results/fastp/{sample}_read2.fastq.gz",
-        ],
+        reads=expand(
+            "results/fastp/{{sample}}_{read}.fastq.gz",
+            read=["read1", "read2"] if is_paired_end() else ["read1"],
+        ),
         idx=rules.bwa_mem2_index.output,
     output:
         "results/bwa_mem2/align/{sample}.bam",

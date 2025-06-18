@@ -26,10 +26,10 @@ rule bowtie2_build:
 # -----------------------------------------------------
 rule bowtie2_align:
     input:
-        sample=[
-            "results/fastp/{sample}_read1.fastq.gz",
-            "results/fastp/{sample}_read2.fastq.gz",
-        ],
+        sample=expand(
+            "results/fastp/{{sample}}_{read}.fastq.gz",
+            read=["read1", "read2"] if is_paired_end() else ["read1"],
+        ),
         idx=rules.bowtie2_build.output,
     output:
         "results/bowtie2/align/{sample}.bam",

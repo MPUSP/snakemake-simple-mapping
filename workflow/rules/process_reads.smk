@@ -58,10 +58,10 @@ rule fastp_pe:
     output:
         html="results/fastp/{sample}.html",
         json="results/fastp/{sample}.json",
-        trimmed=[
-            "results/fastp/{sample}_read1.fastq.gz",
-            "results/fastp/{sample}_read2.fastq.gz",
-        ],
+        trimmed=expand(
+            "results/fastp/{{sample}}_{read}.fastq.gz",
+            read=["read1", "read2"] if is_paired_end() else ["read1"],
+        ),
     log:
         "results/fastp/{sample}.log",
     params:
