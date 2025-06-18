@@ -21,20 +21,7 @@ rule fastqc:
 # -----------------------------------------------------
 rule multiqc:
     input:
-        expand(
-            "results/fastqc/{sample}_{read}_fastqc.{ext}",
-            sample=samples.index,
-            read=(
-                ["read1", "read2"]
-                if lookup(query="index.loc[{sample}]", within=samples, cols="read2")
-                else ["read1"]
-            ),
-            ext=["html", "zip"],
-        ),
-        expand(
-            "results/fastp/{sample}_merged.fastq.gz",
-            sample=samples.index,
-        ),
+        get_multiqc_input,
     output:
         report="results/multiqc/multiqc_report.html",
     params:

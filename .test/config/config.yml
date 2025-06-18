@@ -12,3 +12,41 @@ get_genome:
       "RefSeq": "CDS",
       "Protein Homology": "CDS",
     ]
+
+fastp:
+  extra: ""
+
+mapping:
+  tool: "bwa_mem2"
+  bowtie2:
+    index: ""
+    extra: ""
+  bwa_mem2:
+    extra: ""
+    sort: "samtools"
+    sort_order: "coordinate"
+    sort_extra: ""
+  samtools_sort:
+    extra: "-m 4G"
+  samtools_index:
+    extra: ""
+
+mapping_stats:
+  gffread:
+    extra: ""
+  rseqc_infer_experiment:
+    extra: ""
+  rseqc_bam_stat:
+    extra: ""
+  deeptools_coverage:
+    genome_size: 1000
+    extra: ""
+
+variant_calling:
+  bcftools_pileup:
+    uncompressed: False
+    extra: "--max-depth 1000 --min-BQ 20"
+  bcftools_call:
+    uncompressed: False
+    caller: "-c"
+    extra: ""
