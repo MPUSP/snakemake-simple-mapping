@@ -3,15 +3,15 @@
 This workflow is a best-practice workflow for mapping of reads to reference genomes, minimalistic and simple.
 The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stable/) and consists of the following steps:
 
-1. Download genome reference from NCBI (`ncbi tools`), or use manual input (`fasta` format)
+1. Download genome reference from NCBI (`ncbi tools`), or use manual input (`fasta`, `gff` format)
 2. Check quality of input read data (`FastQC`)
 3. Trim adapters and apply quality filtering (`fastp`)
-4. Determine experiment type (`rseqc`)
-5. Map reads to reference genome using:
+4. Map reads to reference genome using:
    1. (`Bowtie2`)[http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml] _or_
    2. (`BWA-MEM2`)[https://github.com/bwa-mem2/bwa-mem2] _or_
    3. (`STAR`)[https://github.com/alexdobin/STAR] (not implemented yet)
-6. Evaluate mapping quality, quantify variations
+5. Determine experiment type, get mapping stats (`rseqc`)
+6. Quantify variations and SNPs (``)
 7. Collect statistics from tool output (`MultiQC`)
 
 ## Running the workflow

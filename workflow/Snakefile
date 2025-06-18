@@ -9,6 +9,7 @@ include: "rules/common.smk"
 include: "rules/process_reads.smk"
 include: "rules/bowtie2.smk"
 include: "rules/bwamem2.smk"
+include: "rules/mapping_stats.smk"
 include: "rules/qc.smk"
 
 

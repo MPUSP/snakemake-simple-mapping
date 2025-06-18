@@ -26,3 +26,13 @@ mapping:
     sort: "samtools"
     sort_order: "coordinate"
     sort_extra: ""
+  samtools_sort:
+    extra: "-m 4G"
+
+mapping_stats:
+  gffread:
+    extra: ""
+  rseqc_infer_experiment:
+    extra: ""
+  rseqc_bam_stat:
+    extra: ""

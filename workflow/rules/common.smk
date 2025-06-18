@@ -44,6 +44,15 @@ def get_fastq_pairs(wildcards):
     )
 
 
+# get pairs of fastq files for fastp
+def get_bam(wildcards):
+    return expand(
+        "results/{tool}/align/{sample}.bam",
+        sample=wildcards.sample,
+        tool=config["mapping"]["tool"],
+    )
+
+
 # get input for multiqc
 def get_multiqc_input(wildcards):
     result = []
@@ -64,5 +73,10 @@ def get_multiqc_input(wildcards):
         result += expand(
             "results/fastp/{sample}.json",
             sample=s[1]["sample"],
+        )
+        result += expand(
+            "results/rseqc/{tool}/{sample}.txt",
+            sample=s[1]["sample"],
+            tool=["infer_experiment", "bam_stat"],
         )
     return result
