@@ -1,0 +1,147 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+description: configuration file for the analysis pipeline
+properties:
+  samplesheet:
+    type: string
+    description: path to the sample sheet in tsv format
+  get_genome:
+    type: object
+    properties:
+      database:
+        type: string
+        description: database to use for genome retrieval, 'ncbi' or 'manual'
+      assembly:
+        type: string
+        description: assembly version to use for genome retrieval, e.g. 'GCF_000307535.1'
+      fasta:
+        type: [string, "null"]
+        description: path to a custom FASTA file (optional)
+      gff:
+        type: [string, "null"]
+        description: path to a custom GFF file (optional)
+      gff_source_type:
+        type: array
+        description: mapping of GFF source types to feature types
+    required:
+      - database
+      - assembly
+      - gff_source_type
+  fastp:
+    type: object
+    properties:
+      extra:
+        type: string
+        description: additional arguments to pass to Fastp
+  mapping:
+    type: object
+    properties:
+      tool:
+        type: string
+        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2'
+      bowtie2:
+        type: object
+        properties:
+          index:
+            type: string
+            description: additional arguments to bowtie build
+          extra:
+            type: string
+            description: additional arguments to bowtie align
+      bwa_mem2:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to bwa-mem2
+          sort:
+            type: string
+            description: sorting tool to use, e.g. 'samtools'
+          sort_order:
+            type: string
+            description: sorting order to use
+          sort_extra:
+            type: string
+            description: additional arguments to pass to the sorting tool
+      samtools_sort:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to Samtools sort
+      samtools_index:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to Samtools index
+    required:
+      - tool
+  mapping_stats:
+    type: object
+    properties:
+      gffread:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to GFFread
+      rseqc_infer_experiment:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to RSeQC infer_experiment.py
+      rseqc_bam_stat:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to RSeQC bam_stat.py
+      deeptools_coverage:
+        type: object
+        properties:
+          genome_size:
+            type: integer
+            description: genome size in base pairs
+          extra:
+            type: string
+            description: additional arguments to pass to DeepTools bamCoverage
+    required:
+      - gffread
+      - rseqc_infer_experiment
+      - rseqc_bam_stat
+      - deeptools_coverage
+  variant_calling:
+    type: object
+    properties:
+      bcftools_pileup:
+        type: object
+        properties:
+          uncompressed:
+            type: boolean
+            description: whether to output uncompressed BCF files
+          extra:
+            type: string
+            description: additional arguments to pass to BCFtools pileup
+      bcftools_call:
+        type: object
+        properties:
+          uncompressed:
+            type: boolean
+            description: whether to output uncompressed VCF files
+          caller:
+            type: string
+            description: use '-c' for consensus or '-m' for multiallelic
+          extra:
+            type: string
+            description: additional arguments to pass to BCFtools call
+    required:
+      - bcftools_pileup
+      - bcftools_call
+required:
+  - samplesheet
+  - get_genome
+  - fastp
+  - mapping
+  - mapping_stats
+  - variant_calling

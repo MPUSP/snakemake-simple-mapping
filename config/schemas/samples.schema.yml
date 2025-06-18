@@ -1,0 +1,20 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+description: entries for the sample sheet
+properties:
+  sample:
+    type: string
+    description: sample name/identifier
+  description:
+    type: string
+    description: metadata or other information about sample
+  read1:
+    type: string
+    description: path to fastq.gz files, read 1
+  read2:
+    type: string
+    description: path to fastq.gz files, read 2 (optional)
+
+required:
+  - sample
+  - description
+  - read1
