@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.0.0...v1.1.0) (2025-06-19)
+
+
+### Features
+
+* added freebayes as second variant caller ([d4d49b8](https://github.com/MPUSP/snakemake-simple-mapping/commit/d4d49b8a60309e59aa60c49df51f377a7aa594ee))
+* various improvements regarding input options, docs ([fc2fa4d](https://github.com/MPUSP/snakemake-simple-mapping/commit/fc2fa4dc2608c840f012b3b8b0db276be450ba1b))
+
+
+### Bug Fixes
+
+* added dag as workflow overview ([24be9b4](https://github.com/MPUSP/snakemake-simple-mapping/commit/24be9b4ef86425142f5464185a2eb6e4bb5fc80d))
+* explicit link to fasta index ([5a7e895](https://github.com/MPUSP/snakemake-simple-mapping/commit/5a7e89537b1cc4e6cd6e65ae1113f09871995ad6))
+* removed unnecessary fastp_se rule ([232a784](https://github.com/MPUSP/snakemake-simple-mapping/commit/232a784899a34e3c8127965c387ba9d8d29aa141))
+* update dag ([ce4c68c](https://github.com/MPUSP/snakemake-simple-mapping/commit/ce4c68c9fc91d4e6d60ad0464c5de91773d57762))
+* works now seamless with paired and single end input ([5844af8](https://github.com/MPUSP/snakemake-simple-mapping/commit/5844af810006f0f5cc5bd847d2aaf8530c33a299))
+
 ## 1.0.0 (2025-06-18)
 
 
