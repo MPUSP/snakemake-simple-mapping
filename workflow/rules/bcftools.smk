@@ -37,25 +37,41 @@ rule bcftools_call:
 # -----------------------------------------------------
 rule bcftools_view:
     input:
-        "results/bcftools/call/{sample}.bcf",
+        "results/{caller}/call/{sample}.bcf",
     output:
-        "results/bcftools/call/{sample}.vcf",
+        "results/{caller}/call/{sample}_all.vcf",
     log:
-        "results/bcftools/call/{sample}_view.log",
+        "results/{caller}/call/{sample}_view.log",
     params:
         extra="",
     wrapper:
         "v7.0.0/bio/bcftools/view"
 
 
+# filter bcf file to only export called variants
+# -----------------------------------------------------
+rule bcftools_filter:
+    input:
+        "results/{caller}/call/{sample}.bcf",
+    output:
+        "results/{caller}/call/{sample}_variants.vcf",
+    log:
+        "results/{caller}/call/{sample}_variants.log",
+    params:
+        filter="-e 'ALT=\".\"'",
+        extra="",
+    wrapper:
+        "v7.0.0/bio/bcftools/filter"
+
+
 # generate text based stats from bcf files
 # -----------------------------------------------------
 rule bcftools_stats:
     input:
-        "results/bcftools/call/{sample}.bcf",
+        "results/{caller}/call/{sample}.bcf",
     output:
-        "results/bcftools/call/{sample}_stats.txt",
+        "results/{caller}/call/{sample}_stats.txt",
     log:
-        "results/bcftools/call/{sample}_stats.log",
+        "results/{caller}/call/{sample}_stats.log",
     wrapper:
         "v7.0.0/bio/bcftools/stats"

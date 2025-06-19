@@ -135,9 +135,16 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to BCFtools call
+      freebayes:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to Freebayes
     required:
       - bcftools_pileup
       - bcftools_call
+      - freebayes
 required:
   - samplesheet
   - get_genome
