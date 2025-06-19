@@ -5,6 +5,7 @@ rule freebayes:
         alns="results/samtools/sort/{sample}.bam",
         idxs="results/samtools/sort/{sample}.bai",
         ref=rules.get_genome.output.fasta,
+        refidx=rules.get_genome.output.fai,
     output:
         bcf="results/freebayes/call/{sample}.bcf",
     params:
