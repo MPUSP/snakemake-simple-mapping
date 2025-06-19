@@ -12,7 +12,7 @@
    id="svg53"
    sodipodi:docname="dag.svg"
    inkscape:version="1.4.2 (2aeb623e1d, 2025-05-12)"
-   inkscape:export-filename="../2ceab7ed/dag.png"
+   inkscape:export-filename="../8e6f341b/dag.png"
    inkscape:export-xdpi="200"
    inkscape:export-ydpi="200"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -32,11 +32,11 @@
      inkscape:deskcolor="#505050"
      inkscape:document-units="pt"
      showgrid="false"
-     inkscape:zoom="0.80433071"
-     inkscape:cx="501.65932"
-     inkscape:cy="408.4141"
-     inkscape:window-width="1534"
-     inkscape:window-height="931"
+     inkscape:zoom="1.6086614"
+     inkscape:cx="341.27753"
+     inkscape:cy="363.34557"
+     inkscape:window-width="2560"
+     inkscape:window-height="1403"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -53,47 +53,37 @@
        points="-4,4 -4,-630.75 651.12,-630.75 651.12,4 -4,4"
        id="polygon1" />
     <!-- 0 -->
-    <g
-       id="node1"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title2">0</title>
-      <path
-         fill="none"
-         stroke="#d85656"
-         stroke-width="2"
-         d="m 259.62,-36 c 0,0 -30,0 -30,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 30,0 30,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path2" />
-      <text
-         text-anchor="middle"
-         x="244.62"
-         y="-15.62"
-         font-family="sans"
-         font-size="10px"
-         id="text2">all</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#d85656"
+       stroke-width="1.79598"
+       d="m 271.2719,-59.008688 c 0,0 -26.93972,0 -26.93972,0 -5.38795,0 -10.77589,5.387944 -10.77589,10.775889 0,0 0,10.775889 0,10.775889 0,5.387944 5.38794,10.775889 10.77589,10.775889 0,0 26.93972,0 26.93972,0 5.38794,0 10.77589,-5.387945 10.77589,-10.775889 0,0 0,-10.775889 0,-10.775889 0,-5.387945 -5.38795,-10.775889 -10.77589,-10.775889"
+       id="path2"
+       style="stroke:#000000" />
+    <text
+       text-anchor="middle"
+       x="257.80203"
+       y="-40.707638"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text2"
+       style="stroke-width:0.897991">all</text>
     <!-- 1 -->
-    <g
-       id="node2"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title3">1</title>
-      <path
-         fill="none"
-         stroke="#56d8d8"
-         stroke-width="2"
-         d="m 259.62,-108 c 0,0 -30,0 -30,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 30,0 30,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path3" />
-      <text
-         text-anchor="middle"
-         x="244.62"
-         y="-87.620003"
-         font-family="sans"
-         font-size="10px"
-         id="text3">multiqc</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d8d8"
+       stroke-width="1.79598"
+       d="m 271.2719,-123.66402 c 0,0 -26.93972,0 -26.93972,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.387941 5.38794,10.775885 10.77589,10.775885 0,0 26.93972,0 26.93972,0 5.38794,0 10.77589,-5.387944 10.77589,-10.775885 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path3"
+       style="stroke:#56a2d8;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="257.80203"
+       y="-105.36298"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text3"
+       style="stroke-width:0.897991">multiqc</text>
     <!-- 1&#45;&gt;0 -->
     <g
        id="edge1"
@@ -115,26 +105,21 @@
          id="polygon4" />
     </g>
     <!-- 2 -->
-    <g
-       id="node3"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title5">2</title>
-      <path
-         fill="none"
-         stroke="#56d873"
-         stroke-width="2"
-         d="m 56.62,-468 c 0,0 -30,0 -30,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 30,0 30,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path5" />
-      <text
-         text-anchor="middle"
-         x="41.619999"
-         y="-447.62"
-         font-family="sans"
-         font-size="10px"
-         id="text5">fastqc</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d873"
+       stroke-width="1.79598"
+       d="m 88.979776,-446.94069 c 0,0 -26.939722,0 -26.939722,0 -5.387945,0 -10.775889,5.38794 -10.775889,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.387944,10.77589 10.775889,10.77589 0,0 26.939722,0 26.939722,0 5.387945,0 10.775889,-5.38795 10.775889,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.387944,-10.77589 -10.775889,-10.77589"
+       id="path5"
+       style="stroke:#56a2d8;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="75.509911"
+       y="-428.63965"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text5"
+       style="stroke-width:0.897991">fastqc</text>
     <!-- 2&#45;&gt;1 -->
     <g
        id="edge2"
@@ -156,34 +141,30 @@
          id="polygon6" />
     </g>
     <!-- 3 -->
-    <g
-       id="node4"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title7">3</title>
-      <path
-         fill="none"
-         stroke="#56d88a"
-         stroke-width="2"
-         d="M 75.25,-617.74835 H 12 c -6,0 -12,6 -12,12 V -588 c 0,6 6,12 12,12 h 63.25 c 6,0 12,-6 12,-12 v -17.74835 c 0,-6 -6,-12 -12,-12"
-         id="path7"
-         sodipodi:nodetypes="csssssssc" />
-      <text
-         text-anchor="middle"
-         x="43.619999"
-         y="-601.24756"
-         font-family="sans"
-         font-size="10px"
-         id="text7">get_fastq</text>
-      <text
-         text-anchor="middle"
-         x="43.619999"
-         y="-586.99756"
-         font-family="sans"
-         font-size="10px"
-         id="text8">read: read1</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d88a"
+       stroke-width="1.79598"
+       d="M 105.70934,-581.41333 H 48.911429 c -5.387945,0 -10.775889,5.38795 -10.775889,10.77589 v 15.93786 c 0,5.38794 5.387944,10.77589 10.775889,10.77589 h 56.797911 c 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 v -15.93786 c 0,-5.38794 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path7"
+       sodipodi:nodetypes="csssssssc"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="77.305893"
+       y="-566.59576"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text7"
+       style="stroke-width:0.897991">get_fastq</text>
+    <text
+       text-anchor="middle"
+       x="77.305893"
+       y="-553.79938"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text8"
+       style="stroke-width:0.897991">read: read1</text>
     <!-- 3&#45;&gt;2 -->
     <g
        id="edge11"
@@ -205,26 +186,21 @@
          id="polygon9" />
     </g>
     <!-- 7 -->
-    <g
-       id="node8"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title10">7</title>
-      <path
-         fill="none"
-         stroke="#59d856"
-         stroke-width="2"
-         d="m 113.5,-540 c 0,0 -31.75,0 -31.75,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 31.75,0 31.75,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path10" />
-      <text
-         text-anchor="middle"
-         x="97.620003"
-         y="-519.62"
-         font-family="sans"
-         font-size="10px"
-         id="text10">fastp_pe</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#59d856"
+       stroke-width="1.79598"
+       d="m 140.05749,-511.59603 c 0,0 -28.51121,0 -28.51121,0 -5.38794,0 -10.77589,5.38795 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38795 5.38795,10.77589 10.77589,10.77589 0,0 28.51121,0 28.51121,0 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path10"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="125.7974"
+       y="-493.29498"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text10"
+       style="stroke-width:0.897991">fastp_pe</text>
     <!-- 3&#45;&gt;7 -->
     <g
        id="edge15"
@@ -246,26 +222,21 @@
          id="polygon11" />
     </g>
     <!-- 4 -->
-    <g
-       id="node5"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title12">4</title>
-      <path
-         fill="none"
-         stroke="#56d873"
-         stroke-width="2"
-         d="m 167.62,-468 c 0,0 -30,0 -30,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 30,0 30,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path12" />
-      <text
-         text-anchor="middle"
-         x="152.62"
-         y="-447.62"
-         font-family="sans"
-         font-size="10px"
-         id="text12">fastqc</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d873"
+       stroke-width="1.79598"
+       d="m 188.65675,-446.94069 c 0,0 -26.93972,0 -26.93972,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38794,10.77589 10.77589,10.77589 0,0 26.93972,0 26.93972,0 5.38794,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path12"
+       style="stroke:#56a2d8;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="175.18689"
+       y="-428.63965"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text12"
+       style="stroke-width:0.897991">fastqc</text>
     <!-- 4&#45;&gt;1 -->
     <g
        id="edge3"
@@ -287,34 +258,30 @@
          id="polygon13" />
     </g>
     <!-- 5 -->
-    <g
-       id="node6"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title14">5</title>
-      <path
-         fill="none"
-         stroke="#56d88a"
-         stroke-width="2"
-         d="M 183.25,-617.74835 H 120 c -6,0 -12,6 -12,12 V -588 c 0,6 6,12 12,12 h 63.25 c 6,0 12,-6 12,-12 v -17.74835 c 0,-6 -6,-12 -12,-12"
-         id="path14"
-         sodipodi:nodetypes="csssssssc" />
-      <text
-         text-anchor="middle"
-         x="151.62"
-         y="-601.24756"
-         font-family="sans"
-         font-size="10px"
-         id="text14">get_fastq</text>
-      <text
-         text-anchor="middle"
-         x="151.62"
-         y="-586.99756"
-         font-family="sans"
-         font-size="10px"
-         id="text15">read: read2</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d88a"
+       stroke-width="1.79598"
+       d="m 202.69234,-581.41333 h -56.79791 c -5.38794,0 -10.77589,5.38795 -10.77589,10.77589 v 15.93786 c 0,5.38794 5.38795,10.77589 10.77589,10.77589 h 56.79791 c 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 v -15.93786 c 0,-5.38794 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path14"
+       sodipodi:nodetypes="csssssssc"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="174.28889"
+       y="-566.59576"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text14"
+       style="stroke-width:0.897991">get_fastq</text>
+    <text
+       text-anchor="middle"
+       x="174.28889"
+       y="-553.79938"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text15"
+       style="stroke-width:0.897991">read: read2</text>
     <!-- 5&#45;&gt;4 -->
     <g
        id="edge12"
@@ -356,26 +323,21 @@
          id="polygon17" />
     </g>
     <!-- 6 -->
-    <g
-       id="node7"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,46.218936,-26.681021)">
-      <title
-         id="title18">6</title>
-      <path
-         fill="none"
-         stroke="#a7d856"
-         stroke-width="2"
-         d="m 307.25,-468 c 0,0 -45.25,0 -45.25,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 45.25,0 45.25,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path18" />
-      <text
-         text-anchor="middle"
-         x="284.62"
-         y="-447.62"
-         font-family="sans"
-         font-size="10px"
-         id="text18">bwa_mem2</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#a7d856"
+       stroke-width="1.79598"
+       d="m 322.12659,-446.94069 c 0,0 -40.63408,0 -40.63408,0 -5.38794,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38795,10.77589 10.77589,10.77589 0,0 40.63408,0 40.63408,0 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path18"
+       style="stroke:#d4aa00" />
+    <text
+       text-anchor="middle"
+       x="301.80505"
+       y="-428.63965"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text18"
+       style="stroke-width:0.897991">bwa_mem2</text>
     <!-- 6&#45;&gt;1 -->
     <g
        id="edge4"
@@ -397,26 +359,21 @@
          id="polygon19" />
     </g>
     <!-- 11 -->
-    <g
-       id="node12"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title20">11</title>
-      <path
-         fill="none"
-         stroke="#5673d8"
-         stroke-width="2"
-         d="m 328.88,-396 c 0,0 -56.5,0 -56.5,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 56.5,0 56.5,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path20" />
-      <text
-         text-anchor="middle"
-         x="300.62"
-         y="-375.62"
-         font-family="sans"
-         font-size="10px"
-         id="text20">samtools_sort</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#5673d8"
+       stroke-width="1.79598"
+       d="m 333.46674,-382.28536 c 0,0 -50.73648,0 -50.73648,0 -5.38794,0 -10.77589,5.38795 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38795,10.77589 10.77589,10.77589 0,0 50.73648,0 50.73648,0 5.38794,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path20"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="308.08951"
+       y="-363.98431"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text20"
+       style="stroke-width:0.897991">samtools_sort</text>
     <!-- 6&#45;&gt;11 -->
     <g
        id="edge20"
@@ -478,66 +435,51 @@
          id="polygon23" />
     </g>
     <!-- 8 -->
-    <g
-       id="node9"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,1.7602496,-26.681021)">
-      <title
-         id="title24">8</title>
-      <path
-         fill="none"
-         stroke="#88d856"
-         stroke-width="2"
-         d="m 371.88,-540 c 0,0 -74.5,0 -74.5,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 74.5,0 74.5,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path24" />
-      <text
-         text-anchor="middle"
-         x="334.62"
-         y="-519.62"
-         font-family="sans"
-         font-size="10px"
-         id="text24">bwa_mem2_index</text>
-    </g>
-    <g
-       id="node7-6"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,144.56695,-26.681021)">
-      <title
-         id="title18-7">6</title>
-      <path
-         fill="none"
-         stroke="#a7d856"
-         stroke-width="2"
-         d="m 307.25,-468 c 0,0 -45.25,0 -45.25,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 45.25,0 45.25,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path18-5" />
-      <text
-         text-anchor="middle"
-         x="284.62"
-         y="-447.62"
-         font-family="sans"
-         font-size="10px"
-         id="text18-3">bowtie2</text>
-    </g>
-    <g
-       id="node9-5"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,100.10825,-26.681021)">
-      <title
-         id="title24-6">8</title>
-      <path
-         fill="none"
-         stroke="#88d856"
-         stroke-width="2"
-         d="m 371.88,-540 c 0,0 -74.5,0 -74.5,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 74.5,0 74.5,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path24-2" />
-      <text
-         text-anchor="middle"
-         x="334.62"
-         y="-519.62"
-         font-family="sans"
-         font-size="10px"
-         id="text24-9">bowtie2_index</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#88d856"
+       stroke-width="1.79598"
+       d="m 335.70505,-511.59603 c 0,0 -66.90031,0 -66.90031,0 -5.38795,0 -10.77589,5.38795 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38795 5.38794,10.77589 10.77589,10.77589 0,0 66.90031,0 66.90031,0 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path24"
+       style="stroke:#d4aa00" />
+    <text
+       text-anchor="middle"
+       x="302.24591"
+       y="-493.29498"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text24"
+       style="stroke-width:0.897991">bwa_mem2_index</text>
+    <path
+       fill="none"
+       stroke="#a7d856"
+       stroke-width="1.79598"
+       d="m 420.47461,-446.94069 c 0,0 -40.63408,0 -40.63408,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38794,10.77589 10.77589,10.77589 0,0 40.63408,0 40.63408,0 5.38794,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path18-5"
+       style="stroke:#d4aa00" />
+    <text
+       text-anchor="middle"
+       x="400.15308"
+       y="-428.63965"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text18-3"
+       style="stroke-width:0.897991">bowtie2</text>
+    <path
+       fill="none"
+       stroke="#88d856"
+       stroke-width="1.79598"
+       d="m 434.05305,-511.59603 c 0,0 -66.90031,0 -66.90031,0 -5.38795,0 -10.77589,5.38795 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38795 5.38794,10.77589 10.77589,10.77589 0,0 66.90031,0 66.90031,0 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path24-2"
+       style="stroke:#d4aa00" />
+    <text
+       text-anchor="middle"
+       x="400.5939"
+       y="-493.29498"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text24-9"
+       style="stroke-width:0.897991">bowtie2_index</text>
     <!-- 8&#45;&gt;6 -->
     <g
        id="edge14"
@@ -580,26 +522,21 @@
          id="polygon25-9" />
     </g>
     <!-- 9 -->
-    <g
-       id="node10"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title26">9</title>
-      <path
-         fill="none"
-         stroke="#56d8a2"
-         stroke-width="2"
-         d="m 487.25,-619.38 c 0,0 -51.25,0 -51.25,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 51.25,0 51.25,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path26" />
-      <text
-         text-anchor="middle"
-         x="461.62"
-         y="-599"
-         font-family="sans"
-         font-size="10px"
-         id="text26">get_genome</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d8a2"
+       stroke-width="1.79598"
+       d="m 475.68153,-582.87853 c 0,0 -46.02202,0 -46.02202,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38794,10.77589 10.77589,10.77589 0,0 46.02202,0 46.02202,0 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path26"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="452.66602"
+       y="-564.57745"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text26"
+       style="stroke-width:0.897991">get_genome</text>
     <!-- 9&#45;&gt;8 -->
     <g
        id="edge17"
@@ -665,26 +602,21 @@
          transform="rotate(-48.801763,384.34246,-580.50711)" />
     </g>
     <!-- 12 -->
-    <g
-       id="node13"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title28">12</title>
-      <path
-         fill="none"
-         stroke="#56d8c1"
-         stroke-width="2"
-         d="m 483.12,-396 c 0,0 -43,0 -43,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 43,0 43,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path28" />
-      <text
-         text-anchor="middle"
-         x="461.62"
-         y="-375.62"
-         font-family="sans"
-         font-size="10px"
-         id="text28">gffread_gff</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56d8c1"
+       stroke-width="1.79598"
+       d="m 471.97283,-382.28536 c 0,0 -38.6136,0 -38.6136,0 -5.38795,0 -10.77589,5.38795 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38794,10.77589 10.77589,10.77589 0,0 38.6136,0 38.6136,0 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path28"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="452.66602"
+       y="-363.98431"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text28"
+       style="stroke-width:0.897991">gffread_gff</text>
     <!-- 9&#45;&gt;12 -->
     <g
        id="edge21"
@@ -706,26 +638,69 @@
          id="polygon29" />
     </g>
     <!-- 18 -->
-    <g
-       id="node19"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title30">18</title>
-      <path
-         fill="none"
-         stroke="#d88d56"
-         stroke-width="2"
-         d="m 616.5,-324 c 0,0 -61.75,0 -61.75,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 61.75,0 61.75,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path30" />
-      <text
-         text-anchor="middle"
-         x="585.62"
-         y="-303.62"
-         font-family="sans"
-         font-size="10px"
-         id="text30">bcftools_pileup</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#d88d56"
+       stroke-width="1.79598"
+       d="m 591.74684,-317.63002 c 0,0 -55.45093,0 -55.45093,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77588 0,10.77588 0,5.38795 5.38794,10.77589 10.77589,10.77589 0,0 55.45093,0 55.45093,0 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77588 0,-10.77588 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path30"
+       style="stroke:#d86e56;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="564.01691"
+       y="-299.32898"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text30"
+       style="stroke-width:0.897991">bcftools_pileup</text>
+    <path
+       fill="none"
+       stroke="#d88d56"
+       stroke-width="1.79598"
+       d="m 613.42902,-516.60781 h -55.45093 c -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 v 1.77424 c 0,5.38795 5.38794,10.77589 10.77589,10.77589 h 55.45093 c 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 v -1.77424 c 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path30-2"
+       style="stroke:#56a2d8;stroke-opacity:1"
+       sodipodi:nodetypes="csssssssc" />
+    <text
+       text-anchor="middle"
+       x="585.6991"
+       y="-502.80774"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text30-0"
+       style="stroke-width:0.897991">QC and Stats</text>
+    <path
+       fill="none"
+       stroke="#d88d56"
+       stroke-width="1.79598"
+       d="m 613.42902,-546.61331 h -55.45093 c -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 v 1.77424 c 0,5.38795 5.38794,10.77589 10.77589,10.77589 h 55.45093 c 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 v -1.77424 c 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path30-2-3"
+       style="stroke:#d86e56;stroke-opacity:1"
+       sodipodi:nodetypes="csssssssc" />
+    <text
+       text-anchor="middle"
+       x="585.6991"
+       y="-532.81323"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text30-0-7"
+       style="stroke-width:0.897991">Variantcalling</text>
+    <path
+       fill="none"
+       stroke="#d88d56"
+       stroke-width="1.79598"
+       d="m 613.42902,-576.61881 h -55.45093 c -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 v 1.77424 c 0,5.38795 5.38794,10.77589 10.77589,10.77589 h 55.45093 c 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 v -1.77424 c 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path30-2-3-9"
+       style="stroke:#d4aa00;stroke-opacity:1"
+       sodipodi:nodetypes="csssssssc" />
+    <text
+       text-anchor="middle"
+       x="585.6991"
+       y="-562.81873"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text30-0-7-2"
+       style="stroke-width:0.897991">Mapping</text>
     <!-- 9&#45;&gt;18 -->
     <g
        id="edge29"
@@ -747,26 +722,6 @@
          id="polygon31" />
     </g>
     <!-- 10 -->
-    <g
-       id="node11"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title32">10</title>
-      <path
-         fill="none"
-         stroke="#56a2d8"
-         stroke-width="2"
-         d="m 513.12,-324 c 0,0 -103,0 -103,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 103,0 103,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path32" />
-      <text
-         text-anchor="middle"
-         x="461.62"
-         y="-303.62"
-         font-family="sans"
-         font-size="10px"
-         id="text32">rseqc_infer_experiment</text>
-    </g>
     <!-- 10&#45;&gt;1 -->
     <g
        id="edge6"
@@ -798,8 +753,9 @@
          fill="none"
          stroke="#808080"
          stroke-width="2"
-         d="m 341.67,-359.15 c 20.36,8.85 45.19,19.64 66.97,29.11"
-         id="path34" />
+         d="m 334.98719,-360.8207 c 20.36,8.85 51.87281,21.3107 73.65281,30.7807"
+         id="path34"
+         sodipodi:nodetypes="cc" />
       <polygon
          fill="#808080"
          stroke="#808080"
@@ -808,26 +764,21 @@
          id="polygon34" />
     </g>
     <!-- 13 -->
-    <g
-       id="node14"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title35">13</title>
-      <path
-         fill="none"
-         stroke="#56c1d8"
-         stroke-width="2"
-         d="m 276.62,-252 c 0,0 -64,0 -64,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 64,0 64,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path35" />
-      <text
-         text-anchor="middle"
-         x="244.62"
-         y="-231.62"
-         font-family="sans"
-         font-size="10px"
-         id="text35">rseqc_bam_stat</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#56c1d8"
+       stroke-width="1.79598"
+       d="m 286.53774,-252.97469 c 0,0 -57.47141,0 -57.47141,0 -5.38794,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38795,10.77589 10.77589,10.77589 0,0 57.47141,0 57.47141,0 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path35"
+       style="stroke:#56a2d8;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="257.80203"
+       y="-234.67363"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text35"
+       style="stroke-width:0.897991">rseqc_bam_stat</text>
     <!-- 11&#45;&gt;13 -->
     <g
        id="edge22"
@@ -849,26 +800,21 @@
          id="polygon36" />
     </g>
     <!-- 14 -->
-    <g
-       id="node15"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title37">14</title>
-      <path
-         fill="none"
-         stroke="#70d856"
-         stroke-width="2"
-         d="m 404.5,-252 c 0,0 -85.75,0 -85.75,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 85.75,0 85.75,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path37" />
-      <text
-         text-anchor="middle"
-         x="361.62"
-         y="-231.62"
-         font-family="sans"
-         font-size="10px"
-         id="text37">deeptools_coverage</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#70d856"
+       stroke-width="1.79598"
+       d="m 401.3728,-252.97469 c 0,0 -77.00271,0 -77.00271,0 -5.38794,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38795,10.77589 10.77589,10.77589 0,0 77.00271,0 77.00271,0 5.38794,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path37"
+       style="stroke:#56a2d8;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="362.86694"
+       y="-234.67363"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text37"
+       style="stroke-width:0.897991">deeptools_coverage</text>
     <!-- 11&#45;&gt;14 -->
     <g
        id="edge23"
@@ -890,26 +836,21 @@
          id="polygon38" />
     </g>
     <!-- 15 -->
-    <g
-       id="node16"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title39">15</title>
-      <path
-         fill="none"
-         stroke="#568ad8"
-         stroke-width="2"
-         d="m 367.88,-324 c 0,0 -62.5,0 -62.5,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 62.5,0 62.5,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path39" />
-      <text
-         text-anchor="middle"
-         x="336.62"
-         y="-303.62"
-         font-family="sans"
-         font-size="10px"
-         id="text39">samtools_index</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#568ad8"
+       stroke-width="1.79598"
+       d="m 368.48838,-317.63002 c 0,0 -56.12442,0 -56.12442,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77588 0,10.77588 0,5.38795 5.38794,10.77589 10.77589,10.77589 0,0 56.12442,0 56.12442,0 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77588 0,-10.77588 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path39"
+       style="stroke:#56d88a;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="340.41718"
+       y="-299.32898"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text39"
+       style="stroke-width:0.897991">samtools_index</text>
     <!-- 11&#45;&gt;15 -->
     <g
        id="edge25"
@@ -949,6 +890,27 @@
          stroke-width="2"
          points="528.27,-322.03 530.13,-328.77 538.84,-322.74 "
          id="polygon41" />
+    </g>
+    <g
+       id="edge28-6"
+       class="edge"
+       transform="matrix(0.89799075,0,0,0.89799075,36.986112,-23.744591)">
+      <title
+         id="title41-1">11-&gt;18</title>
+      <path
+         fill="none"
+         stroke="#808080"
+         stroke-width="2"
+         d="m 341.51,-369.02 c 44.38,8.94 153.3806,28.9137 166.58916,100.9137"
+         id="path41-8"
+         sodipodi:nodetypes="cc" />
+      <polygon
+         fill="#808080"
+         stroke="#808080"
+         stroke-width="2"
+         points="528.27,-322.03 530.13,-328.77 538.84,-322.74 "
+         id="polygon41-7"
+         transform="rotate(60,469.03177,-315.02702)" />
     </g>
     <!-- 12&#45;&gt;10 -->
     <g
@@ -1031,26 +993,21 @@
          id="polygon45" />
     </g>
     <!-- 16 -->
-    <g
-       id="node17"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title46">16</title>
-      <path
-         fill="none"
-         stroke="#d8a456"
-         stroke-width="2"
-         d="m 635.12,-180 c 0,0 -55,0 -55,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 55,0 55,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path46" />
-      <text
-         text-anchor="middle"
-         x="607.62"
-         y="-159.62"
-         font-family="sans"
-         font-size="10px"
-         id="text46">bcftools_stats</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#d8a456"
+       stroke-width="1.79598"
+       d="m 608.46743,-188.31936 c 0,0 -49.3895,0 -49.3895,0 -5.38794,0 -10.77589,5.38795 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38795 5.38795,10.77589 10.77589,10.77589 0,0 49.3895,0 49.3895,0 5.38794,0 10.77588,-5.38794 10.77588,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38794,-10.77589 -10.77588,-10.77589"
+       id="path46"
+       style="stroke:#d86e56;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="583.77271"
+       y="-170.0183"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text46"
+       style="stroke-width:0.897991">bcftools_stats</text>
     <!-- 16&#45;&gt;1 -->
     <g
        id="edge9"
@@ -1072,72 +1029,58 @@
          id="polygon47" />
     </g>
     <!-- 17 -->
-    <g
-       id="node18"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title48">17</title>
-      <path
-         fill="none"
-         stroke="#d86e56"
-         stroke-width="2"
-         d="m 609.38,-252 c 0,0 -47.5,0 -47.5,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 47.5,0 47.5,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path48" />
-      <text
-         text-anchor="middle"
-         x="585.62"
-         y="-231.62"
-         font-family="sans"
-         font-size="10px"
-         id="text48">bcftools_call</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#d86e56"
+       stroke-width="1.79598"
+       d="m 523.84187,-252.97469 c 0,0 -42.65456,0 -42.65456,0 -5.38794,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38795,10.77589 10.77589,10.77589 0,0 42.65456,0 42.65456,0 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path48"
+       style="stroke:#d86e56;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="502.50565"
+       y="-234.67363"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text48"
+       style="stroke-width:0.897991">bcftools_call</text>
+    <path
+       fill="none"
+       stroke="#d86e56"
+       stroke-width="1.79598"
+       d="m 610.85783,-252.97469 c 0,0 -42.65456,0 -42.65456,0 -5.38794,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77589 0,10.77589 0,5.38794 5.38795,10.77589 10.77589,10.77589 0,0 42.65456,0 42.65456,0 5.38795,0 10.77589,-5.38795 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38795 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path48-6"
+       style="stroke:#d86e56;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="589.52155"
+       y="-234.67363"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text48-7"
+       style="stroke-width:0.897991">freebayes</text>
     <!-- 17&#45;&gt;16 -->
-    <g
-       id="edge26"
-       class="edge"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title49">17-&gt;16</title>
-      <path
-         fill="none"
-         stroke="#808080"
-         stroke-width="2"
-         d="m 591.18,-215.34 c 2.12,6.75 4.6,14.65 6.98,22.23"
-         id="path49" />
-      <polygon
-         fill="#808080"
-         stroke="#808080"
-         stroke-width="2"
-         points="594.75,-192.28 601.43,-194.38 601.09,-183.79 "
-         id="polygon49" />
-    </g>
     <!-- 19 -->
-    <g
-       id="node20"
-       class="node"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
-      <title
-         id="title50">19</title>
-      <path
-         fill="none"
-         stroke="#d8bc56"
-         stroke-width="2"
-         d="m 538.38,-180 c 0,0 -53.5,0 -53.5,0 -6,0 -12,6 -12,12 0,0 0,12 0,12 0,6 6,12 12,12 0,0 53.5,0 53.5,0 6,0 12,-6 12,-12 0,0 0,-12 0,-12 0,-6 -6,-12 -12,-12"
-         id="path50" />
-      <text
-         text-anchor="middle"
-         x="511.62"
-         y="-159.62"
-         font-family="sans"
-         font-size="10px"
-         id="text50">bcftools_view</text>
-    </g>
+    <path
+       fill="none"
+       stroke="#d8bc56"
+       stroke-width="1.79598"
+       d="m 521.5958,-188.31936 c 0,0 -48.04251,0 -48.04251,0 -5.38794,0 -10.77588,5.38795 -10.77588,10.77589 0,0 0,10.77589 0,10.77589 0,5.38795 5.38794,10.77589 10.77588,10.77589 0,0 48.04251,0 48.04251,0 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77589 0,-10.77589 0,-5.38794 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path50"
+       style="stroke:#d86e56;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="497.56555"
+       y="-170.0183"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text50"
+       style="stroke-width:0.897991">bcftools_view</text>
     <!-- 17&#45;&gt;19 -->
     <g
        id="edge30"
        class="edge"
-       transform="matrix(0.89799075,0,0,0.89799075,38.13554,-26.681021)">
+       transform="matrix(0.89799075,0,0,0.89799075,50.813744,-28.724353)">
       <title
          id="title51">17-&gt;19</title>
       <path
@@ -1150,8 +1093,27 @@
          fill="#808080"
          stroke="#808080"
          stroke-width="2"
-         points="537.61,-192.4 542.42,-187.31 532.75,-182.98 "
+         points="542.42,-187.31 532.75,-182.98 537.61,-192.4 "
          id="polygon51" />
+    </g>
+    <g
+       id="edge30-3"
+       class="edge"
+       transform="matrix(-0.89799075,0,0,0.89799075,1036.9776,-28.724353)">
+      <title
+         id="title51-6">17-&gt;19</title>
+      <path
+         fill="none"
+         stroke="#808080"
+         stroke-width="2"
+         d="m 566.95,-215.34 c -8.17,7.74 -17.95,16.98 -26.99,25.53"
+         id="path51-0" />
+      <polygon
+         fill="#808080"
+         stroke="#808080"
+         stroke-width="2"
+         points="532.75,-182.98 537.61,-192.4 542.42,-187.31 "
+         id="polygon51-6" />
     </g>
     <!-- 18&#45;&gt;17 -->
     <g
@@ -1173,6 +1135,44 @@
          points="582.13,-265.93 589.13,-265.93 585.63,-255.93 "
          id="polygon52" />
     </g>
+    <g
+       id="edge27-3"
+       class="edge"
+       transform="matrix(0.89799075,0,0,0.89799075,-23.375733,38.26147)">
+      <title
+         id="title52-5">18-&gt;17</title>
+      <path
+         fill="none"
+         stroke="#808080"
+         stroke-width="2"
+         d="m 585.62,-287.34 c 0,6.59 0,14.26 0,21.67"
+         id="path52-6" />
+      <polygon
+         fill="#808080"
+         stroke="#808080"
+         stroke-width="2"
+         points="582.13,-265.93 589.13,-265.93 585.63,-255.93 "
+         id="polygon52-2" />
+    </g>
+    <g
+       id="edge27-1"
+       class="edge"
+       transform="matrix(0.89799075,0,0,0.89799075,63.640227,38.26147)">
+      <title
+         id="title52-2">18-&gt;17</title>
+      <path
+         fill="none"
+         stroke="#808080"
+         stroke-width="2"
+         d="m 585.62,-287.34 c 0,6.59 0,14.26 0,21.67"
+         id="path52-7" />
+      <polygon
+         fill="#808080"
+         stroke="#808080"
+         stroke-width="2"
+         points="589.13,-265.93 585.63,-255.93 582.13,-265.93 "
+         id="polygon52-0" />
+    </g>
     <!-- 19&#45;&gt;1 -->
     <g
        id="edge10"
@@ -1193,5 +1193,36 @@
          points="284.4,-103.59 285.96,-96.77 275.44,-97.94 "
          id="polygon53" />
     </g>
+    <path
+       fill="none"
+       stroke="#56a2d8"
+       stroke-width="1.79598"
+       d="m 498.91255,-317.63002 c 0,0 -92.49304,0 -92.49304,0 -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 0,0 0,10.77588 0,10.77588 0,5.38795 5.38794,10.77589 10.77589,10.77589 0,0 92.49304,0 92.49304,0 5.38795,0 10.77589,-5.38794 10.77589,-10.77589 0,0 0,-10.77588 0,-10.77588 0,-5.38795 -5.38794,-10.77589 -10.77589,-10.77589"
+       id="path32"
+       style="fill:#f9f9f9;stroke:#56a2d8;stroke-opacity:1" />
+    <text
+       text-anchor="middle"
+       x="452.66602"
+       y="-299.32898"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text32"
+       style="stroke-width:0.897991">rseqc_infer_experiment</text>
+    <path
+       fill="none"
+       stroke="#d88d56"
+       stroke-width="1.79598"
+       d="m 613.42902,-606.62431 h -55.45093 c -5.38795,0 -10.77589,5.38794 -10.77589,10.77589 v 1.77424 c 0,5.38795 5.38794,10.77589 10.77589,10.77589 h 55.45093 c 5.38794,0 10.77589,-5.38794 10.77589,-10.77589 v -1.77424 c 0,-5.38795 -5.38795,-10.77589 -10.77589,-10.77589"
+       id="path30-2-3-8"
+       style="stroke:#56d88a;stroke-opacity:1"
+       sodipodi:nodetypes="csssssssc" />
+    <text
+       text-anchor="middle"
+       x="585.6991"
+       y="-592.82422"
+       font-family="sans"
+       font-size="8.97991px"
+       id="text30-0-7-9"
+       style="stroke-width:0.897991">Data prepare</text>
   </g>
 </svg>
