@@ -50,3 +50,5 @@ variant_calling:
     uncompressed: False
     caller: "-c"
     extra: ""
+  freebayes:
+    extra: ""

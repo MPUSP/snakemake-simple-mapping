@@ -85,8 +85,9 @@ def get_multiqc_input(wildcards):
         sample=samples.index,
     )
     result += expand(
-        "results/bcftools/call/{sample}{ext}",
+        "results/{caller}/call/{sample}{ext}",
         sample=samples.index,
-        ext=["_stats.txt", ".vcf"],
+        caller=["bcftools", "freebayes"],
+        ext=["_stats.txt", "_all.vcf", "_variants.vcf"],
     )
     return result
