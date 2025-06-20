@@ -37,6 +37,6 @@ rule bowtie2_align:
         "results/bowtie2/align/{sample}.log",
     params:
         extra=config["mapping"]["bowtie2"]["extra"],
-    threads: int(workflow.cores * 0.25)
+    threads: 8
     wrapper:
         "v7.0.0/bio/bowtie2/align"
