@@ -12,6 +12,6 @@ rule freebayes:
         extra=config["variant_calling"]["freebayes"]["extra"],
     log:
         "results/freebayes/call/{sample}.log",
-    threads: 2
+    threads: 4
     wrapper:
         "v7.0.0/bio/freebayes"

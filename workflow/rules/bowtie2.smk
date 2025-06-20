@@ -17,7 +17,7 @@ rule bowtie2_build:
         "results/bowtie2/build/build.log",
     params:
         extra=config["mapping"]["bowtie2"]["index"],
-    threads: 8
+    threads: 1
     wrapper:
         "v7.0.0/bio/bowtie2/build"
 
@@ -37,6 +37,6 @@ rule bowtie2_align:
         "results/bowtie2/align/{sample}.log",
     params:
         extra=config["mapping"]["bowtie2"]["extra"],
-    threads: 4
+    threads: 8
     wrapper:
         "v7.0.0/bio/bowtie2/align"

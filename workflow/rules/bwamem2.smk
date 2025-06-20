@@ -36,6 +36,6 @@ rule bwa_mem2:
         sort=config["mapping"]["bwa_mem2"]["sort"],
         sort_order=config["mapping"]["bwa_mem2"]["sort_order"],
         sort_extra=config["mapping"]["bwa_mem2"]["sort_extra"],
-    threads: 4
+    threads: 8
     wrapper:
         "v6.2.0/bio/bwa-mem2/mem"
