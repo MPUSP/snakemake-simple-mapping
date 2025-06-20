@@ -43,7 +43,7 @@ rule bcftools_view:
     log:
         "results/{caller}/call/{sample}_view.log",
     params:
-        extra="",
+        extra=config["variant_calling"]["bcftools_view"]["extra"],
     wrapper:
         "v7.0.0/bio/bcftools/view"
 
@@ -58,8 +58,8 @@ rule bcftools_filter:
     log:
         "results/{caller}/call/{sample}_variants.log",
     params:
-        filter="-e 'ALT=\".\"'",
-        extra="",
+        filter=config["variant_calling"]["bcftools_filter"]["filter"],
+        extra=config["variant_calling"]["bcftools_filter"]["extra"],
     wrapper:
         "v7.0.0/bio/bcftools/filter"
 

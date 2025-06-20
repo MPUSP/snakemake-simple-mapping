@@ -50,5 +50,10 @@ variant_calling:
     uncompressed: False
     caller: "-c"
     extra: ""
-  freebayes:
+  bcftools_view:
     extra: ""
+  bcftools_filter:
+    filter: '-e ''ALT="."'''
+    extra: ""
+  freebayes:
+    extra: "--ploidy 1  --min-base-quality 20 --min-alternate-fraction 0.75"

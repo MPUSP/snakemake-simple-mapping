@@ -73,6 +73,11 @@ This table lists all parameters that can be used to run the workflow.
 | _bcftools_call_          |         |                                                          |                   |
 | uncompressed             | boolean | whether to output uncompressed VCF files                 | `False`           |
 | caller                   | string  | use '-c' for consensus or '-m' for multiallelic          | `-c`              |
+| extra                    | string  | additional arguments to BCFtools view                    |                   |
+| _bcftools_view_          |         |                                                          |                   |
 | extra                    | string  | additional arguments to BCFtools call                    |                   |
+| _bcftools_filter_        |         |                                                          |                   |
+| filter                   | string  | expression by which to filter BCF/VCF result             | `-e 'ALT=\".\"'`  |
+| extra                    | string  | additional arguments to BCFtools filter                  |                   |
 | _freebayes_              |         |                                                          |                   |
 | extra                    | string  | additional arguments to Freebayes call                   |                   |

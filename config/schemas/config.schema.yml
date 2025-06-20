@@ -135,6 +135,18 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to BCFtools call
+      bcftools_view:
+        type: object
+        properties:
+          extra:
+            type: string
+      bcftools_filter:
+        type: object
+        properties:
+          filter:
+            type: string
+          extra:
+            type: string
       freebayes:
         type: object
         properties:
@@ -144,6 +156,8 @@ properties:
     required:
       - bcftools_pileup
       - bcftools_call
+      - bcftools_view
+      - bcftools_filter
       - freebayes
 required:
   - samplesheet
