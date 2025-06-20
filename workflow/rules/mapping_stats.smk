@@ -9,7 +9,7 @@ rule samtools_sort:
         "results/samtools/sort/{sample}.log",
     params:
         extra=config["mapping"]["samtools_sort"]["extra"],
-    threads: workflow.cores * 0.25
+    threads: 2
     wrapper:
         "v7.0.0/bio/samtools/sort"
 
@@ -25,7 +25,7 @@ rule samtools_index:
         "results/samtools/sort/{sample}_index.log",
     params:
         extra=config["mapping"]["samtools_index"]["extra"],
-    threads: workflow.cores * 0.25
+    threads: 2
     wrapper:
         "v7.0.0/bio/samtools/index"
 

@@ -50,6 +50,6 @@ rule fastp:
         "results/fastp/{sample}.log",
     params:
         extra="",
-    threads: workflow.cores * 0.25
+    threads: 2
     wrapper:
         "v7.0.0/bio/fastp"
