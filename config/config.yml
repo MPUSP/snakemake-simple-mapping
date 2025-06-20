@@ -56,4 +56,4 @@ variant_calling:
     filter: '-e ''ALT="."'''
     extra: ""
   freebayes:
-    extra: "--ploidy 1 --min-alternate-fraction 0.75 --report-monomorphic --min-base-quality 20"
+    extra: "--ploidy 1 --min-base-quality 20 --min-alternate-fraction 0.75"
