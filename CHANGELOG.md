@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.1.0...v1.1.1) (2025-06-20)
+
+
+### Bug Fixes
+
+* adjusted resource allocation ([5e7d8a3](https://github.com/MPUSP/snakemake-simple-mapping/commit/5e7d8a3ce1c31c3f2023beb8adb36dd0b6f1b14c))
+* adjusted resource definitions ([8667d70](https://github.com/MPUSP/snakemake-simple-mapping/commit/8667d70278cef36e6fc556a772e958fe85817f95))
+* bug setting cores dynamically, use static number ([bbe6509](https://github.com/MPUSP/snakemake-simple-mapping/commit/bbe6509361794ba3b4e0bff6e9e323297c647aaf))
+* exposed parameters for some tools ([068d30d](https://github.com/MPUSP/snakemake-simple-mapping/commit/068d30d74c7ff6eb62deb5fc169ba7bd49f7a3a8))
+* exposed parameters for some tools ([55a0ac4](https://github.com/MPUSP/snakemake-simple-mapping/commit/55a0ac4addcbffb75d260eb5fb1524d0db1c1ba3))
+
 ## [1.1.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.0.0...v1.1.0) (2025-06-19)
 
 
