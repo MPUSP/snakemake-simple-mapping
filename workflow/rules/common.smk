@@ -90,4 +90,10 @@ def get_multiqc_input(wildcards):
         caller=["bcftools", "freebayes"],
         ext=["_stats.txt", "_all.vcf", "_variants.vcf"],
     )
+    result += expand(
+        "results/{caller}/effect/{sample}{ext}",
+        sample=samples.index,
+        caller=["bcftools", "freebayes"],
+        ext=["_variants.vcf", "_variants.html"],
+    )
     return result

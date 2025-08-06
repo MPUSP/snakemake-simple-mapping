@@ -1,0 +1,7 @@
+name: vep
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - htslib=1.21

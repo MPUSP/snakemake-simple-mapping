@@ -12,6 +12,7 @@ include: "rules/bwamem2.smk"
 include: "rules/mapping_stats.smk"
 include: "rules/bcftools.smk"
 include: "rules/freebayes.smk"
+include: "rules/variant_annotation.smk"
 include: "rules/qc.smk"
 
 

@@ -153,12 +153,21 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to Freebayes
+      variant_effect_prediction:
+        type: object
+        properties:
+          plugins:
+            type: array
+            description: list of VEP plugins to use
+            items:
+              type: string
     required:
       - bcftools_pileup
       - bcftools_call
       - bcftools_view
       - bcftools_filter
       - freebayes
+      - variant_effect_prediction
 required:
   - samplesheet
   - get_genome
