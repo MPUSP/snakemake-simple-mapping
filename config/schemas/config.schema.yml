@@ -153,9 +153,12 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to Freebayes
-      variant_effect_prediction:
+      effect_prediction:
         type: object
         properties:
+          convert_gff:
+            type: boolean
+            description: whether to convert NCBI GFF to VEP compatible format
           plugins:
             type: array
             description: list of VEP plugins to use
@@ -167,7 +170,7 @@ properties:
       - bcftools_view
       - bcftools_filter
       - freebayes
-      - variant_effect_prediction
+      - effect_prediction
 required:
   - samplesheet
   - get_genome

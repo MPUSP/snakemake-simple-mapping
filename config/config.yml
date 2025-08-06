@@ -57,5 +57,6 @@ variant_calling:
     extra: ""
   freebayes:
     extra: "--ploidy 1 --min-base-quality 20 --min-alternate-fraction 0.75"
-  variant_effect_prediction:
+  effect_prediction:
+    convert_gff: True
     plugins: []
