@@ -35,14 +35,14 @@ rule vep_annotate_variants:
         fai=rules.get_genome.output.fai,
         gff=rules.vep_prepare.output.gff_gz,
     output:
-        calls="results/{caller}/effect/{sample}_variants.vcf",
-        stats="results/{caller}/effect/{sample}_variants.html",
+        calls="results/{caller}/effect/{sample}_vep.vcf",
+        stats="results/{caller}/effect/{sample}_vep.html",
     params:
         # available plugins: https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html
         plugins=config["variant_calling"]["effect_prediction"]["plugins"],
         extra="--everything --species custom_bacteria --distance 0",
     log:
-        "results/{caller}/effect/{sample}_variants.log",
+        "results/{caller}/effect/{sample}_vep.log",
     threads: 4
     wrapper:
         "v7.2.0/bio/vep/annotate"
