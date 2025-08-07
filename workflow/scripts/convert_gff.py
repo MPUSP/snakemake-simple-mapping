@@ -39,7 +39,7 @@ with open(input_gff) as gff:
             if len(cols) < 9:
                 continue
             if (
-                cols[2] in ["gene", "pseudogene", "exon", "transcript"]
+                cols[2] in ["gene", "pseudogene", "exon", "transcript", "mRNA"]
             ) or not convert_gff:
                 result += [line.rstrip("\n")]
             elif cols[2] == "CDS":
@@ -56,7 +56,7 @@ with open(input_gff) as gff:
                 result += [
                     "\t".join(
                         cols[:2]
-                        + ["transcript"]
+                        + ["mRNA"]
                         + cols[3:8]
                         + [format_attributes(transcript_attrs)]
                     )
@@ -70,6 +70,16 @@ with open(input_gff) as gff:
                         + ["exon"]
                         + cols[3:8]
                         + [format_attributes(exon_attrs)]
+                    )
+                ]
+                # create CDS feature
+                cds_attrs = {"ID": cds_id, "Parent": transcript_id}
+                result += [
+                    "\t".join(
+                        cols[:2]
+                        + ["CDS"]
+                        + cols[3:8]
+                        + [format_attributes(cds_attrs)]
                     )
                 ]
             else:

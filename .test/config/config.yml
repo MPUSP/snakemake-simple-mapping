@@ -59,4 +59,4 @@ variant_calling:
     extra: "--ploidy 1 --min-base-quality 20 --min-alternate-fraction 0.75"
   effect_prediction:
     convert_gff: True
-    plugins: ["ProteinSeqs", "Downstream"]
+    plugins: []

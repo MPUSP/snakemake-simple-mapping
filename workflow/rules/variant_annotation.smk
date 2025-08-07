@@ -40,7 +40,7 @@ rule vep_annotate_variants:
     params:
         # available plugins: https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html
         plugins=config["variant_calling"]["effect_prediction"]["plugins"],
-        extra="--everything --species custom_bacteria --distance 1000",
+        extra="--everything --species custom_bacteria --distance 0",
     log:
         "results/{caller}/effect/{sample}_variants.log",
     threads: 4
