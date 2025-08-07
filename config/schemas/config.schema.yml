@@ -164,6 +164,9 @@ properties:
             description: list of VEP plugins to use
             items:
               type: string
+          extra:
+            type: string
+            description: additional arguments to pass to VEP
     required:
       - bcftools_pileup
       - bcftools_call
@@ -171,6 +174,24 @@ properties:
       - bcftools_filter
       - freebayes
       - effect_prediction
+  qc:
+    type: object
+    properties:
+      multiqc:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to MultiQC
+      fastqc:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to FastQC
+    required:
+      - multiqc
+      - fastqc
 required:
   - samplesheet
   - get_genome
@@ -178,3 +199,4 @@ required:
   - mapping
   - mapping_stats
   - variant_calling
+  - qc

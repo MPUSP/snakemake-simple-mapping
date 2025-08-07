@@ -7,7 +7,7 @@ rule fastqc:
         html="results/fastqc/{sample}_{read}_fastqc.html",
         zip="results/fastqc/{sample}_{read}_fastqc.zip",
     params:
-        extra="--quiet",
+        extra=config["qc"]["fastqc"]["extra"],
     message:
         """--- Checking fastq files with FastQC."""
     log:
@@ -25,7 +25,7 @@ rule multiqc:
     output:
         report="results/multiqc/multiqc_report.html",
     params:
-        extra="--verbose --dirs",
+        extra=config["qc"]["multiqc"]["extra"],
     message:
         """--- Generating MultiQC report for seq data."""
     log:
