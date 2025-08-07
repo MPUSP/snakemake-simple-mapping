@@ -22,7 +22,7 @@ rule vep_plugins:
     params:
         release=100,
     log:
-        "resources/vep/plugins/plugins.log",
+        "results/vep/plugins.log",
     wrapper:
         "v7.2.0/bio/vep/plugins"
 
