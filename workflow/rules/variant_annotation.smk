@@ -46,3 +46,48 @@ rule vep_annotate_variants:
     threads: 4
     wrapper:
         "v7.2.0/bio/vep/annotate"
+
+
+rule snpeff_prepare:
+    input:
+        gff=rules.vep_prepare.output.gff,
+        fasta=rules.get_genome.output.fasta,
+    output:
+        db_dir=directory("results/snpeff/custom_db"),
+    params:
+        genome_name="custom_genome",
+        extra="-noCheckCds -noCheckProtein",
+    log:
+        "results/snpeff/build_db.log",
+    conda:
+        "../envs/snpeff.yml"
+    shell:
+        """
+        mkdir -p {output.db_dir}/{params.genome_name}
+        config="$(realpath $(whereis snpEff | awk '{{print $2}}')).config"
+        today="$(date +%Y-%m-%d)"
+        cp {input.fasta} {output.db_dir}/{params.genome_name}/sequences.fa
+        cp {input.gff} {output.db_dir}/{params.genome_name}/genes.gff
+        cp ${{config}} {output.db_dir}/snpeff.config
+        echo -e "\n# automatic entry by workflow: snakemake-simple-mapping" >> {output.db_dir}/snpeff.config
+        echo -e "{params.genome_name}.genome : {params.genome_name}" >> {output.db_dir}/snpeff.config
+        echo -e "{params.genome_name}.retrieval_date : ${{today}}\n" >> {output.db_dir}/snpeff.config
+        snpEff build {params.extra} -c {output.db_dir}/snpeff.config -gff3 -dataDir $(realpath {output.db_dir}) {params.genome_name} > {log} 2>&1
+        """
+
+
+
+# rule snpeff:
+#     input:
+#         calls="results/{caller}/call/{sample}.bcf",
+#     output:
+#         calls="snpeff/{sample}.vcf",  # annotated calls (vcf, bcf, or vcf.gz)
+#         stats="snpeff/{sample}.html",  # summary statistics (in HTML), optional
+#         csvstats="snpeff/{sample}.csv",  # summary statistics in CSV, optional
+#     log:
+#         "logs/snpeff/{sample}.log",
+#     resources:
+#         java_opts="-XX:ParallelGCThreads=10",
+#         mem_mb=4096,
+#     wrapper:
+#         "v7.2.0/bio/snpeff/annotate"

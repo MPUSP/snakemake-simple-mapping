@@ -96,4 +96,11 @@ def get_multiqc_input(wildcards):
         caller=["bcftools", "freebayes"],
         ext=["_vep.vcf", "_vep.html"],
     )
+    result += expand(
+        "results/{caller}/effect/{sample}{ext}",
+        sample=samples.index,
+        caller=["bcftools", "freebayes"],
+        ext=["_vep.vcf", "_vep.html"],
+    )
+    result += ["results/snpeff/custom_db"]
     return result
