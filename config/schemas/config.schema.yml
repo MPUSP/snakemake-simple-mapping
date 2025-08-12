@@ -153,12 +153,45 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to Freebayes
+      effect_prediction:
+        type: object
+        properties:
+          convert_gff:
+            type: boolean
+            description: whether to convert NCBI GFF to VEP compatible format
+          plugins:
+            type: array
+            description: list of VEP plugins to use
+            items:
+              type: string
+          extra:
+            type: string
+            description: additional arguments to pass to VEP
     required:
       - bcftools_pileup
       - bcftools_call
       - bcftools_view
       - bcftools_filter
       - freebayes
+      - effect_prediction
+  qc:
+    type: object
+    properties:
+      multiqc:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to MultiQC
+      fastqc:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to FastQC
+    required:
+      - multiqc
+      - fastqc
 required:
   - samplesheet
   - get_genome
@@ -166,3 +199,4 @@ required:
   - mapping
   - mapping_stats
   - variant_calling
+  - qc

@@ -5,6 +5,7 @@ logs/**
 .snakemake/**
 .test/results/*
 .test/config/*
+.test/resources/*
 .vscode/*
 *.Rdata
 *.RData

@@ -13,7 +13,8 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 5. Determine experiment type, get mapping stats (`rseqc`)
 6. Generate `bigwig` or `bedgaph` coverage profiles (`deeptools`)
 7. Quantify variations and SNPs (`bcftools`, `freebayes`)
-8. Collect statistics from tool output (`MultiQC`)
+8. Predict effect of variants such as premature stop codons (`VEP`)
+9. Collect statistics from tool output (`MultiQC`)
 
 ## Running the workflow
 
@@ -81,3 +82,12 @@ This table lists all parameters that can be used to run the workflow.
 | extra                    | string  | additional arguments to BCFtools filter                  |                   |
 | _freebayes_              |         |                                                          |                   |
 | extra                    | string  | additional arguments to Freebayes call                   |                   |
+| _effect_prediction_      |         |                                                          |                   |
+| convert_gff              | boolean | whether to convert NCBI GFF to Ensemble style GFF        | `True`            |
+| plugins                  | array   | VEP plugins to use                                       | `[]`              |
+| extra                    | string  | additional arguments to VEP                              | see config.yml    |
+| **qc**                   |         |                                                          |                   |
+| _fastqc_                 |         |                                                          |                   |
+| extra                    | string  | additional arguments to FastQC                           |                   |
+| _multiqc_                |         |                                                          |                   |
+| extra                    | string  | additional arguments to MultiQC                          |                   |
