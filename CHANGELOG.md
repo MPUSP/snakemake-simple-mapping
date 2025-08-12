@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.1.1...v1.2.0) (2025-08-12)
+
+
+### Features
+
+* added variant effect prediction module ([9e9d940](https://github.com/MPUSP/snakemake-simple-mapping/commit/9e9d940e2e6af376b58802ce8c47f7c53d0b7bdb))
+* added VEP for variant prediction ([354548a](https://github.com/MPUSP/snakemake-simple-mapping/commit/354548aab52363677e957001245d177a9f00cae9))
+
+
+### Bug Fixes
+
+* added missing documentation ([b2156eb](https://github.com/MPUSP/snakemake-simple-mapping/commit/b2156eb40057aa11e37a0aa8abc09a5f830fcbd2))
+* added script to reformat GFF for VEP ([6d19814](https://github.com/MPUSP/snakemake-simple-mapping/commit/6d19814a813ff0d5cc7f05f0de8b69d28bc2f6f9))
+* location of vep log file ([9d5d7a8](https://github.com/MPUSP/snakemake-simple-mapping/commit/9d5d7a803ac15a97abf026cab8d1716362174f66))
+* make multiqc recognize vep output ([a01343b](https://github.com/MPUSP/snakemake-simple-mapping/commit/a01343b7dc40876012a9d4c45300e1077f1349e5))
+* more changes to convert NCBI to ensemble GFF format ([8a9a948](https://github.com/MPUSP/snakemake-simple-mapping/commit/8a9a948004d30e4c7df10f7c654504c6d2c33c87))
+
 ## [1.1.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.1.0...v1.1.1) (2025-06-20)
 
 
