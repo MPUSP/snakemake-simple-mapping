@@ -57,10 +57,15 @@ variant_calling:
     extra: ""
   freebayes:
     extra: "--ploidy 1 --min-base-quality 20 --min-alternate-fraction 0.75"
-  effect_prediction:
+
+variant_annotation:
+  tool: "vep"
+  vep:
     convert_gff: True
     plugins: []
     extra: "--everything --species custom_bacteria --distance 0"
+  snpeff:
+    extra: "-nodownload -ud 0"
 
 qc:
   multiqc:

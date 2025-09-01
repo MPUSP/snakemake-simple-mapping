@@ -100,7 +100,10 @@ def get_multiqc_input(wildcards):
         "results/{caller}/effect/{sample}{ext}",
         sample=samples.index,
         caller=["bcftools", "freebayes"],
-        ext=["_vep.vcf", "_vep.html"],
+        ext=(
+            ["_vep.vcf", "_vep.html"]
+            if config["variant_annotation"]["tool"] == "vep"
+            else ["_snpeff.vcf", "_snpeff.csv"]
+        ),
     )
-    result += ["results/snpeff/custom_db"]
     return result
