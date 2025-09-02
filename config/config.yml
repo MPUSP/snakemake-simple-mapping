@@ -72,3 +72,6 @@ qc:
     extra: "--verbose --dirs"
   fastqc:
     extra: "--quiet"
+
+report:
+  minimum_variant_count: 2

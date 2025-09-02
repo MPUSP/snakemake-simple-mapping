@@ -18,7 +18,8 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 6. Generate `bigwig` or `bedgaph` coverage profiles (`deeptools`)
 7. Quantify variations and SNPs (`bcftools`, `freebayes`)
 8. Predict effect of variants such as premature stop codons (`VEP` or `SnpEff`)
-9. Collect statistics from tool output (`MultiQC`)
+9. Create consensus of variants and create a visual report (`R markdown`)
+10. Collect statistics from tool output (`MultiQC`)
 
 ## Running the workflow
 

@@ -208,6 +208,12 @@ properties:
     required:
       - multiqc
       - fastqc
+  report:
+    type: object
+    properties:
+      minimum_variant_count:
+        type: integer
+        description: minimum number of samples/appearances for the same variant to be included in the final report
 required:
   - samplesheet
   - get_genome
@@ -215,4 +221,6 @@ required:
   - mapping
   - mapping_stats
   - variant_calling
+  - variant_annotation
   - qc
+  - report
