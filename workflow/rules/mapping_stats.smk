@@ -1,5 +1,3 @@
-# re-sort reads from mapping regardless if mapper did
-# -----------------------------------------------------
 rule samtools_sort:
     input:
         get_bam,
@@ -7,6 +5,8 @@ rule samtools_sort:
         "results/samtools/sort/{sample}.bam",
     log:
         "results/samtools/sort/{sample}.log",
+    message:
+        "re-sort reads after mapping regardless if mapper did"
     params:
         extra=config["mapping"]["samtools_sort"]["extra"],
     threads: 2
@@ -14,8 +14,6 @@ rule samtools_sort:
         "v7.0.0/bio/samtools/sort"
 
 
-# index reads
-# -----------------------------------------------------
 rule samtools_index:
     input:
         "results/samtools/sort/{sample}.bam",
@@ -23,6 +21,8 @@ rule samtools_index:
         "results/samtools/sort/{sample}.bai",
     log:
         "results/samtools/sort/{sample}_index.log",
+    message:
+        "index reads"
     params:
         extra=config["mapping"]["samtools_index"]["extra"],
     threads: 2
@@ -30,8 +30,6 @@ rule samtools_index:
         "v7.0.0/bio/samtools/index"
 
 
-# convert genome annotation from GFF to BED format
-# -----------------------------------------------------
 rule gffread_gff:
     input:
         fasta=rules.get_genome.output.fasta,
@@ -41,14 +39,14 @@ rule gffread_gff:
     threads: 1
     log:
         "results/get_genome/gffread.log",
+    message:
+        "convert genome annotation from GFF to BED format"
     params:
         extra=config["mapping_stats"]["gffread"]["extra"],
     wrapper:
         "v7.0.0/bio/gffread"
 
 
-# infer experiment type from mapping to features
-# -----------------------------------------------------
 rule rseqc_infer_experiment:
     input:
         aln="results/samtools/sort/{sample}.bam",
@@ -57,14 +55,14 @@ rule rseqc_infer_experiment:
         "results/rseqc/infer_experiment/{sample}.txt",
     log:
         "results/rseqc/infer_experiment/{sample}.log",
+    message:
+        "infer experiment type from mapping to features"
     params:
         extra="--sample-size 10000",
     wrapper:
         "v7.0.0/bio/rseqc/infer_experiment"
 
 
-# collect statistics from mapping
-# -----------------------------------------------------
 rule rseqc_bam_stat:
     input:
         "results/samtools/sort/{sample}.bam",
@@ -75,12 +73,12 @@ rule rseqc_bam_stat:
         extra="--mapq 5",
     log:
         "results/rseqc/bam_stat/{sample}.log",
+    message:
+        "collect mapping statistics using RSeQC"
     wrapper:
         "v7.0.0/bio/rseqc/bam_stat"
 
 
-# collect statistics from mapping
-# -----------------------------------------------------
 rule deeptools_coverage:
     input:
         bam="results/samtools/sort/{sample}.bam",
@@ -95,5 +93,7 @@ rule deeptools_coverage:
         extra=config["mapping_stats"]["deeptools_coverage"]["extra"],
     log:
         "results/deeptools/coverage/{sample}.log",
+    message:
+        "generate normalized coverage files using deeptools"
     wrapper:
         "v7.0.0/bio/deeptools/bamcoverage"

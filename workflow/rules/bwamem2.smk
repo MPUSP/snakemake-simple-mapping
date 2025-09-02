@@ -1,5 +1,3 @@
-# build bwa_mem2 index
-# -----------------------------------------------------
 rule bwa_mem2_index:
     input:
         ref=rules.get_genome.output.fasta,
@@ -14,12 +12,12 @@ rule bwa_mem2_index:
         ),
     log:
         "results/bwa_mem2/index/genome.log",
+    message:
+        "build bwa_mem2 index"
     wrapper:
         "v6.2.0/bio/bwa-mem2/index"
 
 
-# make bwa_mem2 alignment
-# -----------------------------------------------------
 rule bwa_mem2:
     input:
         reads=expand(
@@ -31,6 +29,8 @@ rule bwa_mem2:
         "results/bwa_mem2/align/{sample}.bam",
     log:
         "results/bwa_mem2/align/{sample}.log",
+    message:
+        "make bwa_mem2 alignment"
     params:
         extra=config["mapping"]["bwa_mem2"]["extra"],
         sort=config["mapping"]["bwa_mem2"]["sort"],

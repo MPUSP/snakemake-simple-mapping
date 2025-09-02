@@ -1,6 +1,10 @@
 ## Workflow overview
 
 This workflow is a best-practice workflow for mapping of reads to reference genomes, minimalistic and simple.
+
+It will attempt to map reads to the reference using one of the included mappers, report read and experiment statistics, create coverage profiles, quantify variants (such as SNPs) using two different tools, and predict the effect of these variants.
+All of this is performed with minimal input and without lookups to external databases (e.g. for variant effects), which makes the workflow ideal for bacteria and other low-complexity non-model organisms.
+
 The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stable/) and consists of the following steps:
 
 1. Download genome reference from NCBI (`ncbi tools`), or use manual input (`fasta`, `gff` format)

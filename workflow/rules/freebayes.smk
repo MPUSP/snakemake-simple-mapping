@@ -1,5 +1,3 @@
-# call variants using freebayes
-# -----------------------------------------------------
 rule freebayes:
     input:
         alns="results/samtools/sort/{sample}.bam",
@@ -12,6 +10,8 @@ rule freebayes:
         extra=config["variant_calling"]["freebayes"]["extra"],
     log:
         "results/freebayes/call/{sample}.log",
+    message:
+        "call variants using freebayes"
     threads: 4
     wrapper:
         "v7.0.0/bio/freebayes"

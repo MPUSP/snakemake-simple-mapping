@@ -1,5 +1,3 @@
-# make QC report
-# -----------------------------------------------------
 rule fastqc:
     input:
         fastq="results/get_fastq/{sample}_{read}.fastq.gz",
@@ -9,7 +7,7 @@ rule fastqc:
     params:
         extra=config["qc"]["fastqc"]["extra"],
     message:
-        """--- Checking fastq files with FastQC."""
+        "checking fastq files with FastQC"
     log:
         "results/fastqc/{sample}.bwa.{read}.log",
     threads: 1
@@ -17,8 +15,6 @@ rule fastqc:
         "v6.0.0/bio/fastqc"
 
 
-# run multiQC on tool output
-# -----------------------------------------------------
 rule multiqc:
     input:
         get_multiqc_input,
@@ -27,7 +23,7 @@ rule multiqc:
     params:
         extra=config["qc"]["multiqc"]["extra"],
     message:
-        """--- Generating MultiQC report for seq data."""
+        "generating MultiQC report for seq data"
     log:
         "results/multiqc/multiqc.log",
     wrapper:

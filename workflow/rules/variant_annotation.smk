@@ -11,6 +11,8 @@ rule vep_prepare:
         "../envs/vep.yml"
     log:
         "results/get_genome/tabix.log",
+    message:
+        "prepare genome annotation for VEP"
     threads: 1
     script:
         "../scripts/convert_gff.py"
@@ -43,6 +45,8 @@ rule vep_annotate_variants:
         extra=config["variant_annotation"]["vep"]["extra"],
     log:
         "results/{caller}/effect/{sample}_vep.log",
+    message:
+        "annotate variants using VEP"
     threads: 4
     wrapper:
         "v7.2.0/bio/vep/annotate"
@@ -59,6 +63,8 @@ rule snpeff_prepare:
         extra="-noCheckCds -noCheckProtein",
     log:
         "results/snpeff/build_db.log",
+    message:
+        "build custom snpEff database"
     conda:
         "../envs/snpeff.yml"
     shell:
@@ -88,6 +94,8 @@ rule snpeff:
         extra=f"-c results/snpeff/custom_db/snpeff.config {config["variant_annotation"]["snpeff"]["extra"]}",
     log:
         "results/{caller}/effect/{sample}_snpeff.log",
+    message:
+        "annotate variants using snpEff"
     resources:
         java_opts="-XX:ParallelGCThreads=2",
         mem_mb=4096,
