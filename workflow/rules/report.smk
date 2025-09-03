@@ -30,3 +30,36 @@ rule bcftools_intersection:
         "../envs/bcftools.yml"
     shell:
         "bcftools isec -n+{params.vcf_count} {params.extra} -o {output} {input}"
+
+
+rule report_html:
+    input:
+        fasta=rules.get_genome.output.fasta,
+        gff=rules.get_genome.output.gff,
+        variants=get_variants,
+        consensus="results/{caller}/consensus/variants.vcf",
+    output:
+        html="results/report/{caller}_report.html",
+    conda:
+        "../envs/report_html.yml"
+    message:
+        "rendering R markdown notebook"
+    log:
+        "results/report/{caller}_report.log",
+    script:
+        "../notebooks/report.Rmd"
+
+
+rule report_pdf:
+    input:
+        html="results/report/{caller}_report.html",
+    output:
+        pdf="results/report/{caller}_report.pdf",
+    conda:
+        "../envs/report_pdf.yml"
+    message:
+        "converting HTML to PDF"
+    log:
+        path="results/report/{caller}_report_pdf.log",
+    shell:
+        "weasyprint -v {input.html} {output.pdf} &> {log.path}"

@@ -1,0 +1,16 @@
+name: report_html
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - r-base 4.3.1
+  - r-essentials=4.3
+  - r-tidyverse=2.0.0
+  - r-ggrepel=0.9.3
+  - r-rstatix=0.7.2
+  - r-ggpubr=0.6.0
+  - r-ggupset=0.4.0
+  - bioconductor-biostrings=2.68.1
+  - bioconductor-genomicranges=1.52.0
+  - bioconductor-genomicfeatures=1.52.1

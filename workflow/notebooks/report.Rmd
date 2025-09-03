@@ -1,0 +1,384 @@
+---
+title: "Report: Predicted variants and effects"
+author: "`r sessionInfo()$platform`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+params:
+   rmd: "report.Rmd"
+output:
+  html_document:
+    theme: cosmo
+    toc: yes
+    toc_depth: 2
+    number_sections: yes
+    df_print: paged
+---
+
+----------
+
+# Background
+
+This report summarizes the genetic variants and their predicted effects from running the [`snakemake-simple-mapping`](https://github.com/MPUSP/snakemake-simple-mapping) workflow.
+
+----------
+
+# Prerequisites
+
+## Packages
+
+Loaded required R packages:
+
+- `tidyverse`
+- `ggrepel`
+- `ggpubr`
+- `ggupset`
+- `GGally`
+- `GenomicRanges`
+- `GenomicFeatures`
+- `Biostrings`
+
+
+```{r, echo = FALSE, warning = FALSE}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(ggrepel)
+  library(ggpubr)
+  library(ggupset)
+  library(GenomicRanges)
+  library(GenomicFeatures)
+  library(Biostrings)
+})
+```
+
+
+```{r, echo = FALSE}
+# messages
+messages <- c()
+
+# import required parameters
+sm_params <- snakemake@config$report
+figure_dir <- gsub("report.html$", "figures/", snakemake@output$html)
+if (!dir.exists(figure_dir)) {
+  dir.create(figure_dir)
+  messages <- append(messages, paste0("created figure dir: ", figure_dir))
+}
+
+# custom ggplot2 theme that is reused for all later plots
+custom_colors <- c(
+  "#E7298A", "#66A61E", "#E6AB02", "#7570B3",
+  "#B3B3B3", "#1B9E77", "#D95F02", "#A6761D"
+)
+
+custom_range <- function(n = 5, quantitative = FALSE) {
+  if (quantitative) colorRampPalette(custom_colors[c(5, 3, 4)])(n)
+  else colorRampPalette(custom_colors)(n)
+}
+
+custom_theme <- function(
+    base_size = 12, base_line_size = 1.0,
+    base_rect_size = 1.0, ...) {
+  theme_light(
+    base_size = base_size,
+    base_line_size = base_line_size,
+    base_rect_size = base_rect_size
+  ) +
+    theme(
+      title = element_text(colour = grey(0.4), size = 10),
+      plot.margin = unit(c(12, 12, 12, 12), "points"),
+      axis.ticks.length = unit(0.2, "cm"),
+      axis.ticks = element_line(
+        colour = grey(0.4),
+        linetype = "solid", lineend = "round"
+      ),
+      axis.text.x = element_text(colour = grey(0.4), size = 10),
+      axis.text.y = element_text(colour = grey(0.4), size = 10),
+      panel.grid.major = element_line(
+        linewidth = 0.6,
+        linetype = "solid", colour = grey(0.9)
+      ),
+      panel.grid.minor = element_blank(),
+      panel.border = element_rect(
+        linetype = "solid",
+        colour = grey(0.4), fill = NA, linewidth = 1.0
+      ),
+      panel.background = element_blank(),
+      strip.background = element_blank(),
+      strip.text = element_text(
+        colour = grey(0.4), size =
+          10, margin = unit(rep(3, 4), "points")
+      ),
+      legend.text = element_text(colour = grey(0.4), size = 10),
+      legend.title = element_blank(),
+      legend.background = element_blank(),
+      ...
+    )
+}
+
+# set graphical parameter for subfigure labels
+list_fontpars <- list(face = "plain", size = 14)
+
+# default figure size
+figwidth <- 9.5
+figheight <- 4.5
+
+# function to export an image as svg and png
+save_plot <- function(
+    pl, path = figure_dir,
+    width = figwidth, height = figheight) {
+  pl_name <- deparse(substitute(pl))
+  svg(
+    filename = paste0(path, pl_name, ".svg"),
+    width = width, height = height
+  )
+  print(pl)
+  dev.off()
+  png(
+    filename = paste0(path, pl_name, ".png"),
+    width = width * 125, height = height * 125, res = 120
+  )
+  print(pl)
+  invisible(capture.output(dev.off()))
+}
+```
+
+## Configuration
+
+All options that were used to run this workflow are listed at [the end of this report](#configuration).
+
+## Variant data
+
+Variant data was imported as `.vcf` files. The primary output from the workflow that is used 
+here are the variant calling files including the variant effect prediction, one for each sample.
+
+```{r, echo = FALSE}
+# import variant files
+list_variants <- unlist(snakemake@input$variants)
+print(list_variants)
+```
+
+The imported variant data has the following layout (first 10 rows shown):
+
+- *NOTE: tables are only rendered in HTML output but not PDF.*
+
+```{r, echo = FALSE}
+df <- lapply(list_variants, function(file) {
+  properties <- strsplit(file, "/")[[1]]
+  read_tsv(file, show_col_types = FALSE, comment = "##") %>%
+    dplyr::rename(CHROM = `#CHROM`) %>%
+    dplyr::select(1:8) %>%
+    mutate(INFO_split = str_split(INFO, ";")) %>%
+    mutate(INFO_keys = map(INFO_split, ~str_extract(.x, "^[^=]+"))) %>%
+    mutate(INFO_values = map(INFO_split, ~str_remove(.x, "^[^=]+="))) %>%
+    mutate(INFO_df = map2(INFO_keys, INFO_values, ~set_names(as.list(.y), .x))) %>%
+    unnest_wider(INFO_df) %>%
+    dplyr::select(-INFO, -INFO_split, -INFO_keys, -INFO_values) %>%
+    mutate(across(matches("DP4"), as.numeric))
+}) %>%
+  set_names(basename(list_variants)) %>%
+  bind_rows(.id = "FILE")
+
+# parse the variant effect column
+df <- df %>%
+  mutate(CSQ = str_split(CSQ, "\\|")) %>%
+  unnest_wider(CSQ, names_sep = "_") %>%
+  dplyr::rename(
+    VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`, 
+    AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
+  ) %>%
+  dplyr::select(-matches("CSQ_"))
+
+head(df, n = 10)
+```
+
+```{r, echo = FALSE}
+# import consensus file
+list_consensus <- snakemake@input$consensus
+df_consensus <- read_tsv(
+  list_consensus, show_col_types = FALSE,
+  col_names = c("CHROM", "POS", "REF", "ALT", "APPEARANCE")
+)
+```
+
+```{r, echo = FALSE}
+# import genome fasta
+input_fasta <- snakemake@input$fasta
+genome_dna <- readDNAStringSet(input_fasta)
+seqlevels(genome_dna) <- str_split_i(seqlevels(genome_dna), " ", i = 1)
+messages <- append(messages, "imported genome fasta file")
+
+# import GFF for genome
+quiet_txdb <- quietly(GenomicFeatures::makeTxDbFromGFF)
+txdb_msg <- quiet_txdb(file = snakemake@input$gff)
+txdb <- txdb_msg$result
+annotated_transcripts <- transcripts(txdb)
+messages <- append(messages, paste0("warning: ", txdb_msg$warnings))
+messages <- append(messages, txdb_msg$messages)
+```
+
+## Variant analysis
+
+### Variant frequency
+
+- the following section is an overview about variants per sample
+- the first figure shows the frequency of variants per chromosome, **broken down by sample**
+- no filtering is applied, all variants are included
+
+```{r, echo = FALSE}
+plot_freq_genome <- df %>%
+  ggplot(aes(x = POS/1000, y = QUAL, color = FILE)) +
+  geom_point() +
+  labs(
+    x = "position (kbp)", y = "quality score",
+    title = "Variant frequency, per chromosome",
+    subtitle = "color: sample"
+  ) +
+  facet_wrap(~CHROM, ncol = 1) +
+  scale_fill_manual(values = custom_range(length(list_variants), FALSE)) +
+  scale_color_manual(values = custom_range(length(list_variants), FALSE)) +
+  custom_theme()
+```
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+print(plot_freq_genome)
+save_plot(plot_freq_genome)
+```
+
+---
+
+- the next figure shows the frequency of variants per chromosome, **broken down by type**
+- no filtering is applied, all variants are included
+
+```{r, echo = FALSE}
+plot_freq_bytype <- df %>%
+  ggplot(aes(x = POS/1000, y = QUAL, color = VARTYPE)) +
+  geom_point() +
+  labs(
+    x = "position (kbp)", y = "quality score",
+    title = "Variant frequency, per chromosome",
+    subtitle = "color: variant type"
+  ) +
+  facet_wrap(~CHROM, ncol = 1) +
+  scale_fill_manual(values = custom_range(length(list_variants), FALSE)) +
+  scale_color_manual(values = custom_range(length(list_variants), FALSE)) +
+  custom_theme()
+```
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+print(plot_freq_bytype)
+save_plot(plot_freq_bytype)
+```
+
+### Variant co-occurence
+
+- the following figure shows a heat map of variant occurence per sample
+- note: filtering is applied such that **only variants with at least N occurences** are included
+- the default is *N = 2*, which means that the variant must be present in at least two samples
+
+```{r, echo = FALSE}
+df_filtered <- df %>%
+  inner_join(df_consensus, by = join_by(CHROM, POS, REF, ALT))
+
+for (effect_type in unique(df_filtered$VARTYPE)) {
+  hm_height = df_filtered %>%
+    filter(VARTYPE == effect_type) %>%
+    pull(FILE) %>%
+    unique() %>%
+    length()
+
+  heatmap <- df_filtered %>%
+    filter(VARTYPE == effect_type) %>%
+    mutate(FILE = factor(FILE, levels = unique(df$FILE))) %>%
+    mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")")) %>%
+    # include also empty tiles for missing values in certain samples
+    tidyr::complete(
+      FILE,
+      variant
+    ) %>%
+    ggplot(aes(x = FILE, y = variant, fill = QUAL)) +
+    geom_tile() +
+    labs(
+      x = "", y = "",
+      title = paste0("Variant co-occurence, for ", effect_type),
+      subtitle = "color: quality score"
+    ) +
+    scale_fill_gradientn(colors = custom_range(5, TRUE), na.value = "transparent") +
+    custom_theme() +
+    theme(
+      axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6),
+      axis.text.y = element_text(size = 6)
+    ) + 
+    coord_fixed(ratio = 0.8)
+
+  hm_filename = paste0("plot_heatmap_", effect_type)
+  assign(hm_filename, heatmap)
+  print(get(hm_filename))
+
+  svg(
+    filename = paste0(figure_dir, hm_filename, ".svg"),
+    width = figwidth, height = 1.5 + hm_height * 0.5
+  )
+  print(heatmap)
+  dev.off()
+  png(
+    filename = paste0(figure_dir, hm_filename, ".png"),
+    width = figwidth * 125, height = (1.5 + hm_height * 0.5) * 125, res = 120
+  )
+  print(heatmap)
+  invisible(capture.output(dev.off()))
+}
+```
+
+### Variant co-occurence, frequency
+
+- the following figure contains the same information as in the previous figure,
+- but variant co-occurence is summarized in an **upset plot**
+
+# About this report
+
+## Workflow
+
+This report was automatically generated by the [snakemake-simple-mapping](https://github.com/MPUSP/snakemake-simple-mapping) workflow.
+
+For issues, bugs, and feature requests please use the workflow's [github page](https://github.com/MPUSP/snakemake-simple-mapping/issues).
+
+For all other feedback, contact the author(s):
+
+- Michael Jahn, PhD (author and maintainer): jahn@mpusp.mpg.de
+
+The workflow is developed at the [Max Planck Unit for the Science of Pathogens](https://www.mpusp.mpg.de/), Berlin, Germany.
+
+## Configuration
+
+The pipeline configuration file is available at: `config/config.yml`.
+
+```{r, echo = FALSE}
+list_config <- read_lines("config/config.yml")
+list_config <- gsub("\"", "", list_config)
+print(list_config)
+```
+
+## Data accessability
+
+The following resources were used to generate this report:
+
+- VCF input for each sample: `r list_variants`
+- VCF consensus between all samples: `r list_consensus`
+
+## Session Info
+
+Link to the R markdown source that was used to generate this report:
+
+<a download="report.Rmd" href="`r base64enc::dataURI(file = params$rmd, mime = 'text/rmd', encoding = 'base64')`">R Markdown source file</a>
+
+Session info (R base and package versions):
+
+```{r, echo = FALSE}
+sessionInfo()
+```
+
+```{r, echo = FALSE}
+messages <- append(messages, "finished writing HTML report successfully")
+write_lines(
+  paste0("HTML_REPORT: ", messages),
+  file = "results/report/report.log"
+)
+```

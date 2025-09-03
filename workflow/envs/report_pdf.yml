@@ -1,0 +1,8 @@
+name: report_pdf
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - python=3.9
+  - weasyprint=62.3

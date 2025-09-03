@@ -36,7 +36,5 @@ onerror:
 rule all:
     input:
         "results/multiqc/multiqc_report.html",
-        expand(
-            "results/{caller}/consensus/variants.vcf", caller=["bcftools", "freebayes"]
-        ),
+        expand("results/report/{caller}_report.pdf", caller=["bcftools", "freebayes"]),
     default_target: True
