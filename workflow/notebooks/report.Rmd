@@ -123,8 +123,9 @@ figheight <- 4.5
 # function to export an image as svg and png
 save_plot <- function(
     pl, path = figure_dir,
-    width = figwidth, height = figheight) {
+    width = figwidth, height = figheight, index = NA) {
   pl_name <- deparse(substitute(pl))
+  if (!is.na(index)) pl_name <- paste0(pl_name, "_", index)
   svg(
     filename = paste0(path, pl_name, ".svg"),
     width = width, height = height
@@ -159,7 +160,7 @@ The imported variant data has the following layout (first 10 rows shown):
 
 - *NOTE: tables are only rendered in HTML output but not PDF.*
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning = FALSE}
 df <- lapply(list_variants, function(file) {
   properties <- strsplit(file, "/")[[1]]
   read_tsv(file, show_col_types = FALSE, comment = "##") %>%
@@ -170,8 +171,7 @@ df <- lapply(list_variants, function(file) {
     mutate(INFO_values = map(INFO_split, ~str_remove(.x, "^[^=]+="))) %>%
     mutate(INFO_df = map2(INFO_keys, INFO_values, ~set_names(as.list(.y), .x))) %>%
     unnest_wider(INFO_df) %>%
-    dplyr::select(-INFO, -INFO_split, -INFO_keys, -INFO_values) %>%
-    mutate(across(matches("DP4"), as.numeric))
+    dplyr::select(-INFO, -INFO_split, -INFO_keys, -INFO_values)
 }) %>%
   set_names(basename(list_variants)) %>%
   bind_rows(.id = "FILE")
@@ -257,8 +257,8 @@ plot_freq_bytype <- df %>%
     subtitle = "color: variant type"
   ) +
   facet_wrap(~CHROM, ncol = 1) +
-  scale_fill_manual(values = custom_range(length(list_variants), FALSE)) +
-  scale_color_manual(values = custom_range(length(list_variants), FALSE)) +
+  scale_fill_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
+  scale_color_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
   custom_theme()
 ```
 
@@ -329,8 +329,222 @@ for (effect_type in unique(df_filtered$VARTYPE)) {
 
 ### Variant co-occurence, frequency
 
-- the following figure contains the same information as in the previous figure,
-- but variant co-occurence is summarized in an **upset plot**
+- the following figure contains the same information as in the previous figures,
+- but variant co-occurence is summarized in an **upset plot** instead
+- 
+
+```{r, echo = FALSE}
+df_variants <- df_filtered %>%
+  mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")")) %>%
+  dplyr::select(FILE, variant) %>%
+  group_by(variant) %>%
+  summarize(files = list(FILE), .groups = "drop")
+
+df_pca <- df_filtered %>%
+  mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")")) %>%
+  group_by(variant) %>%
+  mutate(n = seq_along(FILE)) %>%
+  dplyr::select(FILE, variant, n) %>%
+  ungroup() %>%
+  pivot_wider(names_from = "FILE", values_from = "n") %>%
+  mutate(across(everything(), ~ ifelse(is.na(.x), 0, 1))) %>%
+  dplyr::select(-variant) %>%
+  as.matrix() %>%
+  t() %>%
+  prcomp() %>%
+  {
+    .$x
+  } %>%
+  as_tibble(rownames = "sample")
+
+  for (pc in c("PC2", "PC3")) {
+    if (!pc %in% colnames(df_pca)) {
+      df_pca[[pc]] <- 0
+    }
+  }
+
+plot_pca <- df_pca %>%
+  ggplot(aes(
+    x = PC1, y = PC2, size = PC3, color = sample,
+    label = sample
+  )) +
+  geom_point() +
+  geom_text_repel(size = 3, point.padding = 10, show.legend = FALSE) +
+  labs(
+    title = "PCA based on presence/absence of identical variants",
+    subtitle = "point size encodes PC3, color encodes condition"
+  ) +
+  custom_theme(aspect.ratio = 1, legend.position = "bottom") +
+  guides(color = guide_legend(ncol = 3), size = guide_legend(ncol = 3)) +
+  scale_color_manual(values = rep_len(
+    custom_colors,
+    length.out = nrow(df_pca)
+  ))
+```
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+print(plot_pca)
+save_plot(plot_pca)
+```
+
+```{r, echo = FALSE}
+df_upset <- df_filtered %>%
+  mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")")) %>%
+  dplyr::select(FILE, variant) %>%
+  group_by(variant) %>%
+  summarize(samples = list(FILE), .groups = "drop")
+
+plot_upset <- df_upset %>%
+  ggplot(aes(x = samples)) +
+  geom_bar(position = "stack", fill = custom_colors[7]) +
+  scale_x_upset(order_by = "degree") +
+  geom_text(
+    position = "stack", stat = "count",
+    aes(label = after_stat(count)),
+    vjust = -0.5, size = 3,
+    color = grey(0.3)
+  ) +
+  labs(
+    x = "", y = "count",
+    title = "",
+    subtitle = ""
+  ) +
+  custom_theme(legend.position = "right") +
+  theme_combmatrix(combmatrix.panel.line.size = 0)
+```
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+print(plot_upset)
+save_plot(plot_upset)
+```
+
+
+## Variant location and effect
+
+- variants are displayed in decreasing order of impact on target protein
+- **intergenic variants are not included for display**, can be looked up in the ouput tables
+- note: filtering is applied such that **only variants with at least N occurences** are included
+- the default is *N = 2*, which means that the variant must be present in at least two samples
+
+### Stop lost
+
+```{r, echo = FALSE}
+plot_genome <- function(df, df_mut, tx_width = 1) {
+  tx_window <- df_mut[["POS"]] + c(-5000, 5000)
+  df %>%
+    filter(end >= tx_window[1] & start <= tx_window[2]) %>%
+    mutate(
+      xstart = ifelse(strand == "+", start, end),
+      xend = ifelse(strand == "+", end, start),
+      y = ifelse(strand == "+", 0.25, -0.25)
+    ) %>%
+    ggplot(aes(color = tx_name, fill = tx_name, label = tx_name)) +
+    geom_segment(
+      x = tx_window[1], y = 0, xend = tx_window[2], yend = 0,
+      linewidth = 2, lineend = "square", linejoin = "mitre", color = grey(0.7)
+    ) +
+    geom_segment(aes(x = 0, y = 0, xend = tx_width, yend = 0),
+      linewidth = 1.33, lineend = "square", linejoin = "mitre", arrow = arrow(
+        angle = 30, length = unit(0.02, "inches"),
+        type = "closed"
+      )
+    ) +
+    geom_segment(
+      aes(x = xstart, y = y, xend = xend, yend = y),
+      linewidth = 1.5, lineend = "square", linejoin = "mitre", arrow = arrow(
+        angle = 30, length = unit(0.01, "inches"),
+        type = "closed"
+      )
+    ) +
+    geom_text(aes(
+      x = ifelse(strand == "+", xstart + (xend - xstart)/2, xend - (xend - xstart)/2),
+      y = ifelse(strand == "+", 0.35, -0.35)),
+      size = 2.0, hjust = 0.5
+    ) +
+    geom_segment(
+      data = mutate(df_mut, tx_name = NA),
+      aes(x = POS-5, y = 0, xend = POS+5, yend = 0),
+      linewidth = 2, lineend = "square", linejoin = "mitre", color = "red"
+    ) +
+    geom_label(
+      data = mutate(df_mut, tx_name = NA),
+      aes(x = POS, y = 0, label = paste(c(CHROM, POS, IMPACT, GENE, CODON_CHANGE), collapse = ", ")),
+      size = 2.5, fill = "white", color = "red", hjust = - 0.05, 
+    ) +
+    coord_cartesian(ylim = c(-0.5, 0.5), xlim = tx_window) +
+    labs(
+      x = " [nt]", y = "",
+      title = "", subtitle = ""
+    ) +
+    custom_theme(legend.position = "none") +
+    scale_color_manual(values = rep_len(
+      custom_colors,
+      length.out = nrow(df_tx)
+    )) +
+    theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+}
+
+df_tx <- annotated_transcripts %>%
+    as_tibble()
+```
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.2}
+df_plotting <- df_filtered %>%
+  filter(VARTYPE == "stop_lost") %>%
+  group_by(CHROM, POS, REF, ALT, VARTYPE, IMPACT, GENE, AA_CHANGE, CODON_CHANGE, INDEL) %>%
+  summarize(samples = list(FILE))
+
+for (i in 1:nrow(df_plotting)) {
+  plot_genome_stop_lost <- plot_genome(df_tx, df_plotting[i, ])
+  print(plot_genome_stop_lost)
+  save_plot(plot_genome_stop_lost, height = 2.0, index = i)
+}
+```
+
+### Stop gained
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.2}
+df_plotting <- df_filtered %>%
+  filter(VARTYPE == "stop_gained") %>%
+  group_by(CHROM, POS, REF, ALT, VARTYPE, IMPACT, GENE, AA_CHANGE, CODON_CHANGE, INDEL) %>%
+  summarize(samples = list(FILE), .groups = "drop")
+
+for (i in 1:nrow(df_plotting)) {
+  plot_genome_stop_gained <- plot_genome(df_tx, df_plotting[i, ])
+  print(plot_genome_stop_gained)
+  save_plot(plot_genome_stop_gained, height = 2.0, index = i)
+}
+```
+
+### Frameshift variant
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.2}
+df_plotting <- df_filtered %>%
+  filter(VARTYPE == "frameshift_variant") %>%
+  group_by(CHROM, POS, REF, ALT, VARTYPE, IMPACT, GENE, AA_CHANGE, CODON_CHANGE, INDEL) %>%
+  summarize(samples = list(FILE))
+
+for (i in 1:nrow(df_plotting)) {
+  plot_genome_frameshift_variant <- plot_genome(df_tx, df_plotting[i, ])
+  print(plot_genome_frameshift_variant)
+  save_plot(plot_genome_frameshift_variant, height = 2.0, index = i)
+}
+```
+
+### Missense variant
+
+```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.2}
+df_plotting <- df_filtered %>%
+  filter(VARTYPE == "missense_variant") %>%
+  group_by(CHROM, POS, REF, ALT, VARTYPE, IMPACT, GENE, AA_CHANGE, CODON_CHANGE, INDEL) %>%
+  summarize(samples = list(FILE))
+
+for (i in 1:nrow(df_plotting)) {
+  plot_genome_missense_variant <- plot_genome(df_tx, df_plotting[i, ])
+  print(plot_genome_missense_variant)
+  save_plot(plot_genome_missense_variant, height = 2.0, index = i)
+}
+```
 
 # About this report
 
