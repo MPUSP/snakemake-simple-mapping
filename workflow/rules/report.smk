@@ -44,6 +44,8 @@ rule report_html:
         "../envs/report_html.yml"
     message:
         "rendering R markdown notebook"
+    params:
+        vcf_count=config["report"].get("minimum_variant_count", 2),
     log:
         "results/report/{caller}_report.log",
     script:
