@@ -26,9 +26,9 @@ rule bwa_mem2:
         ),
         idx=rules.bwa_mem2_index.output,
     output:
-        "results/bwa_mem2/align/{sample}.bam",
+        "results/bwa_mem2/align/{sample}/mapped.bam",
     log:
-        "results/bwa_mem2/align/{sample}.log",
+        "results/bwa_mem2/align/{sample}/mapped.log",
     message:
         "make bwa_mem2 alignment"
     params:

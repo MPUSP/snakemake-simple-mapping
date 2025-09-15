@@ -37,7 +37,7 @@ properties:
     properties:
       tool:
         type: string
-        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2'
+        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2', 'star'
       bowtie2:
         type: object
         properties:

@@ -51,7 +51,7 @@ def get_fastq_pairs(wildcards):
 # get bam files
 def get_bam(wildcards):
     return expand(
-        "results/{tool}/align/{sample}.bam",
+        "results/{tool}/align/{sample}/mapped.bam",
         sample=wildcards.sample,
         tool=config["mapping"]["tool"],
     )
@@ -81,7 +81,7 @@ def get_multiqc_input(wildcards):
         ext=["html", "zip"],
     )
     result += expand(
-        "results/{tool}/align/{sample}.bam",
+        "results/{tool}/align/{sample}/mapped.bam",
         sample=samples.index,
         tool=config["mapping"]["tool"],
     )
@@ -101,13 +101,13 @@ def get_multiqc_input(wildcards):
     result += expand(
         "results/{caller}/call/{sample}{ext}",
         sample=samples.index,
-        caller=["bcftools", "freebayes"],
+        caller=config["variant_calling"]["tool"],
         ext=["_stats.txt", "_all.vcf", "_variants.vcf"],
     )
     result += expand(
         "results/{caller}/effect/{sample}{ext}",
         sample=samples.index,
-        caller=["bcftools", "freebayes"],
+        caller=config["variant_calling"]["tool"],
         ext=(
             ["_vep.vcf", "_vep.html"]
             if config["variant_annotation"]["tool"] == "vep"
