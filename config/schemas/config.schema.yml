@@ -71,6 +71,21 @@ properties:
           extra:
             type: string
             description: additional arguments to STAR align
+      minimap2:
+        type: object
+        properties:
+          index:
+            type: string
+            description: additional arguments to minimap2 index
+          extra:
+            type: string
+            description: additional arguments to minimap2 align
+          sorting:
+            type: string
+            description: sorting order to use
+          sort_extra:
+            type: string
+            description: additional arguments to pass to the sorting tool
       samtools_sort:
         type: object
         properties:

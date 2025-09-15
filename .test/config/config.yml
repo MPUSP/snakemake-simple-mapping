@@ -29,6 +29,11 @@ mapping:
   star:
     index: ""
     extra: ""
+  minimap2:
+    index: ""
+    extra: "-ax map-ont"
+    sorting: "coordinate"
+    sort_extra: ""
   samtools_sort:
     extra: "-m 4G"
   samtools_index:
