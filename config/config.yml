@@ -26,6 +26,9 @@ mapping:
     sort: "samtools"
     sort_order: "coordinate"
     sort_extra: ""
+  star:
+    index: ""
+    extra: ""
   samtools_sort:
     extra: "-m 4G"
   samtools_index:

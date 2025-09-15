@@ -1,6 +1,3 @@
-from os import path
-
-
 rule star_index:
     input:
         fasta=rules.get_genome.output.fasta,
@@ -8,7 +5,7 @@ rule star_index:
         directory("results/star/index/"),
     threads: 1
     params:
-        extra="",
+        extra=config["mapping"]["star"]["index"],
     log:
         "results/star/index/index.log",
     message:
@@ -30,7 +27,7 @@ rule star_align:
     message:
         "make star alignment"
     params:
-        extra="",
+        extra=config["mapping"]["star"]["extra"],
     threads: 8
     wrapper:
         "v7.2.0/bio/star/align"

@@ -62,6 +62,15 @@ properties:
           sort_extra:
             type: string
             description: additional arguments to pass to the sorting tool
+      star:
+        type: object
+        properties:
+          index:
+            type: string
+            description: additional arguments to STAR index
+          extra:
+            type: string
+            description: additional arguments to STAR align
       samtools_sort:
         type: object
         properties:
