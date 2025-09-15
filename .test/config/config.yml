@@ -43,6 +43,7 @@ mapping_stats:
     extra: ""
 
 variant_calling:
+  tool: "freebayes"
   bcftools_pileup:
     uncompressed: False
     extra: "--max-depth 1000 --min-BQ 20"

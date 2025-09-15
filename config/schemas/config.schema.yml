@@ -114,6 +114,9 @@ properties:
   variant_calling:
     type: object
     properties:
+      tool:
+        type: [string, array]
+        description: the variant caller to use, one of 'freebayes', 'bcftools', or both
       bcftools_pileup:
         type: object
         properties:
