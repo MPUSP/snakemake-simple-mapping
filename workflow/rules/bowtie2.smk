@@ -1,5 +1,3 @@
-# build bowtie2 index
-# -----------------------------------------------------
 rule bowtie2_build:
     input:
         ref=rules.get_genome.output.fasta,
@@ -15,6 +13,8 @@ rule bowtie2_build:
         ),
     log:
         "results/bowtie2/build/build.log",
+    message:
+        "build bowtie2 index"
     params:
         extra=config["mapping"]["bowtie2"]["index"],
     threads: 1
@@ -22,8 +22,6 @@ rule bowtie2_build:
         "v7.0.0/bio/bowtie2/build"
 
 
-# make bowtie2 alignment
-# -----------------------------------------------------
 rule bowtie2_align:
     input:
         sample=expand(
@@ -35,6 +33,8 @@ rule bowtie2_align:
         "results/bowtie2/align/{sample}.bam",
     log:
         "results/bowtie2/align/{sample}.log",
+    message:
+        "make bowtie2 alignment"
     params:
         extra=config["mapping"]["bowtie2"]["extra"],
     threads: 8

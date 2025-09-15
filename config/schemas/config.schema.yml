@@ -1,4 +1,4 @@
-$schema: "http://json-schema.org/draft-07/schema#"
+$schema: "https://json-schema.org/draft/2020-12/schema"
 description: configuration file for the analysis pipeline
 properties:
   samplesheet:
@@ -153,7 +153,19 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to Freebayes
-      effect_prediction:
+    required:
+      - bcftools_pileup
+      - bcftools_call
+      - bcftools_view
+      - bcftools_filter
+      - freebayes
+  variant_annotation:
+    type: object
+    properties:
+      tool:
+        type: string
+        description: annotation tool to use, one of 'vep', 'snpeff'
+      vep:
         type: object
         properties:
           convert_gff:
@@ -167,13 +179,17 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to VEP
+      snpeff:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to SnpEff
     required:
-      - bcftools_pileup
-      - bcftools_call
-      - bcftools_view
-      - bcftools_filter
-      - freebayes
-      - effect_prediction
+      - tool
+      - vep
+      - snpeff
+
   qc:
     type: object
     properties:
@@ -192,6 +208,12 @@ properties:
     required:
       - multiqc
       - fastqc
+  report:
+    type: object
+    properties:
+      minimum_variant_count:
+        type: integer
+        description: minimum number of samples/appearances for the same variant to be included in the final report
 required:
   - samplesheet
   - get_genome
@@ -199,4 +221,6 @@ required:
   - mapping
   - mapping_stats
   - variant_calling
+  - variant_annotation
   - qc
+  - report

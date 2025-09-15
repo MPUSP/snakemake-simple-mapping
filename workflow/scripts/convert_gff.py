@@ -39,9 +39,20 @@ with open(input_gff) as gff:
             if len(cols) < 9:
                 continue
             if (
-                cols[2] in ["gene", "pseudogene", "exon", "transcript", "mRNA"]
+                cols[2] in ["gene", "exon", "transcript", "mRNA"]
             ) or not convert_gff:
                 result += [line.rstrip("\n")]
+            elif cols[2] == "pseudogene":
+                # in case of pseudo genes, these often have CDS annotation but
+                # clash with SnpEff --> convert to 'gene' type
+                feat_type = "gene"
+                result += [
+                    "\t".join(
+                        cols[:2]
+                        + ["gene"]
+                        + cols[3:9]
+                    )
+                ]
             elif cols[2] == "CDS":
                 attrs = parse_attributes(cols[8])
                 gene_id = attrs.get("Parent")

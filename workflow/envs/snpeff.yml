@@ -1,0 +1,8 @@
+name: snpeff
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - snpeff=5.2
+  - snakemake-wrapper-utils=0.7.2

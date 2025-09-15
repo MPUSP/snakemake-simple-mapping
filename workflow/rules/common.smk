@@ -48,12 +48,26 @@ def get_fastq_pairs(wildcards):
     )
 
 
-# get pairs of fastq files for fastp
+# get bam files
 def get_bam(wildcards):
     return expand(
         "results/{tool}/align/{sample}.bam",
         sample=wildcards.sample,
         tool=config["mapping"]["tool"],
+    )
+
+
+# get variant files to make consensus
+def get_variants(wildcards):
+    return expand(
+        "results/{caller}/effect/{sample}{ext}.gz",
+        caller=wildcards.caller,
+        sample=samples.index,
+        ext=(
+            "_vep.vcf"
+            if config["variant_annotation"]["tool"] == "vep"
+            else "_snpeff.vcf"
+        ),
     )
 
 
@@ -94,6 +108,10 @@ def get_multiqc_input(wildcards):
         "results/{caller}/effect/{sample}{ext}",
         sample=samples.index,
         caller=["bcftools", "freebayes"],
-        ext=["_vep.vcf", "_vep.html"],
+        ext=(
+            ["_vep.vcf", "_vep.html"]
+            if config["variant_annotation"]["tool"] == "vep"
+            else ["_snpeff.vcf", "_snpeff.csv"]
+        ),
     )
     return result

@@ -23,7 +23,7 @@ Detailed information about input data and workflow configuration can also be fou
 
 If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this repository or its DOI.
 
-*Workflow overview:*
+_Workflow overview:_
 
 <!-- include overview-->
 <img src="resources/images/dag.png" align="center" />
