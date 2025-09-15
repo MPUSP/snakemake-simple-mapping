@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.3.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.2.0...v1.3.0) (2025-09-15)
+
+
+### Features
+
+* added first draft of report for most important variants ([5cf5150](https://github.com/MPUSP/snakemake-simple-mapping/commit/5cf515029d910949d6e7f91caa4477674a0d40bd))
+* added genome plots to report ([c4acfb1](https://github.com/MPUSP/snakemake-simple-mapping/commit/c4acfb164ca10cc6f50fd83559993bf2398f8b72))
+* added rule to collect consensus variants ([f883811](https://github.com/MPUSP/snakemake-simple-mapping/commit/f883811997a54a3cfdcb42c2db98a71b6ca787b8))
+* added SnpEff part 1 ([52b4f1d](https://github.com/MPUSP/snakemake-simple-mapping/commit/52b4f1dc7565547ecb50363a51883b62c5cb85cd))
+* added SnpEff part 2 ([59c2e69](https://github.com/MPUSP/snakemake-simple-mapping/commit/59c2e6973e5cf6795173e95c2191926b6ae8611b))
+* more detailed plots for report ([9cdc49a](https://github.com/MPUSP/snakemake-simple-mapping/commit/9cdc49aba3422c258b5780cf5e4d73e8fae8994d))
+* various improvements to variant effect prediction + viz ([103ada1](https://github.com/MPUSP/snakemake-simple-mapping/commit/103ada16e44fed984e793e460a7004b31f90b81a))
+
+
+### Bug Fixes
+
+* corrected urls to json schema ([d9456d9](https://github.com/MPUSP/snakemake-simple-mapping/commit/d9456d994b11fc2ea08d3baa303167cb05ef6d8f))
+* minor formatting ([338d9ee](https://github.com/MPUSP/snakemake-simple-mapping/commit/338d9eecfdd2be5da16015800d88550699718fe6))
+
 ## [1.2.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.1.1...v1.2.0) (2025-08-12)
 
 
