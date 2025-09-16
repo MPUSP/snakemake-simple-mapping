@@ -13,8 +13,9 @@ get_genome:
       "Protein Homology": "CDS",
     ]
 
-fastp:
-  extra: ""
+processing:
+  fastp:
+    extra: ""
 
 mapping:
   tool: "bwa_mem2"

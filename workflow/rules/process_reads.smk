@@ -45,7 +45,9 @@ rule fastp:
     message:
         "trimming and QC filtering reads using fastp"
     params:
-        extra="",
+        extra=config["processing"]["fastp"]["extra"],
     threads: 2
+    resources:
+        mem_mb=4096,
     wrapper:
         "v7.0.0/bio/fastp"

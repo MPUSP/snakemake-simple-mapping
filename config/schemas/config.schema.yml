@@ -26,12 +26,15 @@ properties:
       - database
       - assembly
       - gff_source_type
-  fastp:
+  processing:
     type: object
     properties:
-      extra:
-        type: string
-        description: additional arguments to pass to Fastp
+      fastp:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to Fastp
   mapping:
     type: object
     properties:
@@ -244,7 +247,7 @@ properties:
 required:
   - samplesheet
   - get_genome
-  - fastp
+  - processing
   - mapping
   - mapping_stats
   - variant_calling
