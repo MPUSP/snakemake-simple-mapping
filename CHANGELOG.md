@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.4.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.3.0...v1.4.0) (2025-09-17)
+
+
+### Features
+
+* added minimap2 as another mapper option ([99e95d1](https://github.com/MPUSP/snakemake-simple-mapping/commit/99e95d1be49984cd061e894f996287d30cb2e3d5))
+* added new modules for mapping ([82cacb3](https://github.com/MPUSP/snakemake-simple-mapping/commit/82cacb36fc7bf67cbbff7a218d02dcc6fcbbc80c))
+* added STAR as a mapper option ([9dd4fa8](https://github.com/MPUSP/snakemake-simple-mapping/commit/9dd4fa8931be24a20e5147a557d73e558f55ef7a))
+* fix: added option to choose varaint caller to config ([96f51d7](https://github.com/MPUSP/snakemake-simple-mapping/commit/96f51d7f242a4221ad0d3805723b073b408c3271))
+
+
+### Bug Fixes
+
+* added missing argument input to get_genome ([532afee](https://github.com/MPUSP/snakemake-simple-mapping/commit/532afeea3b91a37f55b0e0d09f86898881a21caf))
+* expose extra args in config ([93d4500](https://github.com/MPUSP/snakemake-simple-mapping/commit/93d4500a26594bd774b3a240f45e3eab64096eac))
+* minor changes config settings ([aeeab0e](https://github.com/MPUSP/snakemake-simple-mapping/commit/aeeab0e22f185b785684b61d1051d14e3276fc99))
+* prevent report from failing when no variants were found + format ([538c772](https://github.com/MPUSP/snakemake-simple-mapping/commit/538c7723f2a32cf25c7da1b41e607506df9f9813))
+* tolerate empty genome input ([8f3d0cf](https://github.com/MPUSP/snakemake-simple-mapping/commit/8f3d0cf9b1b920d870b26e7b60d33aee2fbb9f5a))
+
 ## [1.3.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.2.0...v1.3.0) (2025-09-15)
 
 
