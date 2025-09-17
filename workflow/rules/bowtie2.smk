@@ -30,9 +30,9 @@ rule bowtie2_align:
         ),
         idx=rules.bowtie2_build.output,
     output:
-        "results/bowtie2/align/{sample}.bam",
+        "results/bowtie2/align/{sample}/mapped.bam",
     log:
-        "results/bowtie2/align/{sample}.log",
+        "results/bowtie2/align/{sample}/mapped.log",
     message:
         "make bowtie2 alignment"
     params:

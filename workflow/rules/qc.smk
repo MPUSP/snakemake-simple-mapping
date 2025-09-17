@@ -11,6 +11,8 @@ rule fastqc:
     log:
         "results/fastqc/{sample}.bwa.{read}.log",
     threads: 1
+    resources:
+        mem_mb=4096,
     wrapper:
         "v6.0.0/bio/fastqc"
 

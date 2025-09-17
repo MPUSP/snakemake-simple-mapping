@@ -26,18 +26,21 @@ properties:
       - database
       - assembly
       - gff_source_type
-  fastp:
+  processing:
     type: object
     properties:
-      extra:
-        type: string
-        description: additional arguments to pass to Fastp
+      fastp:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to Fastp
   mapping:
     type: object
     properties:
       tool:
         type: string
-        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2'
+        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2', 'star'
       bowtie2:
         type: object
         properties:
@@ -57,6 +60,30 @@ properties:
             type: string
             description: sorting tool to use, e.g. 'samtools'
           sort_order:
+            type: string
+            description: sorting order to use
+          sort_extra:
+            type: string
+            description: additional arguments to pass to the sorting tool
+      star:
+        type: object
+        properties:
+          index:
+            type: string
+            description: additional arguments to STAR index
+          extra:
+            type: string
+            description: additional arguments to STAR align
+      minimap2:
+        type: object
+        properties:
+          index:
+            type: string
+            description: additional arguments to minimap2 index
+          extra:
+            type: string
+            description: additional arguments to minimap2 align
+          sorting:
             type: string
             description: sorting order to use
           sort_extra:
@@ -114,6 +141,9 @@ properties:
   variant_calling:
     type: object
     properties:
+      tool:
+        type: [string, array]
+        description: the variant caller to use, one of 'freebayes', 'bcftools', or both
       bcftools_pileup:
         type: object
         properties:
@@ -217,7 +247,7 @@ properties:
 required:
   - samplesheet
   - get_genome
-  - fastp
+  - processing
   - mapping
   - mapping_stats
   - variant_calling

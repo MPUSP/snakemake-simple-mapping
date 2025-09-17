@@ -13,8 +13,9 @@ get_genome:
       "Protein Homology": "CDS",
     ]
 
-fastp:
-  extra: ""
+processing:
+  fastp:
+    extra: ""
 
 mapping:
   tool: "bwa_mem2"
@@ -25,6 +26,14 @@ mapping:
     extra: ""
     sort: "samtools"
     sort_order: "coordinate"
+    sort_extra: ""
+  star:
+    index: ""
+    extra: ""
+  minimap2:
+    index: ""
+    extra: "-ax map-ont"
+    sorting: "coordinate"
     sort_extra: ""
   samtools_sort:
     extra: "-m 4G"
@@ -43,6 +52,7 @@ mapping_stats:
     extra: ""
 
 variant_calling:
+  tool: "freebayes"
   bcftools_pileup:
     uncompressed: False
     extra: "--max-depth 1000 --min-BQ 20"

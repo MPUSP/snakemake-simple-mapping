@@ -1,4 +1,15 @@
 rule get_genome:
+    input:
+        fasta=lambda wildcards: (
+            config["get_genome"]["fasta"]
+            if config["get_genome"]["database"] == "manual"
+            else []
+        ),
+        gff=lambda wildcards: (
+            config["get_genome"]["gff"]
+            if config["get_genome"]["database"] == "manual"
+            else []
+        ),
     output:
         fasta="results/get_genome/genome.fasta",
         gff="results/get_genome/genome.gff",
@@ -6,6 +17,7 @@ rule get_genome:
     params:
         database=config["get_genome"]["database"],
         assembly=config["get_genome"]["assembly"],
+        gff_source_types=config["get_genome"]["gff_source_type"],
     message:
         "parsing genome GFF and FASTA files"
     log:
@@ -45,7 +57,9 @@ rule fastp:
     message:
         "trimming and QC filtering reads using fastp"
     params:
-        extra="",
+        extra=config["processing"]["fastp"]["extra"],
     threads: 2
+    resources:
+        mem_mb=4096,
     wrapper:
         "v7.0.0/bio/fastp"

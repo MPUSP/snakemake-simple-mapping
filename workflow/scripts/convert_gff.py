@@ -56,6 +56,8 @@ with open(input_gff) as gff:
             elif cols[2] == "CDS":
                 attrs = parse_attributes(cols[8])
                 gene_id = attrs.get("Parent")
+                if not gene_id:
+                    gene_id = attrs.get("ID").lstrip("cds-")
                 cds_id = attrs.get("ID", "cds-" + gene_id)
                 # create transcript feature
                 transcript_id = f"transcript-{cds_id.lstrip("cds-")}"

@@ -55,7 +55,7 @@ suppressPackageStartupMessages({
 messages <- c()
 
 # import required parameters
-sm_params <- snakemake@config$report
+sm_params <- snakemake@params
 vcf_count <- sm_params$vcf_count
 figure_dir <- gsub("report.html$", "figures/", snakemake@output$html)
 if (!dir.exists(figure_dir)) {
@@ -70,8 +70,11 @@ custom_colors <- c(
 )
 
 custom_range <- function(n = 5, quantitative = FALSE) {
-  if (quantitative) colorRampPalette(custom_colors[c(5, 3, 4)])(n)
-  else colorRampPalette(custom_colors)(n)
+  if (quantitative) {
+    colorRampPalette(custom_colors[c(5, 3, 4)])(n)
+  } else {
+    colorRampPalette(custom_colors)(n)
+  }
 }
 
 custom_theme <- function(
@@ -144,7 +147,7 @@ save_plot <- function(
 
 ## Configuration
 
-All options that were used to run this workflow are listed at [the end of this report](#configuration).
+All options that were used to run this workflow are listed at [the end of this report](#about-this-report).
 
 ## Variant data
 
@@ -167,10 +170,11 @@ df <- lapply(list_variants, function(file) {
   read_tsv(file, show_col_types = FALSE, comment = "##") %>%
     dplyr::rename(CHROM = `#CHROM`) %>%
     dplyr::select(1:8) %>%
+    mutate(across(all_of(c("POS", "QUAL")), as.numeric)) %>%
     mutate(INFO_split = str_split(INFO, ";")) %>%
-    mutate(INFO_keys = map(INFO_split, ~str_extract(.x, "^[^=]+"))) %>%
-    mutate(INFO_values = map(INFO_split, ~str_remove(.x, "^[^=]+="))) %>%
-    mutate(INFO_df = map2(INFO_keys, INFO_values, ~set_names(as.list(.y), .x))) %>%
+    mutate(INFO_keys = map(INFO_split, ~ str_extract(.x, "^[^=]+"))) %>%
+    mutate(INFO_values = map(INFO_split, ~ str_remove(.x, "^[^=]+="))) %>%
+    mutate(INFO_df = map2(INFO_keys, INFO_values, ~ set_names(as.list(.y), .x))) %>%
     unnest_wider(INFO_df) %>%
     dplyr::select(-INFO, -INFO_split, -INFO_keys, -INFO_values)
 }) %>%
@@ -183,7 +187,7 @@ df <- df %>%
   mutate(CSQ = str_split(CSQ, "\\|")) %>%
   unnest_wider(CSQ, names_sep = "_") %>%
   dplyr::rename(
-    VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`, 
+    VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
     AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
   ) %>%
   dplyr::select(-matches("CSQ_")) %>%
@@ -196,7 +200,8 @@ head(df, n = 10)
 # import consensus file
 list_consensus <- snakemake@input$consensus
 df_consensus <- read_tsv(
-  list_consensus, show_col_types = FALSE,
+  list_consensus,
+  show_col_types = FALSE,
   col_names = c("CHROM", "POS", "REF", "ALT", "APPEARANCE")
 ) %>%
   mutate(POS = as.numeric(POS))
@@ -228,7 +233,7 @@ messages <- append(messages, txdb_msg$messages)
 
 ```{r, echo = FALSE}
 plot_freq_genome <- df %>%
-  ggplot(aes(x = POS/1000, y = QUAL, color = FILE)) +
+  ggplot(aes(x = POS / 1000, y = QUAL, color = FILE)) +
   geom_point() +
   labs(
     x = "position (kbp)", y = "quality score",
@@ -253,7 +258,7 @@ save_plot(plot_freq_genome)
 
 ```{r, echo = FALSE}
 plot_freq_bytype <- df %>%
-  ggplot(aes(x = POS/1000, y = QUAL, color = VARTYPE)) +
+  ggplot(aes(x = POS / 1000, y = QUAL, color = VARTYPE)) +
   geom_point() +
   labs(
     x = "position (kbp)", y = "quality score",
@@ -311,7 +316,7 @@ save_plot(plot_freq_barchart)
 df_filtered <- df %>%
   inner_join(df_consensus, by = join_by(CHROM, POS, REF, ALT))
 
-no_var_message = paste0(
+no_var_message <- paste0(
   "No variants detected that appear more than ", vcf_count, " times"
 )
 
@@ -339,11 +344,11 @@ if (nrow(df_filtered)) {
     } %>%
     as_tibble(rownames = "sample")
 
-    for (pc in c("PC2", "PC3")) {
-      if (!pc %in% colnames(df_pca)) {
-        df_pca[[pc]] <- 0
-      }
+  for (pc in c("PC2", "PC3")) {
+    if (!pc %in% colnames(df_pca)) {
+      df_pca[[pc]] <- 0
     }
+  }
 
   plot_pca <- df_pca %>%
     ggplot(aes(
@@ -370,7 +375,7 @@ if (nrow(df_filtered)) {
 ```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight*1.5}
 if (nrow(df_filtered)) {
   print(plot_pca)
-  save_plot(plot_pca, height = figheight*1.5)
+  save_plot(plot_pca, height = figheight * 1.5)
 }
 ```
 
@@ -430,19 +435,17 @@ if (nrow(df_filtered)) {
 ```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 12}
 for (effect_type in unique(df_filtered$VARTYPE)) {
   if (!is.null(effect_type)) {
-    
     df_vartype <- df_filtered %>%
-    filter(VARTYPE == effect_type)
+      filter(VARTYPE == effect_type)
 
-    hm_height = length(unique(df_vartype$variant))
-    hm_width = length(unique(df$FILE))
+    hm_height <- length(unique(df_vartype$variant))
+    hm_width <- length(unique(df$FILE))
 
     heatmap <- df_vartype %>%
       mutate(FILE = factor(FILE, levels = unique(df$FILE))) %>%
       mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")") %>%
         str_trunc(width = 20, side = "right", ellipsis = "…") %>%
-        str_pad(width = 20, side = "right", pad = " ")
-      ) %>%
+        str_pad(width = 20, side = "right", pad = " ")) %>%
       # include also empty tiles for missing values in certain samples
       tidyr::complete(
         FILE,
@@ -460,10 +463,10 @@ for (effect_type in unique(df_filtered$VARTYPE)) {
       theme(
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1, size = 6),
         axis.text.y = element_text(size = 6)
-      ) + 
+      ) +
       coord_fixed(ratio = 0.95)
 
-    hm_filename = paste0("plot_heatmap_", effect_type)
+    hm_filename <- paste0("plot_heatmap_", effect_type)
     assign(hm_filename, heatmap)
     print(get(hm_filename))
 
@@ -538,7 +541,7 @@ if (nrow(df_filtered)) {
 
 ```{r, echo = FALSE}
 filter_variants <- function(df, vartype, topn = 10) {
-  cols_select = c(
+  cols_select <- c(
     "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
     "GENE", "AA_CHANGE", "CODON_CHANGE", "INDEL"
   )
@@ -577,26 +580,28 @@ plot_genome <- function(df, df_mut, tx_width = 1) {
         type = "closed"
       )
     ) +
-    geom_text(aes(
-      x = ifelse(strand == "+", xstart + (xend - xstart)/2, xend - (xend - xstart)/2),
-      y = ifelse(strand == "+", 0.35, -0.35)),
+    geom_text(
+      aes(
+        x = ifelse(strand == "+", xstart + (xend - xstart) / 2, xend - (xend - xstart) / 2),
+        y = ifelse(strand == "+", 0.35, -0.35)
+      ),
       size = 2.0, hjust = 0.5
     ) +
     geom_segment(
       data = mutate(df_mut, tx_name = NA),
-      aes(x = POS-5, y = 0, xend = POS+5, yend = 0),
+      aes(x = POS - 5, y = 0, xend = POS + 5, yend = 0),
       linewidth = 2, lineend = "square", linejoin = "mitre", color = "red"
     ) +
     geom_label(
       data = mutate(df_mut, tx_name = NA),
       aes(x = POS, y = 0, label = paste(c(CHROM, POS, IMPACT, GENE, CODON_CHANGE), collapse = ", ")),
-      size = 2.5, fill = "white", color = "red", hjust = - 0.05, 
+      size = 2.5, fill = "white", color = "red", hjust = -0.05,
     ) +
     coord_cartesian(ylim = c(-0.5, 0.5), xlim = tx_window) +
     labs(
       x = "position [nt]", y = "",
       title = with(df_mut, paste0(
-        "CHR: ", CHROM, ", pos: ", POS, ", impact: ", IMPACT, ", gene: ", GENE, 
+        "CHR: ", CHROM, ", pos: ", POS, ", impact: ", IMPACT, ", gene: ", GENE,
         ", codon: ", CODON_CHANGE
       )),
       subtitle = paste0("Variant present in: ", paste(df_mut[["samples"]], collapse = ", "))
@@ -610,7 +615,7 @@ plot_genome <- function(df, df_mut, tx_width = 1) {
 }
 
 df_tx <- annotated_transcripts %>%
-    as_tibble()
+  as_tibble()
 ```
 
 ### Stop lost

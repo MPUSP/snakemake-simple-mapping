@@ -9,6 +9,8 @@ include: "rules/common.smk"
 include: "rules/process_reads.smk"
 include: "rules/bowtie2.smk"
 include: "rules/bwamem2.smk"
+include: "rules/star.smk"
+include: "rules/minimap2.smk"
 include: "rules/mapping_stats.smk"
 include: "rules/bcftools.smk"
 include: "rules/freebayes.smk"
@@ -36,5 +38,8 @@ onerror:
 rule all:
     input:
         "results/multiqc/multiqc_report.html",
-        expand("results/report/{caller}_report.pdf", caller=["bcftools", "freebayes"]),
+        expand(
+            "results/report/{caller}_report.pdf",
+            caller=config["variant_calling"]["tool"],
+        ),
     default_target: True

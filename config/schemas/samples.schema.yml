@@ -16,5 +16,4 @@ properties:
 
 required:
   - sample
-  - description
   - read1
