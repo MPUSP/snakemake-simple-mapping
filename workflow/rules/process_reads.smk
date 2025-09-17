@@ -1,4 +1,7 @@
 rule get_genome:
+    input:
+        fasta=config["get_genome"]["fasta"],
+        gff=config["get_genome"]["gff"],
     output:
         fasta="results/get_genome/genome.fasta",
         gff="results/get_genome/genome.gff",
@@ -6,6 +9,7 @@ rule get_genome:
     params:
         database=config["get_genome"]["database"],
         assembly=config["get_genome"]["assembly"],
+        gff_source_types=config["get_genome"]["gff_source_type"],
     message:
         "parsing genome GFF and FASTA files"
     log:
