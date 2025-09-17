@@ -1,7 +1,15 @@
 rule get_genome:
     input:
-        fasta=config["get_genome"]["fasta"],
-        gff=config["get_genome"]["gff"],
+        fasta=lambda wildcards: (
+            config["get_genome"]["fasta"]
+            if config["get_genome"]["database"] == "manual"
+            else []
+        ),
+        gff=lambda wildcards: (
+            config["get_genome"]["gff"]
+            if config["get_genome"]["database"] == "manual"
+            else []
+        ),
     output:
         fasta="results/get_genome/genome.fasta",
         gff="results/get_genome/genome.gff",
