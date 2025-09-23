@@ -183,15 +183,17 @@ df <- lapply(list_variants, function(file) {
   mutate(FILE = gsub("_(vep|snpeff)\\.vcf\\.gz", "", FILE))
 
 # parse the variant effect column
-df <- df %>%
-  mutate(CSQ = str_split(CSQ, "\\|")) %>%
-  unnest_wider(CSQ, names_sep = "_") %>%
-  dplyr::rename(
-    VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
-    AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
-  ) %>%
-  dplyr::select(-matches("CSQ_")) %>%
-  mutate(VARTYPE = gsub("coding_sequence_variant&", "", VARTYPE))
+if ("CSQ" %in% colnames(df)) {
+  df <- df %>%
+    mutate(CSQ = str_split(CSQ, "\\|")) %>%
+    unnest_wider(CSQ, names_sep = "_") %>%
+    dplyr::rename(
+      VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
+      AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
+    ) %>%
+    dplyr::select(-matches("CSQ_")) %>%
+    mutate(VARTYPE = gsub("coding_sequence_variant&", "", VARTYPE))
+}
 
 head(df, n = 10)
 ```
@@ -549,12 +551,18 @@ filter_variants <- function(df, vartype, topn) {
     "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
     "GENE", "AA_CHANGE", "CODON_CHANGE", "INDEL"
   )
-  df %>%
-    filter(VARTYPE == vartype) %>%
-    group_by(across(any_of(cols_select))) %>%
-    summarize(samples = list(FILE), QUAL = mean(QUAL), .groups = "drop") %>%
-    dplyr::arrange(desc(QUAL)) %>%
-    dplyr::slice(1:topn)
+  if ("VARTYPE" %in% colnames(df)) {
+    return(
+      df %>%
+        filter(VARTYPE == vartype) %>%
+        group_by(across(any_of(cols_select))) %>%
+        summarize(samples = list(FILE), QUAL = mean(QUAL), .groups = "drop") %>%
+        dplyr::arrange(desc(QUAL)) %>%
+        dplyr::slice(1:topn)
+      )
+  } else {
+    return(tibble())
+  }
 }
 
 plot_genome <- function(df, df_mut, tx_width = 1) {
