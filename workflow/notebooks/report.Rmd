@@ -183,15 +183,17 @@ df <- lapply(list_variants, function(file) {
   mutate(FILE = gsub("_(vep|snpeff)\\.vcf\\.gz", "", FILE))
 
 # parse the variant effect column
-df <- df %>%
-  mutate(CSQ = str_split(CSQ, "\\|")) %>%
-  unnest_wider(CSQ, names_sep = "_") %>%
-  dplyr::rename(
-    VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
-    AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
-  ) %>%
-  dplyr::select(-matches("CSQ_")) %>%
-  mutate(VARTYPE = gsub("coding_sequence_variant&", "", VARTYPE))
+if ("CSQ" %in% colnames(df)) {
+  df <- df %>%
+    mutate(CSQ = str_split(CSQ, "\\|")) %>%
+    unnest_wider(CSQ, names_sep = "_") %>%
+    dplyr::rename(
+      VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
+      AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
+    ) %>%
+    dplyr::select(-matches("CSQ_")) %>%
+    mutate(VARTYPE = gsub("coding_sequence_variant&", "", VARTYPE))
+}
 
 head(df, n = 10)
 ```
@@ -225,84 +227,97 @@ messages <- append(messages, txdb_msg$messages)
 
 ## Variant analysis
 
-### Variant frequency
+### Variant frequency by sample {.tabset}
 
 - the following section is an overview about variants per sample
 - the first figure shows the frequency of variants per chromosome, **broken down by sample**
 - no filtering is applied, all variants are included
 
 ```{r, echo = FALSE}
-plot_freq_genome <- df %>%
-  ggplot(aes(x = POS / 1000, y = QUAL, color = FILE)) +
-  geom_point() +
-  labs(
-    x = "position (kbp)", y = "quality score",
-    title = "Variant frequency, per chromosome",
-    subtitle = "Color: sample"
-  ) +
-  facet_wrap(~CHROM, ncol = 1) +
-  scale_fill_manual(values = custom_range(length(list_variants), FALSE)) +
-  scale_color_manual(values = custom_range(length(list_variants), FALSE)) +
-  custom_theme()
+chromosomes <- sort(unique(df$CHROM))
 ```
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
-print(plot_freq_genome)
-save_plot(plot_freq_genome)
+```{r, echo = FALSE, results = 'asis'}
+for (chrom in chromosomes) {
+  cat("\n\n#### ", chrom, " {-}\n\n")
+  plot_freq_bysample <- df %>%
+    filter(CHROM == chrom) %>%
+    ggplot(aes(x = POS / 1000, y = QUAL, color = FILE)) +
+    geom_point() +
+    labs(
+      x = "position (kbp)", y = "quality score",
+      title = paste0("Variant frequency, chromosome: ", chrom),
+      subtitle = "Color: sample"
+    ) +
+    scale_fill_manual(values = custom_range(length(list_variants), FALSE)) +
+    scale_color_manual(values = custom_range(length(list_variants), FALSE)) +
+    custom_theme() +
+    theme(legend.position = "bottom")
+  print(plot_freq_bysample)
+  save_plot(plot_freq_bysample, index = chrom)
+}
 ```
 
----
+### {-}
+
+### Variant frequency by type {.tabset}
 
 - this figure shows the frequency of variants per chromosome, **broken down by type**
 - no filtering is applied, all variants are included
 
-```{r, echo = FALSE}
-plot_freq_bytype <- df %>%
-  ggplot(aes(x = POS / 1000, y = QUAL, color = VARTYPE)) +
-  geom_point() +
-  labs(
-    x = "position (kbp)", y = "quality score",
-    title = "Variant frequency, per chromosome",
-    subtitle = "Color: variant type"
-  ) +
-  facet_wrap(~CHROM, ncol = 1) +
-  scale_fill_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
-  scale_color_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
-  custom_theme()
+```{r, echo = FALSE, results = 'asis'}
+for (chrom in chromosomes) {
+  cat("\n\n#### ", chrom, " {-}\n\n")
+  plot_freq_bytype <- df %>%
+    filter(CHROM == chrom) %>%
+    ggplot(aes(x = POS / 1000, y = QUAL, color = VARTYPE)) +
+    geom_point() +
+    labs(
+      x = "position (kbp)", y = "quality score",
+      title = paste0("Variant frequency, chromosome: ", chrom),
+      subtitle = "Color: variant type"
+    ) +
+    scale_fill_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
+    scale_color_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
+    custom_theme() +
+    theme(legend.position = "bottom")
+  print(plot_freq_bytype)
+  save_plot(plot_freq_bytype, index = chrom)
+}
 ```
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
-print(plot_freq_bytype)
-save_plot(plot_freq_bytype)
-```
+### {-}
 
----
+### Variant frequency as bar chart {.tabset}
 
 - this figure shows the frequency of **variants per chromosome as a bar chart**
 - variants are **broken down by type**
 - no filtering is applied, all variants are included
 
-```{r, echo = FALSE}
-plot_freq_barchart <- df %>%
-  group_by(FILE, CHROM, VARTYPE) %>%
-  count() %>%
-  ggplot(aes(x = n, y = FILE, fill = VARTYPE)) +
-  geom_col(color = "white") +
-  labs(
-    x = "count", y = "",
-    title = "Variant frequency, per sample and chromosome",
-    subtitle = "Color: variant type"
-  ) +
-  facet_wrap(~CHROM, ncol = 1) +
-  scale_fill_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
-  scale_color_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
-  custom_theme()
+```{r, echo = FALSE, results = 'asis'}
+for (chrom in chromosomes) {
+  cat("\n\n#### ", chrom, " {-}\n\n")
+  plot_freq_barchart <- df %>%
+    filter(CHROM == chrom) %>%
+    group_by(FILE, VARTYPE) %>%
+    count() %>%
+    ggplot(aes(x = n, y = FILE, fill = VARTYPE)) +
+    geom_col(color = "white") +
+    labs(
+      x = "count", y = "",
+      title = paste0("Variant frequency, per sample, chromosome: ", chrom),
+      subtitle = "Color: variant type"
+    ) +
+    scale_fill_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
+    scale_color_manual(values = custom_range(length(unique(df$VARTYPE)), FALSE)) +
+    custom_theme() +
+    theme(legend.position = "bottom")
+  print(plot_freq_barchart)
+  save_plot(plot_freq_barchart, index = chrom)
+}
 ```
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
-print(plot_freq_barchart)
-save_plot(plot_freq_barchart)
-```
+### {-}
 
 ### Variant co-occurence, overall similarity
 
@@ -425,23 +440,20 @@ if (nrow(df_filtered)) {
 }
 ```
 
-### Variant co-occurence, heat maps
+### Variant co-occurence, heat maps {.tabset}
 
 - the following figure shows a heat map of variant occurence per sample
 - note: filtering is applied such that **only variants with at least N occurences** are included
 - the default is *N = 2*, which means that the variant must be present in at least two samples
 - can be adjusted using the config parameter `report` > `minimum_variant_count` (current value: `r vcf_count`)
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 12}
+```{r, echo = FALSE, results = 'asis', fig.width = figwidth, fig.height = 12}
 for (effect_type in unique(df_filtered$VARTYPE)) {
   if (!is.null(effect_type)) {
+    cat("\n\n#### ", effect_type, " {-}\n\n")
+
     df_vartype <- df_filtered %>%
-      filter(VARTYPE == effect_type)
-
-    hm_height <- length(unique(df_vartype$variant))
-    hm_width <- length(unique(df$FILE))
-
-    heatmap <- df_vartype %>%
+      filter(VARTYPE == effect_type) %>%
       mutate(FILE = factor(FILE, levels = unique(df$FILE))) %>%
       mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")") %>%
         str_trunc(width = 20, side = "right", ellipsis = "…") %>%
@@ -450,7 +462,12 @@ for (effect_type in unique(df_filtered$VARTYPE)) {
       tidyr::complete(
         FILE,
         variant
-      ) %>%
+      )
+
+    hm_height <- length(unique(df_vartype$variant))
+    hm_width <- length(unique(df_vartype$FILE))
+
+    heatmap <- df_vartype %>%
       ggplot(aes(x = FILE, y = variant, fill = QUAL)) +
       geom_tile() +
       labs(
@@ -466,24 +483,13 @@ for (effect_type in unique(df_filtered$VARTYPE)) {
       ) +
       coord_fixed(ratio = 0.95)
 
-    hm_filename <- paste0("plot_heatmap_", effect_type)
-    assign(hm_filename, heatmap)
-    print(get(hm_filename))
-
-    svg(
-      filename = paste0(figure_dir, hm_filename, ".svg"),
-      width = figwidth, height = 3.5 + hm_height * 0.5
-    )
     print(heatmap)
-    dev.off()
-    png(
-      filename = paste0(figure_dir, hm_filename, ".png"),
-      width = figwidth * 125, height = (3.5 + hm_height * 0.5) * 125, res = 120
+    save_plot(
+      heatmap,
+      index = effect_type,
+      height = max(c(4, hm_height * 0.25)),
+      width = max(c(8, hm_width * 0.25))
     )
-    print(heatmap)
-    invisible(capture.output(dev.off()))
-  } else {
-    print(no_var_message)
   }
 }
 ```
@@ -540,22 +546,29 @@ if (nrow(df_filtered)) {
 - only the **top 10 variants by quality score** are shown to keep the report concise
 
 ```{r, echo = FALSE}
-filter_variants <- function(df, vartype, topn = 10) {
+filter_variants <- function(df, vartype, topn) {
   cols_select <- c(
     "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
     "GENE", "AA_CHANGE", "CODON_CHANGE", "INDEL"
   )
-  df %>%
-    filter(VARTYPE == vartype) %>%
-    group_by(across(any_of(cols_select))) %>%
-    summarize(samples = list(FILE), QUAL = mean(QUAL), .groups = "drop") %>%
-    dplyr::arrange(desc(QUAL)) %>%
-    dplyr::slice(1:topn)
+  if ("VARTYPE" %in% colnames(df)) {
+    return(
+      df %>%
+        filter(VARTYPE == vartype) %>%
+        group_by(across(any_of(cols_select))) %>%
+        summarize(samples = list(FILE), QUAL = mean(QUAL), .groups = "drop") %>%
+        dplyr::arrange(desc(QUAL)) %>%
+        dplyr::slice(1:topn)
+      )
+  } else {
+    return(tibble())
+  }
 }
 
 plot_genome <- function(df, df_mut, tx_width = 1) {
   tx_window <- df_mut[["POS"]] + c(-5000, 5000)
   df %>%
+    filter(seqnames == df_mut$CHROM[1]) %>%
     filter(end >= tx_window[1] & start <= tx_window[2]) %>%
     mutate(
       xstart = ifelse(strand == "+", start, end),
@@ -597,7 +610,7 @@ plot_genome <- function(df, df_mut, tx_width = 1) {
       aes(x = POS, y = 0, label = paste(c(CHROM, POS, IMPACT, GENE, CODON_CHANGE), collapse = ", ")),
       size = 2.5, fill = "white", color = "red", hjust = -0.05,
     ) +
-    coord_cartesian(ylim = c(-0.5, 0.5), xlim = tx_window) +
+    coord_cartesian(ylim = c(-0.5, 0.5), xlim = tx_window, expand = FALSE) +
     labs(
       x = "position [nt]", y = "",
       title = with(df_mut, paste0(
@@ -616,15 +629,16 @@ plot_genome <- function(df, df_mut, tx_width = 1) {
 
 df_tx <- annotated_transcripts %>%
   as_tibble()
+topn <- 10
 ```
 
 ### Stop lost
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
-df_plotting <- filter_variants(df_filtered, "stop_lost")
+df_plotting <- filter_variants(df_filtered, "stop_lost", topn)
 
 if (nrow(df_plotting)) {
-  for (i in 1:min(c(5, nrow(df_plotting)))) {
+  for (i in 1:min(c(topn, nrow(df_plotting)))) {
     plot_genome_stop_lost <- plot_genome(df_tx, df_plotting[i, ])
     print(plot_genome_stop_lost)
   }
@@ -636,10 +650,10 @@ if (nrow(df_plotting)) {
 ### Stop gained
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
-df_plotting <- filter_variants(df_filtered, "stop_gained")
+df_plotting <- filter_variants(df_filtered, "stop_gained", topn)
 
 if (nrow(df_plotting)) {
-  for (i in 1:nrow(df_plotting)) {
+  for (i in 1:min(c(topn, nrow(df_plotting)))) {
     plot_genome_stop_gained <- plot_genome(df_tx, df_plotting[i, ])
     print(plot_genome_stop_gained)
   }
@@ -651,10 +665,10 @@ if (nrow(df_plotting)) {
 ### Frameshift variant
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
-df_plotting <- filter_variants(df_filtered, "frameshift_variant")
+df_plotting <- filter_variants(df_filtered, "frameshift_variant", topn)
 
 if (nrow(df_plotting)) {
-  for (i in 1:nrow(df_plotting)) {
+  for (i in 1:min(c(topn, nrow(df_plotting)))) {
     plot_genome_frameshift_variant <- plot_genome(df_tx, df_plotting[i, ])
     print(plot_genome_frameshift_variant)
   }
@@ -666,10 +680,10 @@ if (nrow(df_plotting)) {
 ### Missense variant
 
 ```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
-df_plotting <- filter_variants(df_filtered, "missense_variant")
+df_plotting <- filter_variants(df_filtered, "missense_variant", topn)
 
 if (nrow(df_plotting)) {
-  for (i in 1:nrow(df_plotting)) {
+  for (i in 1:min(c(topn, nrow(df_plotting)))) {
     plot_genome_missense_variant <- plot_genome(df_tx, df_plotting[i, ])
     print(plot_genome_missense_variant)
   }

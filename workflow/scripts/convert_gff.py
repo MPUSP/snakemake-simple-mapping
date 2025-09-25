@@ -70,7 +70,8 @@ with open(input_gff) as gff:
                     "\t".join(
                         cols[:2]
                         + ["mRNA"]
-                        + cols[3:8]
+                        + cols[3:7]
+                        + ["."]
                         + [format_attributes(transcript_attrs)]
                     )
                 ]
@@ -81,7 +82,8 @@ with open(input_gff) as gff:
                     "\t".join(
                         cols[:2]
                         + ["exon"]
-                        + cols[3:8]
+                        + cols[3:7]
+                        + ["."]
                         + [format_attributes(exon_attrs)]
                     )
                 ]
