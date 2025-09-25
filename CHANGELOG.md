@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.4.0...v1.4.1) (2025-09-25)
+
+
+### Bug Fixes
+
+* minor issues, formatting ([865e609](https://github.com/MPUSP/snakemake-simple-mapping/commit/865e6094607048153f1902439744aa654711fcd1))
+* prevent rule from crashing when no variants were found at all ([c7ec81c](https://github.com/MPUSP/snakemake-simple-mapping/commit/c7ec81ce3b1fd8ee96f229c1528e9bedda8fcf65))
+* removed phase attribute for exons and mRNAs ([25fabe2](https://github.com/MPUSP/snakemake-simple-mapping/commit/25fabe20356f7b5d0edc70e779f274813c0c873c))
+* removed unnecessary rdata export ([aa6a5d5](https://github.com/MPUSP/snakemake-simple-mapping/commit/aa6a5d5dc6535591b1fba01a0f6a83f82dcdadde))
+* report chromosomes etc as tabs ([029c1df](https://github.com/MPUSP/snakemake-simple-mapping/commit/029c1dfafe26354a1e3f773b5b3e29872920c99f))
+
 ## [1.4.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.3.0...v1.4.0) (2025-09-17)
 
 
