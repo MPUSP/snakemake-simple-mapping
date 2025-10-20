@@ -446,6 +446,7 @@ if (nrow(df_filtered)) {
 - note: filtering is applied such that **only variants with at least N occurences** are included
 - the default is *N = 2*, which means that the variant must be present in at least two samples
 - can be adjusted using the config parameter `report` > `minimum_variant_count` (current value: `r vcf_count`)
+- heat maps are restricted to a maximum number of 100 variants
 
 ```{r, echo = FALSE, results = 'asis', fig.width = figwidth, fig.height = 12}
 for (effect_type in unique(df_filtered$VARTYPE)) {
@@ -462,7 +463,14 @@ for (effect_type in unique(df_filtered$VARTYPE)) {
       tidyr::complete(
         FILE,
         variant
-      )
+      ) %>%
+      # restrict to top 100 variants by score
+      group_by(variant) %>%
+      mutate(mean_qual = mean(QUAL, na.rm = TRUE)) %>%
+      ungroup() %>%
+      arrange(desc(mean_qual)) %>%
+      group_by(FILE) %>%
+      dplyr::slice(1:100)
 
     hm_height <- length(unique(df_vartype$variant))
     hm_width <- length(unique(df_vartype$FILE))
