@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.2](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.4.1...v1.4.2) (2025-11-19)
+
+
+### Bug Fixes
+
+* minor fixes for next release ([13a1e03](https://github.com/MPUSP/snakemake-simple-mapping/commit/13a1e03b634ba6e1675135a9adf32bd9758fd184))
+* restrict number of variants for heatmaps ([f08d201](https://github.com/MPUSP/snakemake-simple-mapping/commit/f08d2017dae6c1de1f11bb5f24728056c6b32023))
+
 ## [1.4.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.4.0...v1.4.1) (2025-09-25)
 
 
