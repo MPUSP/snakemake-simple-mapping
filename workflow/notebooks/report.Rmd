@@ -3,7 +3,7 @@ title: "Report: Predicted variants and effects"
 author: "`r sessionInfo()$platform`"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 params:
-   rmd: "report.Rmd"
+  rmd: "report.Rmd"
 output:
   html_document:
     theme: cosmo
@@ -37,7 +37,7 @@ Loaded required R packages:
 - `Biostrings`
 
 
-```{r, echo = FALSE, warning = FALSE}
+```{r}
 suppressPackageStartupMessages({
   library(tidyverse)
   library(ggrepel)
@@ -49,8 +49,11 @@ suppressPackageStartupMessages({
 })
 ```
 
+```{r}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
 
-```{r, echo = FALSE}
+```{r}
 # messages
 messages <- c()
 
@@ -154,7 +157,7 @@ All options that were used to run this workflow are listed at [the end of this r
 Variant data was imported as `.vcf` files. The primary output from the workflow that is used 
 here are the variant calling files including the variant effect prediction, one for each sample.
 
-```{r, echo = FALSE}
+```{r}
 # import variant files
 list_variants <- unlist(snakemake@input$variants)
 print(list_variants)
@@ -164,7 +167,7 @@ The imported variant data has the following layout (first 10 rows shown):
 
 - *NOTE: tables are only rendered in HTML output but not PDF.*
 
-```{r, echo = FALSE, warning = FALSE}
+```{r}
 df <- lapply(list_variants, function(file) {
   properties <- strsplit(file, "/")[[1]]
   read_tsv(file, show_col_types = FALSE, comment = "##") %>%
@@ -198,7 +201,7 @@ if ("CSQ" %in% colnames(df)) {
 head(df, n = 10)
 ```
 
-```{r, echo = FALSE}
+```{r}
 # import consensus file
 list_consensus <- snakemake@input$consensus
 df_consensus <- read_tsv(
@@ -209,7 +212,7 @@ df_consensus <- read_tsv(
   mutate(POS = as.numeric(POS))
 ```
 
-```{r, echo = FALSE}
+```{r}
 # import genome fasta
 input_fasta <- snakemake@input$fasta
 genome_dna <- readDNAStringSet(input_fasta)
@@ -233,11 +236,11 @@ messages <- append(messages, txdb_msg$messages)
 - the first figure shows the frequency of variants per chromosome, **broken down by sample**
 - no filtering is applied, all variants are included
 
-```{r, echo = FALSE}
+```{r}
 chromosomes <- sort(unique(df$CHROM))
 ```
 
-```{r, echo = FALSE, results = 'asis'}
+```{r, results = 'asis'}
 for (chrom in chromosomes) {
   cat("\n\n#### ", chrom, " {-}\n\n")
   plot_freq_bysample <- df %>%
@@ -265,7 +268,7 @@ for (chrom in chromosomes) {
 - this figure shows the frequency of variants per chromosome, **broken down by type**
 - no filtering is applied, all variants are included
 
-```{r, echo = FALSE, results = 'asis'}
+```{r, results = 'asis'}
 for (chrom in chromosomes) {
   cat("\n\n#### ", chrom, " {-}\n\n")
   plot_freq_bytype <- df %>%
@@ -294,7 +297,7 @@ for (chrom in chromosomes) {
 - variants are **broken down by type**
 - no filtering is applied, all variants are included
 
-```{r, echo = FALSE, results = 'asis'}
+```{r, results = 'asis'}
 for (chrom in chromosomes) {
   cat("\n\n#### ", chrom, " {-}\n\n")
   plot_freq_barchart <- df %>%
@@ -327,7 +330,7 @@ for (chrom in chromosomes) {
 - the default is *N = 2*, which means that the variant must be present in at least two samples
 - can be adjusted using the config parameter `report` > `minimum_variant_count` (current value: `r vcf_count`)
   
-```{r, echo = FALSE}
+```{r}
 df_filtered <- df %>%
   inner_join(df_consensus, by = join_by(CHROM, POS, REF, ALT))
 
@@ -387,7 +390,7 @@ if (nrow(df_filtered)) {
 }
 ```
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight*1.5}
+```{r, fig.width = figwidth, fig.height = figheight*1.5}
 if (nrow(df_filtered)) {
   print(plot_pca)
   save_plot(plot_pca, height = figheight * 1.5)
@@ -399,7 +402,7 @@ if (nrow(df_filtered)) {
 - the following figure contains the same information as in the previous figure,
 - but variant co-occurence is summarized in an **upset plot** instead
 
-```{r, echo = FALSE}
+```{r}
 if (nrow(df_filtered)) {
   df_upset <- df_filtered %>%
     mutate(variant = paste0(CHROM, " [", POS, "] (", REF, "->", ALT, ")")) %>%
@@ -433,7 +436,7 @@ if (nrow(df_filtered)) {
 }
 ```
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+```{r, fig.width = figwidth, fig.height = figheight}
 if (nrow(df_filtered)) {
   print(plot_upset)
   save_plot(plot_upset)
@@ -448,7 +451,7 @@ if (nrow(df_filtered)) {
 - can be adjusted using the config parameter `report` > `minimum_variant_count` (current value: `r vcf_count`)
 - heat maps are restricted to a maximum number of 100 variants
 
-```{r, echo = FALSE, results = 'asis', fig.width = figwidth, fig.height = 12}
+```{r, results = 'asis', fig.width = figwidth, fig.height = 12}
 for (effect_type in unique(df_filtered$VARTYPE)) {
   if (!is.null(effect_type)) {
     cat("\n\n#### ", effect_type, " {-}\n\n")
@@ -509,7 +512,7 @@ for (effect_type in unique(df_filtered$VARTYPE)) {
 - note: for this depiction it does not matter whether variants were found in the same or other samples
 - the figure is restricted to the **top 20 genes** with two or more variants
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+```{r, fig.width = figwidth, fig.height = figheight}
 if (nrow(df_filtered)) {
   plot_genes_barchart <- df_filtered %>%
     filter(GENE != "") %>%
@@ -537,7 +540,7 @@ if (nrow(df_filtered)) {
 }
 ```
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = figheight}
+```{r, fig.width = figwidth, fig.height = figheight}
 if (nrow(df_filtered)) {
   print(plot_genes_barchart)
   save_plot(plot_genes_barchart)
@@ -553,7 +556,7 @@ if (nrow(df_filtered)) {
 - can be adjusted using the config parameter `report` > `minimum_variant_count` (current value: `r vcf_count`)
 - only the **top 10 variants by quality score** are shown to keep the report concise
 
-```{r, echo = FALSE}
+```{r}
 filter_variants <- function(df, vartype, topn) {
   cols_select <- c(
     "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
@@ -567,7 +570,7 @@ filter_variants <- function(df, vartype, topn) {
         summarize(samples = list(FILE), QUAL = mean(QUAL), .groups = "drop") %>%
         dplyr::arrange(desc(QUAL)) %>%
         dplyr::slice(1:topn)
-      )
+    )
   } else {
     return(tibble())
   }
@@ -642,7 +645,7 @@ topn <- 10
 
 ### Stop lost
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
+```{r, fig.width = figwidth, fig.height = 2.0}
 df_plotting <- filter_variants(df_filtered, "stop_lost", topn)
 
 if (nrow(df_plotting)) {
@@ -657,7 +660,7 @@ if (nrow(df_plotting)) {
 
 ### Stop gained
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
+```{r, fig.width = figwidth, fig.height = 2.0}
 df_plotting <- filter_variants(df_filtered, "stop_gained", topn)
 
 if (nrow(df_plotting)) {
@@ -672,7 +675,7 @@ if (nrow(df_plotting)) {
 
 ### Frameshift variant
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
+```{r, fig.width = figwidth, fig.height = 2.0}
 df_plotting <- filter_variants(df_filtered, "frameshift_variant", topn)
 
 if (nrow(df_plotting)) {
@@ -687,7 +690,7 @@ if (nrow(df_plotting)) {
 
 ### Missense variant
 
-```{r, echo = FALSE, warning = FALSE, fig.width = figwidth, fig.height = 2.0}
+```{r, fig.width = figwidth, fig.height = 2.0}
 df_plotting <- filter_variants(df_filtered, "missense_variant", topn)
 
 if (nrow(df_plotting)) {
@@ -718,7 +721,7 @@ The workflow is developed at the [Max Planck Unit for the Science of Pathogens](
 
 The pipeline configuration file is available at: `config/config.yml`.
 
-```{r, echo = FALSE}
+```{r}
 list_config <- read_lines("config/config.yml")
 list_config <- gsub("\"", "", list_config)
 print(list_config)
@@ -739,11 +742,11 @@ Link to the R markdown source that was used to generate this report:
 
 Session info (R base and package versions):
 
-```{r, echo = FALSE}
+```{r}
 sessionInfo()
 ```
 
-```{r, echo = FALSE}
+```{r}
 messages <- append(messages, "finished writing HTML report successfully")
 write_lines(
   paste0("HTML_REPORT: ", messages),
