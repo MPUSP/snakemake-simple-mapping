@@ -1,4 +1,4 @@
-samplesheet: ".test/config/samples.tsv"
+samplesheet: "config/samples.tsv"
 
 get_genome:
   database: "ncbi"
