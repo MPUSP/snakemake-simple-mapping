@@ -29,7 +29,7 @@ jobs:
       - name: create dockerfile
         uses: snakemake/snakemake-github-action@v2
         with:
-          directory: .test
+          directory: .
           snakefile: workflow/Snakefile
           install-apptainer: true
           args: "--cores 1"
