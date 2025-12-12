@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.5.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.4.2...v1.5.0) (2025-12-12)
+
+
+### Features
+
+* enable apptainer deployment ([f0198f6](https://github.com/MPUSP/snakemake-simple-mapping/commit/f0198f624fee081398c60121b3e85e51ebe365a5))
+* enable apptainer deployment ([138414b](https://github.com/MPUSP/snakemake-simple-mapping/commit/138414b5063a91567a7de2dc0ad987da2cb08b64))
+
+
+### Bug Fixes
+
+* chunks with default messaging turned off ([0310f01](https://github.com/MPUSP/snakemake-simple-mapping/commit/0310f0122b837e640738b7f64b3be43c0c2df48c))
+* corrected dir for building Dockerfile ([d5e752a](https://github.com/MPUSP/snakemake-simple-mapping/commit/d5e752aa1c7269dc70b62e1e641ae449ba6c15db))
+* corrected dir for building Dockerfile ([79933c2](https://github.com/MPUSP/snakemake-simple-mapping/commit/79933c2709ca0eb5fbe7e70a18ab42124bbc1a52))
+* paths to run wf in main dir ([c643bfd](https://github.com/MPUSP/snakemake-simple-mapping/commit/c643bfd71e487b6802081363141f183dce75bb3f))
+* paths to run wf in main dir ([7fecab2](https://github.com/MPUSP/snakemake-simple-mapping/commit/7fecab2f516792f19db70f0c526005f81e04cea5))
+* use empty array instead of empty string for no input ([927586d](https://github.com/MPUSP/snakemake-simple-mapping/commit/927586d141dad666631dc38725b87394375f2e69))
+
 ## [1.4.2](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.4.1...v1.4.2) (2025-11-19)
 
 
