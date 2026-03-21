@@ -1,9 +1,9 @@
 # Snakemake-simple-mapping
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥8.0.0-brightgreen.svg)](https://snakemake.github.io)
-[![GitHub actions status](https://github.com/MPUSP/snakemake-simple-mapping/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/MPUSP/snakemake-simple-mapping/actions/workflows/main.yml)
+[![GitHub Actions](https://github.com/MPUSP/snakemake-simple-mapping/actions/workflows/snakemake-tests.yml/badge.svg)](https://github.com/MPUSP/snakemake-simple-mapping/actions/workflows/snakemake-tests.yml)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
-[![run with apptainer](https://img.shields.io/badge/run%20with-singularity-1D355C.svg?labelColor=000000)](https://sylabs.io/docs/)
+[![run with apptainer](https://img.shields.io/badge/run%20with-apptainer-1D355C.svg?labelColor=000000)](https://apptainer.org/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/MPUSP/snakemake-simple-mapping)
 
 A Snakemake workflow for the mapping of reads to reference genomes, minimalistic and simple.
