@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.5.0...v1.6.0) (2026-03-21)
+
+
+### Features
+
+* update docs, CI workflows ([cb4f792](https://github.com/MPUSP/snakemake-simple-mapping/commit/cb4f7927328de20d1f727a4379c5dfb2eeb1cff7))
+* update README and config schema ([1549c34](https://github.com/MPUSP/snakemake-simple-mapping/commit/1549c3415702563cb66480d2bdd844554acc956e))
+
+
+### Bug Fixes
+
+* update badges ([d619663](https://github.com/MPUSP/snakemake-simple-mapping/commit/d619663d166e7e734047c6d9216bcfae6dcc0938))
+* update CI workflows ([7c2bcc6](https://github.com/MPUSP/snakemake-simple-mapping/commit/7c2bcc69ab59237fa52b18293053f6f02dcdbcf2))
+
 ## [1.5.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.4.2...v1.5.0) (2025-12-18)
 
 
