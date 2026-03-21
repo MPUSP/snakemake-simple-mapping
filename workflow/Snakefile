@@ -21,7 +21,7 @@ include: "rules/report.smk"
 
 # container definition (optional)
 # -----------------------------------------------------
-containerized: "oras://ghcr.io/mpusp/snakemake-simple-mapping:latest"
+container: "oras://ghcr.io/mpusp/snakemake-simple-mapping:latest"
 
 
 # optional messages, log and error handling

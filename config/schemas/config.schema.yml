@@ -10,9 +10,11 @@ properties:
       database:
         type: string
         description: database to use for genome retrieval, 'ncbi' or 'manual'
+        default: ncbi
       assembly:
         type: string
-        description: assembly version to use for genome retrieval, e.g. 'GCF_000307535.1'
+        description: RefSeq assembly accession to use for genome retrieval
+        default: GCF_000307535.1
       fasta:
         type: [string, "null"]
         description: path to a custom FASTA file (optional)
@@ -34,13 +36,14 @@ properties:
         properties:
           extra:
             type: string
-            description: additional arguments to pass to Fastp
+            description: additional arguments to pass to fastp
   mapping:
     type: object
     properties:
       tool:
         type: string
-        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2', 'star'
+        description: mapping tool to use, one of 'bowtie2', 'bwa_mem2', 'star', or 'minimap2'
+        default: bwa_mem2
       bowtie2:
         type: object
         properties:
@@ -59,9 +62,11 @@ properties:
           sort:
             type: string
             description: sorting tool to use, e.g. 'samtools'
+            default: samtools
           sort_order:
             type: string
             description: sorting order to use
+            default: coordinate
           sort_extra:
             type: string
             description: additional arguments to pass to the sorting tool
@@ -83,9 +88,11 @@ properties:
           extra:
             type: string
             description: additional arguments to minimap2 align
+            default: -ax map-ont
           sorting:
             type: string
             description: sorting order to use
+            default: coordinate
           sort_extra:
             type: string
             description: additional arguments to pass to the sorting tool
@@ -95,6 +102,7 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to Samtools sort
+            default: -m 4G
       samtools_index:
         type: object
         properties:
@@ -130,6 +138,7 @@ properties:
           genome_size:
             type: integer
             description: genome size in base pairs
+            default: 1000
           extra:
             type: string
             description: additional arguments to pass to DeepTools bamCoverage
@@ -150,6 +159,7 @@ properties:
           uncompressed:
             type: boolean
             description: whether to output uncompressed BCF files
+            default: false
           extra:
             type: string
             description: additional arguments to pass to BCFtools pileup
@@ -159,9 +169,11 @@ properties:
           uncompressed:
             type: boolean
             description: whether to output uncompressed VCF files
+            default: false
           caller:
             type: string
             description: use '-c' for consensus or '-m' for multiallelic
+            default: "-c"
           extra:
             type: string
             description: additional arguments to pass to BCFtools call
@@ -170,19 +182,23 @@ properties:
         properties:
           extra:
             type: string
+            description: additional arguments to pass to BCFtools view
       bcftools_filter:
         type: object
         properties:
           filter:
             type: string
+            description: expression used to filter BCF/VCF records
+            default: '-e ''ALT="."'''
           extra:
             type: string
+            description: additional arguments to pass to BCFtools filter
       freebayes:
         type: object
         properties:
           extra:
             type: string
-            description: additional arguments to pass to Freebayes
+            description: additional arguments to pass to Freebayes call
     required:
       - bcftools_pileup
       - bcftools_call
@@ -195,15 +211,18 @@ properties:
       tool:
         type: string
         description: annotation tool to use, one of 'vep', 'snpeff'
+        default: vep
       vep:
         type: object
         properties:
           convert_gff:
             type: boolean
-            description: whether to convert NCBI GFF to VEP compatible format
+            description: whether to convert NCBI GFF to Ensembl-style GFF for VEP compatibility
+            default: true
           plugins:
             type: array
             description: list of VEP plugins to use
+            default: []
             items:
               type: string
           extra:
