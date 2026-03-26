@@ -62,4 +62,4 @@ rule fastp:
     resources:
         mem_mb=4096,
     wrapper:
-        "v7.0.0/bio/fastp"
+        "v9.4.1/bio/fastp"

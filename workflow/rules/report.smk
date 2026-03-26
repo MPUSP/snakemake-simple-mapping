@@ -11,7 +11,7 @@ rule bcftools_bcf_and_index:
     params:
         extra="--write-index",
     wrapper:
-        "v7.2.0/bio/bcftools/view"
+        "v9.4.1/bio/bcftools/view"
 
 
 rule bcftools_intersection:

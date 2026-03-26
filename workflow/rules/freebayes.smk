@@ -14,4 +14,4 @@ rule freebayes:
         "call variants using freebayes"
     threads: 4
     wrapper:
-        "v7.0.0/bio/freebayes"
+        "v9.4.1/bio/freebayes"

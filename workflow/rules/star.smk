@@ -11,7 +11,7 @@ rule star_index:
     message:
         "build star index"
     wrapper:
-        "v7.2.0/bio/star/index"
+        "v3.3.7/bio/star/index"
 
 
 rule star_align:
@@ -30,4 +30,4 @@ rule star_align:
         extra=config["mapping"]["star"]["extra"],
     threads: 8
     wrapper:
-        "v7.2.0/bio/star/align"
+        "v3.3.7/bio/star/align"

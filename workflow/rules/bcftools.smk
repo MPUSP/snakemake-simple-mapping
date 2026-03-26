@@ -13,7 +13,7 @@ rule bcftools_pileup:
     log:
         "results/bcftools/pileup/{sample}.log",
     wrapper:
-        "v7.0.0/bio/bcftools/mpileup"
+        "v9.4.1/bio/bcftools/mpileup"
 
 
 rule bcftools_call:
@@ -30,7 +30,7 @@ rule bcftools_call:
     log:
         "results/bcftools/call/{sample}.log",
     wrapper:
-        "v7.0.0/bio/bcftools/call"
+        "v9.4.1/bio/bcftools/call"
 
 
 rule bcftools_view:
@@ -45,7 +45,7 @@ rule bcftools_view:
     params:
         extra=config["variant_calling"]["bcftools_view"]["extra"],
     wrapper:
-        "v7.0.0/bio/bcftools/view"
+        "v9.4.1/bio/bcftools/view"
 
 
 rule bcftools_filter:
@@ -61,7 +61,7 @@ rule bcftools_filter:
         filter=config["variant_calling"]["bcftools_filter"]["filter"],
         extra=config["variant_calling"]["bcftools_filter"]["extra"],
     wrapper:
-        "v7.0.0/bio/bcftools/filter"
+        "v9.4.1/bio/bcftools/filter"
 
 
 rule bcftools_stats:
@@ -74,4 +74,4 @@ rule bcftools_stats:
     log:
         "results/{caller}/call/{sample}_stats.log",
     wrapper:
-        "v7.0.0/bio/bcftools/stats"
+        "v9.4.1/bio/bcftools/stats"
