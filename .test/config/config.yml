@@ -29,7 +29,13 @@ mapping:
     sort_extra: ""
   star:
     index: ""
-    extra: ""
+    extra:
+      [
+        "--outFilterMultimapNmax 10",
+        "--outSAMmultNmax 1",
+        "--outMultimapperOrder Random",
+        "--alignIntronMax 1",
+      ]
   minimap2:
     index: ""
     extra: "-ax map-ont"

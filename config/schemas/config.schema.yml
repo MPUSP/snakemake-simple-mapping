@@ -77,8 +77,17 @@ properties:
             type: string
             description: additional arguments to STAR index
           extra:
-            type: string
+            type: array
+            items:
+              type: string
             description: additional arguments to STAR align
+            default:
+              [
+                "--outFilterMultimapNmax 10",
+                "--outSAMmultNmax 1",
+                "--outMultimapperOrder Random",
+                "--alignIntronMax 1",
+              ]
       minimap2:
         type: object
         properties:
