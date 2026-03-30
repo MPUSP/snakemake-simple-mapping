@@ -19,7 +19,7 @@ rule bowtie2_build:
         extra=config["mapping"]["bowtie2"]["index"],
     threads: 1
     wrapper:
-        "v7.0.0/bio/bowtie2/build"
+        "v9.4.1/bio/bowtie2/build"
 
 
 rule bowtie2_align:
@@ -39,4 +39,4 @@ rule bowtie2_align:
         extra=config["mapping"]["bowtie2"]["extra"],
     threads: 8
     wrapper:
-        "v7.0.0/bio/bowtie2/align"
+        "v9.4.1/bio/bowtie2/align"

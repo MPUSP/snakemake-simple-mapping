@@ -9,7 +9,7 @@ rule minimap2_index:
         extra=config["mapping"]["minimap2"]["index"],
     threads: 1
     wrapper:
-        "v7.2.0/bio/minimap2/index"
+        "v7.1.0/bio/minimap2/index"
 
 
 rule minimap2_align:
@@ -29,4 +29,4 @@ rule minimap2_align:
         sort_extra=config["mapping"]["minimap2"]["sort_extra"],
     threads: 8
     wrapper:
-        "v7.2.0/bio/minimap2/aligner"
+        "v9.4.1/bio/minimap2/aligner"

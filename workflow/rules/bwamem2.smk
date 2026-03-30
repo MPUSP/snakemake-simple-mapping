@@ -15,7 +15,7 @@ rule bwa_mem2_index:
     message:
         "build bwa_mem2 index"
     wrapper:
-        "v6.2.0/bio/bwa-mem2/index"
+        "v7.2.0/bio/bwa-mem2/index"
 
 
 rule bwa_mem2:
@@ -38,4 +38,4 @@ rule bwa_mem2:
         sort_extra=config["mapping"]["bwa_mem2"]["sort_extra"],
     threads: 8
     wrapper:
-        "v6.2.0/bio/bwa-mem2/mem"
+        "v9.4.1/bio/bwa-mem2/mem"

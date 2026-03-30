@@ -11,7 +11,7 @@ rule samtools_sort:
         extra=config["mapping"]["samtools_sort"]["extra"],
     threads: 2
     wrapper:
-        "v7.0.0/bio/samtools/sort"
+        "v9.4.1/bio/samtools/sort"
 
 
 rule samtools_index:
@@ -27,7 +27,7 @@ rule samtools_index:
         extra=config["mapping"]["samtools_index"]["extra"],
     threads: 2
     wrapper:
-        "v7.0.0/bio/samtools/index"
+        "v9.4.1/bio/samtools/index"
 
 
 rule gffread_gff:
@@ -44,7 +44,7 @@ rule gffread_gff:
     params:
         extra=config["mapping_stats"]["gffread"]["extra"],
     wrapper:
-        "v7.0.0/bio/gffread"
+        "v5.0.0/bio/gffread"
 
 
 rule rseqc_infer_experiment:
@@ -60,7 +60,7 @@ rule rseqc_infer_experiment:
     params:
         extra="--sample-size 10000",
     wrapper:
-        "v7.0.0/bio/rseqc/infer_experiment"
+        "v4.7.5/bio/rseqc/infer_experiment"
 
 
 rule rseqc_bam_stat:
@@ -76,7 +76,7 @@ rule rseqc_bam_stat:
     message:
         "collect mapping statistics using RSeQC"
     wrapper:
-        "v7.0.0/bio/rseqc/bam_stat"
+        "v5.0.0/bio/rseqc/bam_stat"
 
 
 rule deeptools_coverage:
@@ -96,4 +96,4 @@ rule deeptools_coverage:
     message:
         "generate normalized coverage files using deeptools"
     wrapper:
-        "v7.0.0/bio/deeptools/bamcoverage"
+        "v5.6.0/bio/deeptools/bamcoverage"

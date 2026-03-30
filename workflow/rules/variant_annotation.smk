@@ -26,7 +26,7 @@ rule vep_plugins:
     log:
         "results/vep/plugins.log",
     wrapper:
-        "v7.2.0/bio/vep/plugins"
+        "v9.0.1/bio/vep/plugins"
 
 
 rule vep_annotate_variants:
@@ -49,7 +49,7 @@ rule vep_annotate_variants:
         "annotate variants using VEP"
     threads: 4
     wrapper:
-        "v7.2.0/bio/vep/annotate"
+        "v9.4.0/bio/vep/annotate"
 
 
 rule snpeff_prepare:
