@@ -14,7 +14,10 @@ get_genome:
     ]
 
 processing:
+  tool: "fastp"
   fastp:
+    extra: ""
+  fastplong:
     extra: ""
 
 mapping:

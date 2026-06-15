@@ -31,12 +31,24 @@ properties:
   processing:
     type: object
     properties:
+      tool:
+        type: string
+        description: processing tool to use, one of 'fastp' or 'fastplong'
+        default: fastp
       fastp:
         type: object
         properties:
           extra:
             type: string
             description: additional arguments to pass to fastp
+      fastplong:
+        type: object
+        properties:
+          extra:
+            type: string
+            description: additional arguments to pass to fastplong
+    required:
+      - tool
   mapping:
     type: object
     properties:
