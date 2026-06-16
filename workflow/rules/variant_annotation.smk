@@ -5,15 +5,15 @@ rule vep_prepare:
         gff="results/get_genome/genome_vep.gff",
         gff_gz="results/get_genome/genome.gff.gz",
         index="results/get_genome/genome.gff.gz.tbi",
-    params:
-        convert_gff=config["variant_annotation"]["vep"]["convert_gff"],
-    conda:
-        "../envs/vep.yml"
     log:
         "results/get_genome/tabix.log",
+    conda:
+        "../envs/vep.yml"
+    threads: 1
+    params:
+        convert_gff=config["variant_annotation"]["vep"]["convert_gff"],
     message:
         "prepare genome annotation for VEP"
-    threads: 1
     script:
         "../scripts/convert_gff.py"
 
@@ -21,10 +21,10 @@ rule vep_prepare:
 rule vep_plugins:
     output:
         directory("resources/vep/plugins"),
-    params:
-        release=100,
     log:
         "results/vep/plugins.log",
+    params:
+        release=100,
     wrapper:
         "v9.0.1/bio/vep/plugins"
 
@@ -39,15 +39,15 @@ rule vep_annotate_variants:
     output:
         calls="results/{caller}/effect/{sample}_vep.vcf",
         stats="results/{caller}/effect/{sample}_vep.html",
+    log:
+        "results/{caller}/effect/{sample}_vep.log",
+    threads: 4
     params:
         # available plugins: https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html
         plugins=config["variant_annotation"]["vep"]["plugins"],
         extra=config["variant_annotation"]["vep"]["extra"],
-    log:
-        "results/{caller}/effect/{sample}_vep.log",
     message:
         "annotate variants using VEP"
-    threads: 4
     wrapper:
         "v9.4.0/bio/vep/annotate"
 
@@ -58,15 +58,15 @@ rule snpeff_prepare:
         fasta=rules.get_genome.output.fasta,
     output:
         db=directory(f"results/snpeff/custom_db/{config["get_genome"]["assembly"]}"),
+    log:
+        "results/snpeff/build_db.log",
+    conda:
+        "../envs/snpeff.yml"
     params:
         genome_name=config["get_genome"]["assembly"],
         extra="-noCheckCds -noCheckProtein",
-    log:
-        "results/snpeff/build_db.log",
     message:
         "build custom snpEff database"
-    conda:
-        "../envs/snpeff.yml"
     shell:
         """
         mkdir -p {output.db}
@@ -75,10 +75,10 @@ rule snpeff_prepare:
         cp {input.fasta} {output.db}/sequences.fa
         cp {input.gff} {output.db}/genes.gff
         cp ${{config}} {output.db}/../snpeff.config
-        echo -e "\n# automatic entry by workflow: snakemake-simple-mapping" >> {output.db}/../snpeff.config
-        echo -e "{params.genome_name}.genome : {params.genome_name}" >> {output.db}/../snpeff.config
-        echo -e "{params.genome_name}.retrieval_date : ${{today}}\n" >> {output.db}/../snpeff.config
-        snpEff build {params.extra} -c {output.db}/../snpeff.config -gff3 -dataDir $(realpath {output.db}/../) {params.genome_name} > {log} 2>&1
+        echo -e "\n# automatic entry by workflow: snakemake-simple-mapping" >>{output.db}/../snpeff.config
+        echo -e "{params.genome_name}.genome : {params.genome_name}" >>{output.db}/../snpeff.config
+        echo -e "{params.genome_name}.retrieval_date : ${{today}}\n" >>{output.db}/../snpeff.config
+        snpEff build {params.extra} -c {output.db}/../snpeff.config -gff3 -dataDir $(realpath {output.db}/../) {params.genome_name} >{log} 2>&1
         """
 
 
@@ -90,14 +90,14 @@ rule snpeff:
         calls="results/{caller}/effect/{sample}_snpeff.vcf",
         stats="results/{caller}/effect/{sample}_snpeff.html",
         csvstats="results/{caller}/effect/{sample}_snpeff.csv",
-    params:
-        extra=f"-c results/snpeff/custom_db/snpeff.config {config["variant_annotation"]["snpeff"]["extra"]}",
     log:
         "results/{caller}/effect/{sample}_snpeff.log",
-    message:
-        "annotate variants using snpEff"
     resources:
         java_opts="-XX:ParallelGCThreads=2",
         mem_mb=4096,
+    params:
+        extra=f"-c results/snpeff/custom_db/snpeff.config {config["variant_annotation"]["snpeff"]["extra"]}",
+    message:
+        "annotate variants using snpEff"
     wrapper:
         "v7.2.0/bio/snpeff/annotate"

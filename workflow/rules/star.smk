@@ -3,11 +3,11 @@ rule star_index:
         fasta=rules.get_genome.output.fasta,
     output:
         directory("results/star/index/"),
+    log:
+        "results/star/index/index.log",
     threads: 1
     params:
         extra=config["mapping"]["star"]["index"],
-    log:
-        "results/star/index/index.log",
     message:
         "build star index"
     wrapper:
@@ -24,10 +24,10 @@ rule star_align:
         log_final="results/star/align/{sample}/Log.final.out",
     log:
         "results/star/align/{sample}/mapped.log",
-    message:
-        "make star alignment"
+    threads: 8
     params:
         extra=config["mapping"]["star"]["extra"],
-    threads: 8
+    message:
+        "make star alignment"
     wrapper:
         "v3.3.7/bio/star/align"

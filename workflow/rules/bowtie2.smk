@@ -13,11 +13,11 @@ rule bowtie2_build:
         ),
     log:
         "results/bowtie2/build/build.log",
-    message:
-        "build bowtie2 index"
+    threads: 1
     params:
         extra=config["mapping"]["bowtie2"]["index"],
-    threads: 1
+    message:
+        "build bowtie2 index"
     wrapper:
         "v9.4.1/bio/bowtie2/build"
 
@@ -33,10 +33,10 @@ rule bowtie2_align:
         "results/bowtie2/align/{sample}/mapped.bam",
     log:
         "results/bowtie2/align/{sample}/mapped.log",
-    message:
-        "make bowtie2 alignment"
+    threads: 8
     params:
         extra=config["mapping"]["bowtie2"]["extra"],
-    threads: 8
+    message:
+        "make bowtie2 alignment"
     wrapper:
         "v9.4.1/bio/bowtie2/align"
