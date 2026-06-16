@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.6.0...v1.6.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* added missing star options, bump wrappers ([df64f43](https://github.com/MPUSP/snakemake-simple-mapping/commit/df64f43f5c6df501810bc6093bbbbb2453d07436))
+* added star default options ([a414cf6](https://github.com/MPUSP/snakemake-simple-mapping/commit/a414cf6515eb03f5fa776b8eac251688ed76507c))
+* bump all wrapper versions ([7b39056](https://github.com/MPUSP/snakemake-simple-mapping/commit/7b39056293f0562b5501d860716eb38e06470ef4))
+
 ## [1.6.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.5.0...v1.6.0) (2026-03-21)
 
 
