@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.7.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.6.1...v1.7.0) (2026-06-17)
+
+
+### Features
+
+* add long-read processing. fix samtools index suffix output. ([96ad5a0](https://github.com/MPUSP/snakemake-simple-mapping/commit/96ad5a0311b1ef3a5909f5d26ca69aaf12561a00))
+* added fastplong for long-read preprocessing, closes [#35](https://github.com/MPUSP/snakemake-simple-mapping/issues/35) ([7d2b3cd](https://github.com/MPUSP/snakemake-simple-mapping/commit/7d2b3cd8944bda0819e656a8b021188a7df48c78))
+
+
+### Bug Fixes
+
+* change samtools index suffix to 'bam.bai', closes [#36](https://github.com/MPUSP/snakemake-simple-mapping/issues/36) ([d964651](https://github.com/MPUSP/snakemake-simple-mapping/commit/d964651f8e2761eff168bbc246eaab8923d8f648))
+* linting issue in freebayes rule. ([e38ca09](https://github.com/MPUSP/snakemake-simple-mapping/commit/e38ca09e1533c3a6725e24e7c4538861d680bd9f))
+* modify input file for index. ([dcc31fb](https://github.com/MPUSP/snakemake-simple-mapping/commit/dcc31fb6fc78a82c2bdaa0d2fcdb6aded9eb3892))
+* reorder rules by latest snakefmt ([704f743](https://github.com/MPUSP/snakemake-simple-mapping/commit/704f74393d36e91c1ffd7c1f0f2ee90a641a905e))
+
 ## [1.6.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.6.0...v1.6.1) (2026-03-30)
 
 
