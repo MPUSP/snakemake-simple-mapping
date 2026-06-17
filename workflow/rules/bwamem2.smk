@@ -29,13 +29,13 @@ rule bwa_mem2:
         "results/bwa_mem2/align/{sample}/mapped.bam",
     log:
         "results/bwa_mem2/align/{sample}/mapped.log",
-    message:
-        "make bwa_mem2 alignment"
+    threads: 8
     params:
         extra=config["mapping"]["bwa_mem2"]["extra"],
         sort=config["mapping"]["bwa_mem2"]["sort"],
         sort_order=config["mapping"]["bwa_mem2"]["sort_order"],
         sort_extra=config["mapping"]["bwa_mem2"]["sort_extra"],
-    threads: 8
+    message:
+        "make bwa_mem2 alignment"
     wrapper:
         "v9.4.1/bio/bwa-mem2/mem"

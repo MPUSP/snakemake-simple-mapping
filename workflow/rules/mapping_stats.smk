@@ -5,11 +5,11 @@ rule samtools_sort:
         "results/samtools/sort/{sample}.bam",
     log:
         "results/samtools/sort/{sample}.log",
-    message:
-        "re-sort reads after mapping regardless if mapper did"
+    threads: 2
     params:
         extra=config["mapping"]["samtools_sort"]["extra"],
-    threads: 2
+    message:
+        "re-sort reads after mapping regardless if mapper did"
     wrapper:
         "v9.4.1/bio/samtools/sort"
 
@@ -18,14 +18,14 @@ rule samtools_index:
     input:
         "results/samtools/sort/{sample}.bam",
     output:
-        "results/samtools/sort/{sample}.bai",
+        "results/samtools/sort/{sample}.bam.bai",
     log:
         "results/samtools/sort/{sample}_index.log",
-    message:
-        "index reads"
+    threads: 2
     params:
         extra=config["mapping"]["samtools_index"]["extra"],
-    threads: 2
+    message:
+        "index reads"
     wrapper:
         "v9.4.1/bio/samtools/index"
 
@@ -36,13 +36,13 @@ rule gffread_gff:
         annotation=rules.get_genome.output.gff,
     output:
         records="results/get_genome/genome.bed",
-    threads: 1
     log:
         "results/get_genome/gffread.log",
-    message:
-        "convert genome annotation from GFF to BED format"
+    threads: 1
     params:
         extra=config["mapping_stats"]["gffread"]["extra"],
+    message:
+        "convert genome annotation from GFF to BED format"
     wrapper:
         "v5.0.0/bio/gffread"
 
@@ -55,10 +55,10 @@ rule rseqc_infer_experiment:
         "results/rseqc/infer_experiment/{sample}.txt",
     log:
         "results/rseqc/infer_experiment/{sample}.log",
-    message:
-        "infer experiment type from mapping to features"
     params:
         extra="--sample-size 10000",
+    message:
+        "infer experiment type from mapping to features"
     wrapper:
         "v4.7.5/bio/rseqc/infer_experiment"
 
@@ -68,11 +68,11 @@ rule rseqc_bam_stat:
         "results/samtools/sort/{sample}.bam",
     output:
         "results/rseqc/bam_stat/{sample}.txt",
+    log:
+        "results/rseqc/bam_stat/{sample}.log",
     threads: 2
     params:
         extra="--mapq 5",
-    log:
-        "results/rseqc/bam_stat/{sample}.log",
     message:
         "collect mapping statistics using RSeQC"
     wrapper:
@@ -82,17 +82,17 @@ rule rseqc_bam_stat:
 rule deeptools_coverage:
     input:
         bam="results/samtools/sort/{sample}.bam",
-        bai="results/samtools/sort/{sample}.bai",
+        bai="results/samtools/sort/{sample}.bam.bai",
     output:
         "results/deeptools/coverage/{sample}.bw",
+    log:
+        "results/deeptools/coverage/{sample}.log",
     threads: 4
     params:
         effective_genome_size=config["mapping_stats"]["deeptools_coverage"][
             "genome_size"
         ],
         extra=config["mapping_stats"]["deeptools_coverage"]["extra"],
-    log:
-        "results/deeptools/coverage/{sample}.log",
     message:
         "generate normalized coverage files using deeptools"
     wrapper:
