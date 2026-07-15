@@ -21,7 +21,7 @@ include: "rules/report.smk"
 
 # container definition (optional)
 # -----------------------------------------------------
-container: "oras://ghcr.io/mpusp/snakemake-simple-mapping:latest"
+containerized: "oras://ghcr.io/mpusp/snakemake-simple-mapping:latest"
 
 
 # optional messages, log and error handling
@@ -41,10 +41,10 @@ onerror:
 # target rules
 # -----------------------------------------------------
 rule all:
+    default_target: True
     input:
         "results/multiqc/multiqc_report.html",
         expand(
             "results/report/{caller}_report.pdf",
             caller=config["variant_calling"]["tool"],
         ),
-    default_target: True
