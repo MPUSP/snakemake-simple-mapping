@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.2](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.7.1...v1.7.2) (2026-07-15)
+
+
+### Bug Fixes
+
+* added missing dep ([3f409eb](https://github.com/MPUSP/snakemake-simple-mapping/commit/3f409eb0457cddbb6dd73f54e8af0fe34df2f699))
+* added missing dep ([620438c](https://github.com/MPUSP/snakemake-simple-mapping/commit/620438c872030ae607a5c2b00ffec5d7609d4ab7))
+
 ## [1.7.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.7.0...v1.7.1) (2026-07-15)
 
 
