@@ -41,10 +41,10 @@ onerror:
 # target rules
 # -----------------------------------------------------
 rule all:
+    default_target: True
     input:
         "results/multiqc/multiqc_report.html",
         expand(
             "results/report/{caller}_report.pdf",
             caller=config["variant_calling"]["tool"],
         ),
-    default_target: True
