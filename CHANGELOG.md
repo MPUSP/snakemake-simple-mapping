@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.7.0...v1.7.1) (2026-07-15)
+
+
+### Bug Fixes
+
+* container directive ([a1c7c7a](https://github.com/MPUSP/snakemake-simple-mapping/commit/a1c7c7a780eda2bbdade677ae035482a109267b6))
+* container directive ([ba794aa](https://github.com/MPUSP/snakemake-simple-mapping/commit/ba794aa60727bad4d4a06abdeb5d61de1a3bec31))
+* formatting ([cc144df](https://github.com/MPUSP/snakemake-simple-mapping/commit/cc144dfa1dc34054bde7f8e23b30275f98e56cd1))
+
 ## [1.7.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.6.1...v1.7.0) (2026-06-17)
 
 
