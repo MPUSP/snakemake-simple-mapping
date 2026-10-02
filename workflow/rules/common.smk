@@ -86,8 +86,9 @@ def get_multiqc_input(wildcards):
         tool=config["mapping"]["tool"],
     )
     result += expand(
-        "results/fastp/{sample}.json",
+        "results/{tool}/{sample}.json",
         sample=samples.index,
+        tool=config["processing"]["tool"],
     )
     result += expand(
         "results/rseqc/{tool}/{sample}.txt",
@@ -120,3 +121,18 @@ def get_multiqc_input(wildcards):
         ),
     )
     return result
+
+
+# stop workflow when paired-end reads are used as input for fastplong
+if is_paired_end() and config["processing"]["tool"] == "fastplong":
+    raise SystemExit(
+        "Error: fastplong cannot be used with paired-end reads in this workflow."
+    )
+
+# trigger warning when paired-end reads are used with minimap2
+if is_paired_end() and config["mapping"]["tool"] == "minimap2":
+    print(
+        "WARNING: minimap2 is being used with paired-end reads.\n"
+        + "This is possible but may require additional parameters to run.\n"
+        + "Please consult the minimap2 documentation for details."
+    )

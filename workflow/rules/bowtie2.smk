@@ -25,8 +25,9 @@ rule bowtie2_build:
 rule bowtie2_align:
     input:
         sample=expand(
-            "results/fastp/{{sample}}_{read}.fastq.gz",
+            "results/{tool}/{{sample}}_{read}.fastq.gz",
             read=["read1", "read2"] if is_paired_end() else ["read1"],
+            tool=config["processing"]["tool"],
         ),
         idx=rules.bowtie2_build.output,
     output:

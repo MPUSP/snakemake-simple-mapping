@@ -21,8 +21,9 @@ rule bwa_mem2_index:
 rule bwa_mem2:
     input:
         reads=expand(
-            "results/fastp/{{sample}}_{read}.fastq.gz",
+            "results/{tool}/{{sample}}_{read}.fastq.gz",
             read=["read1", "read2"] if is_paired_end() else ["read1"],
+            tool=config["processing"]["tool"],
         ),
         idx=rules.bwa_mem2_index.output,
     output:

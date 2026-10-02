@@ -16,8 +16,20 @@ rule star_index:
 
 rule star_align:
     input:
-        fq1="results/fastp/{sample}_read1.fastq.gz",
-        fq2="results/fastp/{sample}_read2.fastq.gz" if is_paired_end() else [],
+        fq1=expand(
+            "results/{tool}/{sample}_read1.fastq.gz",
+            sample=samples.index,
+            tool=config["processing"]["tool"],
+        ),
+        fq2=(
+            expand(
+                "results/{tool}/{sample}_read2.fastq.gz",
+                sample=samples.index,
+                tool=config["processing"]["tool"],
+            )
+            if is_paired_end()
+            else []
+        ),
         idx=rules.star_index.output,
     output:
         aln="results/star/align/{sample}/mapped.bam",
