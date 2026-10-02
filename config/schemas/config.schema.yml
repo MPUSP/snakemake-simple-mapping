@@ -169,6 +169,7 @@ properties:
           extra:
             type: string
             description: additional arguments to pass to DeepTools plotCoverage
+            default: "--numberOfSamples 10000 --skipZeros --coverageThresholds 1"
     required:
       - gffread
       - rseqc_infer_experiment
