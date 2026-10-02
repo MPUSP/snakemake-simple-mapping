@@ -17,14 +17,12 @@ rule star_index:
 rule star_align:
     input:
         fq1=expand(
-            "results/{tool}/{sample}_read1.fastq.gz",
-            sample=samples.index,
+            "results/{tool}/{{sample}}_read1.fastq.gz",
             tool=config["processing"]["tool"],
         ),
         fq2=(
             expand(
-                "results/{tool}/{sample}_read2.fastq.gz",
-                sample=samples.index,
+                "results/{tool}/{{sample}}_read2.fastq.gz",
                 tool=config["processing"]["tool"],
             )
             if is_paired_end()

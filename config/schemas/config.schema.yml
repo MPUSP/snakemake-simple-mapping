@@ -175,6 +175,7 @@ properties:
       - rseqc_infer_experiment
       - rseqc_bam_stat
       - deeptools_coverage
+      - deeptools_plotcoverage
   variant_calling:
     type: object
     properties:
