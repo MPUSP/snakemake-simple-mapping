@@ -1,6 +1,7 @@
 # import basic packages
 import pandas as pd
 from snakemake.utils import validate
+from snakemake.logging import logger
 from pathlib import Path
 
 # read sample sheet
@@ -86,8 +87,9 @@ def get_multiqc_input(wildcards):
         tool=config["mapping"]["tool"],
     )
     result += expand(
-        "results/fastp/{sample}.json",
+        "results/{tool}/{sample}.json",
         sample=samples.index,
+        tool=config["processing"]["tool"],
     )
     result += expand(
         "results/rseqc/{tool}/{sample}.txt",
@@ -120,3 +122,21 @@ def get_multiqc_input(wildcards):
         ),
     )
     return result
+
+
+# stop workflow when paired-end reads are used as input for fastplong
+if is_paired_end() and config["processing"]["tool"] == "fastplong":
+    config["processing"]["tool"] = "fastp"
+    logger.warning(
+        "\nWARNING: fastplong cannot be used with paired-end reads in this workflow.\n"
+        + "Fastp will be used as a replacement.\n"
+        + "Please consult the fastplong documentation for details.\n"
+    )
+
+# trigger warning when paired-end reads are used with minimap2
+if is_paired_end() and config["mapping"]["tool"] == "minimap2":
+    logger.warning(
+        "\nWARNING: minimap2 is being used with paired-end reads.\n"
+        + "This is possible but may require additional parameters to run.\n"
+        + "Please consult the minimap2 documentation for details.\n"
+    )

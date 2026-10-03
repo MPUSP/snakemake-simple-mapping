@@ -111,6 +111,6 @@ rule deeptools_plotcoverage:
         "results/deeptools/coverage/{sample}_coverage.log",
     threads: 4
     params:
-        extra="--coverageThresholds 1",
+        extra=config["mapping_stats"]["deeptools_plotcoverage"]["extra"],
     wrapper:
         "v5.6.0/bio/deeptools/plotcoverage"
