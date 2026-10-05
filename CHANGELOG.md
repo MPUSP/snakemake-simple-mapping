@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.8.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.8.0...v1.8.1) (2026-10-03)
+
+
+### Bug Fixes
+
+* expose deeptools coverage args, defaults for better performance ([e2ca17d](https://github.com/MPUSP/snakemake-simple-mapping/commit/e2ca17d04e500980a53dd4b4c01bb28843c9cd9c))
+* fastplong wired in workflow and expose tool args ([02e89f7](https://github.com/MPUSP/snakemake-simple-mapping/commit/02e89f74c31b6927ea36c83ec550d71bef4384b0))
+* review comments ([76caecc](https://github.com/MPUSP/snakemake-simple-mapping/commit/76caeccf3a6a34f3563299074138f8ffedee6c5a))
+* wire fastplong into workflow as alt to fastp ([31ce410](https://github.com/MPUSP/snakemake-simple-mapping/commit/31ce410c0706f2f617c0db68b49694ca6f7b294e))
+
 ## [1.8.0](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.7.2...v1.8.0) (2026-08-20)
 
 
