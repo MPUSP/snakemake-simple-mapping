@@ -213,8 +213,19 @@ cols_select <- c(
   "GENE", "AA_CHANGE", "CODON_CHANGE", "INDEL"
 )
 
-# import consensus file
+# import consensus files
 list_consensus <- snakemake@input$consensus
+index_consensus <- snakemake@input$consensus_index
+
+names_consensus <- read_tsv(
+  index_consensus,
+  show_col_types = FALSE,
+  skip = 4,
+  col_names = c("col1", "col2", "col3")
+) %>%
+  mutate(name = str_split_i(col3, "\\/", i = 4) %>% str_remove("\\_(vep|snpeff)\\.vcf\\.gz$")) %>%
+  pull(name)
+
 df_consensus <- read_tsv(
   list_consensus,
   show_col_types = FALSE,
@@ -224,12 +235,12 @@ df_consensus <- read_tsv(
     POS = as.numeric(POS),
     APPEARANCE = as.character(APPEARANCE)
   ) %>%
-  separate_wider_position(APPEARANCE, width = setNames(rep_along(df_samples$sample, 1), df_samples$sample)) %>%
+  separate_wider_position(APPEARANCE, width = setNames(rep_along(names_consensus, 1), names_consensus)) %>%
   rowwise() %>%
   mutate(
-    across(df_samples$sample, as.numeric),
-    N_SAMPLES_ABS = sum(c_across(df_samples$sample)),
-    N_SAMPLES_REL = N_SAMPLES_ABS / length(df_samples$sample)
+    across(names_consensus, as.numeric),
+    N_SAMPLES_ABS = sum(c_across(names_consensus)),
+    N_SAMPLES_REL = N_SAMPLES_ABS / length(names_consensus)
   )
 
 # add variant information and export annotated table
