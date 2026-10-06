@@ -199,14 +199,11 @@ if ("CSQ" %in% colnames(df)) {
 **Consensus variants**
 
 - All variants which are detected in a number of samples exceeding the predefined threshold are listed in the following consensus table.
-- The table can also be found in `report/<variant_caller>_report.tsv`.
+- The table can also be found in `results/report/<variant_caller>_report.tsv`.
 - *NOTE: Tables are only rendered in HTML output but not PDF.*
 
 
 ```{r}
-# import sample sheet
-df_samples <- read_tsv(snakemake@config$samplesheet, show_col_types = FALSE)
-
 # annotation columns to select
 cols_select <- c(
   "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
@@ -241,7 +238,8 @@ df_consensus <- read_tsv(
     across(names_consensus, as.numeric),
     N_SAMPLES_ABS = sum(c_across(names_consensus)),
     N_SAMPLES_REL = N_SAMPLES_ABS / length(names_consensus)
-  )
+  ) %>%
+  ungroup()
 
 # add variant information and export annotated table
 df_consensus <- df_consensus %>%

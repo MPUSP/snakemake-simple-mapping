@@ -18,7 +18,7 @@ rule bcftools_intersection:
     input:
         get_variants,
     output:
-        consensus="results/{caller}/consensus/variants.vcf",
+        consensus="results/{caller}/consensus/variants.tsv",
         consensus_index="results/{caller}/consensus/README.txt",
     log:
         "results/{caller}/consensus/variants.log",
@@ -43,7 +43,7 @@ rule report_html:
         fasta=rules.get_genome.output.fasta,
         gff=rules.get_genome.output.gff,
         variants=get_variants,
-        consensus="results/{caller}/consensus/variants.vcf",
+        consensus="results/{caller}/consensus/variants.tsv",
         consensus_index="results/{caller}/consensus/README.txt",
     output:
         html="results/report/{caller}_report.html",
