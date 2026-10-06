@@ -180,8 +180,9 @@ properties:
     type: object
     properties:
       tool:
-        type: [string, array]
-        description: the variant caller to use, one of 'freebayes', 'bcftools', or both
+        type: [string, array, "null"]
+        description: the variant caller to use, one of 'freebayes', 'bcftools', both, or none (empty list, 'null')
+        default: freebayes
       bcftools_pileup:
         type: object
         properties:
