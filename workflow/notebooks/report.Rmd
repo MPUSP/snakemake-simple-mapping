@@ -184,15 +184,29 @@ df <- lapply(list_variants, function(file) {
 
 # parse the variant effect column
 if ("CSQ" %in% colnames(df)) {
+  # FROM VEP
   df <- df %>%
     mutate(CSQ = str_split(CSQ, "\\|")) %>%
     unnest_wider(CSQ, names_sep = "_") %>%
     dplyr::rename(
       VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
-      AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
+      DNA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
     ) %>%
     dplyr::select(-matches("CSQ_")) %>%
     mutate(VARTYPE = gsub("coding_sequence_variant&", "", VARTYPE))
+} else if ("ANN" %in% colnames(df)) {
+  # FROM SNPEFF
+  df <- df %>%
+    mutate(ANN = str_split(ANN, "\\|")) %>%
+    unnest_wider(ANN, names_sep = "_") %>%
+    dplyr::rename(
+      VARTYPE = `ANN_2`, IMPACT = `ANN_3`, GENE = `ANN_4`,
+      CODON_CHANGE = `ANN_11`
+    ) %>%
+    unite("DNA_CHANGE", matches("ANN_(7|8|9|10)"), sep = "|", remove = TRUE) %>%
+    dplyr::select(-matches("ANN_"))
+} else {
+  stop("No recognized variant effect columns found ('CSQ' from VEP or 'ANN' from SNPEFF).")
 }
 ```
 
@@ -207,7 +221,7 @@ if ("CSQ" %in% colnames(df)) {
 # annotation columns to select
 cols_select <- c(
   "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
-  "GENE", "AA_CHANGE", "CODON_CHANGE", "INDEL"
+  "GENE", "DNA_CHANGE", "CODON_CHANGE", "INDEL"
 )
 
 # import consensus files
@@ -235,7 +249,7 @@ df_consensus <- read_tsv(
   separate_wider_position(APPEARANCE, width = setNames(rep_along(names_consensus, 1), names_consensus)) %>%
   rowwise() %>%
   mutate(
-    across(names_consensus, as.numeric),
+    across(all_of(names_consensus), as.numeric),
     N_SAMPLES_ABS = sum(c_across(names_consensus)),
     N_SAMPLES_REL = N_SAMPLES_ABS / length(names_consensus)
   ) %>%
