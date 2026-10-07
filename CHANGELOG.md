@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.8.2](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.8.1...v1.8.2) (2026-10-07)
+
+
+### Bug Fixes
+
+* [#48](https://github.com/MPUSP/snakemake-simple-mapping/issues/48) ([1f2ae56](https://github.com/MPUSP/snakemake-simple-mapping/commit/1f2ae56332d1362e1ed19f4232317513ed2b5aad))
+* [#51](https://github.com/MPUSP/snakemake-simple-mapping/issues/51) ([ba84424](https://github.com/MPUSP/snakemake-simple-mapping/commit/ba84424ffe8d3064a7992406f9a5904dd73c0979))
+* allow to switch off variant calling ([0d77049](https://github.com/MPUSP/snakemake-simple-mapping/commit/0d770490312b1a45ee89e0c77ce07a8f022c343a))
+* report snpeff variant effects ([34034eb](https://github.com/MPUSP/snakemake-simple-mapping/commit/34034eb51118ca04476c7ee3f30b4a35f5cfcdc1))
+* review comments ([da30a25](https://github.com/MPUSP/snakemake-simple-mapping/commit/da30a256b18fe8a6e3cf37e5a21c420e1db4f585))
+* write improved consensus variant table as diagnostic output ([24f7456](https://github.com/MPUSP/snakemake-simple-mapping/commit/24f7456af97652bf642a314322bf5b509b920311))
+
 ## [1.8.1](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.8.0...v1.8.1) (2026-10-03)
 
 
