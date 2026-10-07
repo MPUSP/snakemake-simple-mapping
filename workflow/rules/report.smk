@@ -18,7 +18,8 @@ rule bcftools_intersection:
     input:
         get_variants,
     output:
-        "results/{caller}/consensus/variants.vcf",
+        consensus="results/{caller}/consensus/variants.tsv",
+        consensus_index="results/{caller}/consensus/README.txt",
     log:
         "results/{caller}/consensus/variants.log",
     conda:
@@ -29,7 +30,12 @@ rule bcftools_intersection:
     message:
         "intersect variant calls from different callers"
     shell:
-        "bcftools isec -n+{params.vcf_count} {params.extra} -o {output} {input}"
+        """
+        output_dir="$(dirname {output.consensus})"
+        bcftools isec -p ${{output_dir}} -n+{params.vcf_count} {params.extra} {input} >{log} 2>&1
+        mv ${{output_dir}}/sites.txt {output.consensus}
+        rm -rf ${{output_dir}}/0*.vcf
+        """
 
 
 rule report_html:
@@ -37,7 +43,8 @@ rule report_html:
         fasta=rules.get_genome.output.fasta,
         gff=rules.get_genome.output.gff,
         variants=get_variants,
-        consensus="results/{caller}/consensus/variants.vcf",
+        consensus="results/{caller}/consensus/variants.tsv",
+        consensus_index="results/{caller}/consensus/README.txt",
     output:
         html="results/report/{caller}_report.html",
     log:

@@ -105,22 +105,35 @@ def get_multiqc_input(wildcards):
         sample=samples.index,
         ext=["png", "raw", "metrics"],
     )
-    result += expand(
-        "results/{caller}/call/{sample}{ext}",
-        sample=samples.index,
-        caller=config["variant_calling"]["tool"],
-        ext=["_stats.txt", "_all.vcf", "_variants.vcf"],
-    )
-    result += expand(
-        "results/{caller}/effect/{sample}{ext}",
-        sample=samples.index,
-        caller=config["variant_calling"]["tool"],
-        ext=(
-            ["_vep.vcf", "_vep.html"]
-            if config["variant_annotation"]["tool"] == "vep"
-            else ["_snpeff.vcf", "_snpeff.csv"]
-        ),
-    )
+    if config["variant_calling"]["tool"] not in [None, [], "null"]:
+        result += expand(
+            "results/{caller}/call/{sample}{ext}",
+            sample=samples.index,
+            caller=config["variant_calling"]["tool"],
+            ext=["_stats.txt", "_all.vcf", "_variants.vcf"],
+        )
+        result += expand(
+            "results/{caller}/effect/{sample}{ext}",
+            sample=samples.index,
+            caller=config["variant_calling"]["tool"],
+            ext=(
+                ["_vep.vcf", "_vep.html"]
+                if config["variant_annotation"]["tool"] == "vep"
+                else ["_snpeff.vcf", "_snpeff.csv"]
+            ),
+        )
+    return result
+
+
+# get targets for entire workflow
+def get_targets():
+    result = []
+    result += ["results/multiqc/multiqc_report.html"]
+    if config["variant_calling"]["tool"] not in [None, [], "null"]:
+        result += expand(
+            "results/report/{caller}_report.pdf",
+            caller=config["variant_calling"]["tool"],
+        )
     return result
 
 

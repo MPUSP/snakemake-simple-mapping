@@ -36,6 +36,9 @@ Loaded required R packages:
 - `GenomicFeatures`
 - `Biostrings`
 
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+```
 
 ```{r}
 suppressPackageStartupMessages({
@@ -47,10 +50,6 @@ suppressPackageStartupMessages({
   library(GenomicFeatures)
   library(Biostrings)
 })
-```
-
-```{r}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 ```
 
 ```{r}
@@ -81,8 +80,9 @@ custom_range <- function(n = 5, quantitative = FALSE) {
 }
 
 custom_theme <- function(
-    base_size = 12, base_line_size = 1.0,
-    base_rect_size = 1.0, ...) {
+  base_size = 12, base_line_size = 1.0,
+  base_rect_size = 1.0, ...
+) {
   theme_light(
     base_size = base_size,
     base_line_size = base_line_size,
@@ -129,8 +129,9 @@ figheight <- 4.5
 
 # function to export an image as svg and png
 save_plot <- function(
-    pl, path = figure_dir,
-    width = figwidth, height = figheight, index = NA) {
+  pl, path = figure_dir,
+  width = figwidth, height = figheight, index = NA
+) {
   pl_name <- deparse(substitute(pl))
   if (!is.na(index)) pl_name <- paste0(pl_name, "_", index)
   svg(
@@ -163,10 +164,6 @@ list_variants <- unlist(snakemake@input$variants)
 print(list_variants)
 ```
 
-The imported variant data has the following layout (first 10 rows shown):
-
-- *NOTE: tables are only rendered in HTML output but not PDF.*
-
 ```{r}
 df <- lapply(list_variants, function(file) {
   properties <- strsplit(file, "/")[[1]]
@@ -187,29 +184,91 @@ df <- lapply(list_variants, function(file) {
 
 # parse the variant effect column
 if ("CSQ" %in% colnames(df)) {
+  # FROM VEP
   df <- df %>%
     mutate(CSQ = str_split(CSQ, "\\|")) %>%
     unnest_wider(CSQ, names_sep = "_") %>%
     dplyr::rename(
       VARTYPE = `CSQ_2`, IMPACT = `CSQ_3`, GENE = `CSQ_4`,
-      AA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
+      DNA_CHANGE = `CSQ_11`, CODON_CHANGE = `CSQ_16`
     ) %>%
     dplyr::select(-matches("CSQ_")) %>%
     mutate(VARTYPE = gsub("coding_sequence_variant&", "", VARTYPE))
+} else if ("ANN" %in% colnames(df)) {
+  # FROM SNPEFF
+  df <- df %>%
+    mutate(ANN = str_split(ANN, "\\|")) %>%
+    unnest_wider(ANN, names_sep = "_") %>%
+    dplyr::rename(
+      VARTYPE = `ANN_2`, IMPACT = `ANN_3`, GENE = `ANN_4`,
+      CODON_CHANGE = `ANN_11`
+    ) %>%
+    unite("DNA_CHANGE", matches("ANN_(7|8|9|10)"), sep = "|", remove = TRUE) %>%
+    dplyr::select(-matches("ANN_"))
+} else {
+  stop("No recognized variant effect columns found ('CSQ' from VEP or 'ANN' from SNPEFF).")
 }
-
-head(df, n = 10)
 ```
 
+**Consensus variants**
+
+- All variants which are detected in a number of samples exceeding the predefined threshold are listed in the following consensus table.
+- The table can also be found in `results/report/<variant_caller>_report.tsv`.
+- *NOTE: Tables are only rendered in HTML output but not PDF.*
+
+
 ```{r}
-# import consensus file
+# annotation columns to select
+cols_select <- c(
+  "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
+  "GENE", "DNA_CHANGE", "CODON_CHANGE", "INDEL"
+)
+
+# import consensus files
 list_consensus <- snakemake@input$consensus
+index_consensus <- snakemake@input$consensus_index
+
+names_consensus <- read_tsv(
+  index_consensus,
+  show_col_types = FALSE,
+  skip = 4,
+  col_names = c("col1", "col2", "col3")
+) %>%
+  mutate(name = str_split_i(col3, "\\/", i = 4) %>% str_remove("\\_(vep|snpeff)\\.vcf\\.gz$")) %>%
+  pull(name)
+
 df_consensus <- read_tsv(
   list_consensus,
   show_col_types = FALSE,
   col_names = c("CHROM", "POS", "REF", "ALT", "APPEARANCE")
 ) %>%
-  mutate(POS = as.numeric(POS))
+  mutate(
+    POS = as.numeric(POS),
+    APPEARANCE = as.character(APPEARANCE)
+  ) %>%
+  separate_wider_position(APPEARANCE, width = setNames(rep_along(names_consensus, 1), names_consensus)) %>%
+  rowwise() %>%
+  mutate(
+    across(all_of(names_consensus), as.numeric),
+    N_SAMPLES_ABS = sum(c_across(names_consensus)),
+    N_SAMPLES_REL = N_SAMPLES_ABS / length(names_consensus)
+  ) %>%
+  ungroup()
+
+# add variant information and export annotated table
+df_consensus <- df_consensus %>%
+  left_join(
+    df %>% dplyr::select(any_of(cols_select)) %>%
+      distinct(),
+    by = join_by(CHROM, POS, REF, ALT)
+  ) %>%
+  dplyr::select(any_of(c(cols_select, "N_SAMPLES_ABS", "N_SAMPLES_REL")), everything()) %>%
+  arrange(CHROM, POS)
+
+output_table <- str_replace(snakemake@output$html, "\\.html$", ".tsv")
+write_tsv(df_consensus, file = output_table)
+
+df_consensus
 ```
 
 ```{r}
@@ -332,7 +391,10 @@ for (chrom in chromosomes) {
   
 ```{r}
 df_filtered <- df %>%
-  inner_join(df_consensus, by = join_by(CHROM, POS, REF, ALT))
+  inner_join(
+    dplyr::select(df_consensus, CHROM, POS, REF, ALT),
+    by = join_by(CHROM, POS, REF, ALT)
+  )
 
 no_var_message <- paste0(
   "No variants detected that appear more than ", vcf_count, " times"
@@ -558,10 +620,6 @@ if (nrow(df_filtered)) {
 
 ```{r}
 filter_variants <- function(df, vartype, topn) {
-  cols_select <- c(
-    "CHROM", "POS", "REF", "ALT", "VARTYPE", "IMPACT",
-    "GENE", "AA_CHANGE", "CODON_CHANGE", "INDEL"
-  )
   if ("VARTYPE" %in% colnames(df)) {
     return(
       df %>%
