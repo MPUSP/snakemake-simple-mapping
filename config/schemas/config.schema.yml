@@ -180,9 +180,14 @@ properties:
     type: object
     properties:
       tool:
-        type: [string, array, "null"]
-        description: the variant caller to use, one of 'freebayes', 'bcftools', both, or none (empty list, 'null')
+        type: [string, array]
+        description: the variant caller to use, one of 'freebayes', 'bcftools', both, or none (empty list)
         default: freebayes
+        items:
+          type: string
+          enum:
+            - freebayes
+            - bcftools
       bcftools_pileup:
         type: object
         properties:
@@ -239,9 +244,14 @@ properties:
     type: object
     properties:
       tool:
-        type: string
-        description: annotation tool to use, one of 'vep', 'snpeff'
+        type: [string, array]
+        description: annotation tool to use, one of 'vep', 'snpeff', both, or none (empty list)
         default: vep
+        items:
+          type: string
+          enum:
+            - vep
+            - snpeff
       vep:
         type: object
         properties:

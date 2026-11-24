@@ -61,14 +61,10 @@ def get_bam(wildcards):
 # get variant files to make consensus
 def get_variants(wildcards):
     return expand(
-        "results/{caller}/effect/{sample}{ext}.gz",
+        "results/{caller}/{annotater}/{sample}.vcf.gz",
         caller=wildcards.caller,
+        annotater=wildcards.annotater,
         sample=samples.index,
-        ext=(
-            "_vep.vcf"
-            if config["variant_annotation"]["tool"] == "vep"
-            else "_snpeff.vcf"
-        ),
     )
 
 
@@ -105,23 +101,32 @@ def get_multiqc_input(wildcards):
         sample=samples.index,
         ext=["png", "raw", "metrics"],
     )
-    if config["variant_calling"]["tool"] not in [None, [], "null"]:
+    if config["variant_calling"]["tool"] not in [None, []]:
         result += expand(
             "results/{caller}/call/{sample}{ext}",
             sample=samples.index,
             caller=config["variant_calling"]["tool"],
             ext=["_stats.txt", "_all.vcf", "_variants.vcf"],
         )
-        result += expand(
-            "results/{caller}/effect/{sample}{ext}",
-            sample=samples.index,
-            caller=config["variant_calling"]["tool"],
-            ext=(
-                ["_vep.vcf", "_vep.html"]
-                if config["variant_annotation"]["tool"] == "vep"
-                else ["_snpeff.vcf", "_snpeff.csv"]
-            ),
-        )
+        if config["variant_annotation"]["tool"] not in [None, []]:
+            result += expand(
+                "results/{caller}/{annotater}/{sample}.vcf",
+                sample=samples.index,
+                caller=config["variant_calling"]["tool"],
+                annotater=config["variant_annotation"]["tool"],
+            )
+            if "vep" in config["variant_annotation"]["tool"]:
+                result += expand(
+                    "results/{caller}/vep/{sample}.html",
+                    sample=samples.index,
+                    caller=config["variant_calling"]["tool"],
+                )
+            if "snpeff" in config["variant_annotation"]["tool"]:
+                result += expand(
+                    "results/{caller}/snpeff/{sample}.csv",
+                    sample=samples.index,
+                    caller=config["variant_calling"]["tool"],
+                )
     return result
 
 
@@ -129,10 +134,11 @@ def get_multiqc_input(wildcards):
 def get_targets():
     result = []
     result += ["results/multiqc/multiqc_report.html"]
-    if config["variant_calling"]["tool"] not in [None, [], "null"]:
+    if config["variant_annotation"]["tool"] not in [None, []]:
         result += expand(
-            "results/report/{caller}_report.pdf",
+            "results/report/{caller}/{annotater}/report.pdf",
             caller=config["variant_calling"]["tool"],
+            annotater=config["variant_annotation"]["tool"],
         )
     return result
 

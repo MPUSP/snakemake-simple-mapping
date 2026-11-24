@@ -1,11 +1,11 @@
 rule bcftools_bcf_and_index:
     input:
-        "results/{caller}/effect/{sample}{ext}",
+        "results/{caller}/{annotater}/{sample}{ext}",
     output:
-        "results/{caller}/effect/{sample}{ext}.gz",
-        "results/{caller}/effect/{sample}{ext}.gz.csi",
+        "results/{caller}/{annotater}/{sample}{ext}.gz",
+        "results/{caller}/{annotater}/{sample}{ext}.gz.csi",
     log:
-        "results/{caller}/effect/{sample}{ext}.gz.log",
+        "results/{caller}/{annotater}/{sample}{ext}.gz.log",
     params:
         extra="--write-index",
     message:
@@ -18,10 +18,10 @@ rule bcftools_intersection:
     input:
         get_variants,
     output:
-        consensus="results/{caller}/consensus/variants.tsv",
-        consensus_index="results/{caller}/consensus/README.txt",
+        consensus="results/{caller}/{annotater}/consensus/variants.tsv",
+        consensus_index="results/{caller}/{annotater}/consensus/README.txt",
     log:
-        "results/{caller}/consensus/variants.log",
+        "results/{caller}/{annotater}/consensus/variants.log",
     conda:
         "../envs/bcftools.yml"
     params:
@@ -43,12 +43,12 @@ rule report_html:
         fasta=rules.get_genome.output.fasta,
         gff=rules.get_genome.output.gff,
         variants=get_variants,
-        consensus="results/{caller}/consensus/variants.tsv",
-        consensus_index="results/{caller}/consensus/README.txt",
+        consensus="results/{caller}/{annotater}/consensus/variants.tsv",
+        consensus_index="results/{caller}/{annotater}/consensus/README.txt",
     output:
-        html="results/report/{caller}_report.html",
+        html="results/report/{caller}/{annotater}/report.html",
     log:
-        "results/report/{caller}_report.log",
+        "results/report/{caller}/{annotater}/report.log",
     conda:
         "../envs/report_html.yml"
     params:
@@ -61,11 +61,11 @@ rule report_html:
 
 rule report_pdf:
     input:
-        html="results/report/{caller}_report.html",
+        html="results/report/{caller}/{annotater}/report.html",
     output:
-        pdf="results/report/{caller}_report.pdf",
+        pdf="results/report/{caller}/{annotater}/report.pdf",
     log:
-        path="results/report/{caller}_report_pdf.log",
+        path="results/report/{caller}/{annotater}/report_pdf.log",
     conda:
         "../envs/report_pdf.yml"
     message:

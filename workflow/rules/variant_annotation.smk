@@ -37,10 +37,10 @@ rule vep_annotate_variants:
         fai=rules.get_genome.output.fai,
         gff=rules.vep_prepare.output.gff_gz,
     output:
-        calls="results/{caller}/effect/{sample}_vep.vcf",
-        stats="results/{caller}/effect/{sample}_vep.html",
+        calls="results/{caller}/vep/{sample}.vcf",
+        stats="results/{caller}/vep/{sample}.html",
     log:
-        "results/{caller}/effect/{sample}_vep.log",
+        "results/{caller}/vep/{sample}.log",
     threads: 4
     params:
         # available plugins: https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html
@@ -87,11 +87,11 @@ rule snpeff:
         calls="results/{caller}/call/{sample}.bcf",
         db=f"results/snpeff/custom_db/{config["get_genome"]["assembly"]}",
     output:
-        calls="results/{caller}/effect/{sample}_snpeff.vcf",
-        stats="results/{caller}/effect/{sample}_snpeff.html",
-        csvstats="results/{caller}/effect/{sample}_snpeff.csv",
+        calls="results/{caller}/snpeff/{sample}.vcf",
+        stats="results/{caller}/snpeff/{sample}.html",
+        csvstats="results/{caller}/snpeff/{sample}.csv",
     log:
-        "results/{caller}/effect/{sample}_snpeff.log",
+        "results/{caller}/snpeff/{sample}.log",
     resources:
         java_opts="-XX:ParallelGCThreads=2",
         mem_mb=4096,
