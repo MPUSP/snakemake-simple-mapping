@@ -57,7 +57,7 @@ rule snpeff_prepare:
         gff=rules.vep_prepare.output.gff,
         fasta=rules.get_genome.output.fasta,
     output:
-        db=directory(f"results/snpeff/custom_db/{config["get_genome"]["assembly"]}"),
+        db=directory(snpeff_db),
     log:
         "results/snpeff/build_db.log",
     conda:
@@ -85,7 +85,7 @@ rule snpeff_prepare:
 rule snpeff:
     input:
         calls="results/{caller}/call/{sample}.bcf",
-        db=f"results/snpeff/custom_db/{config["get_genome"]["assembly"]}",
+        db=snpeff_db,
     output:
         calls="results/{caller}/snpeff/{sample}.vcf",
         stats="results/{caller}/snpeff/{sample}.html",
@@ -96,7 +96,7 @@ rule snpeff:
         java_opts="-XX:ParallelGCThreads=2",
         mem_mb=4096,
     params:
-        extra=f"-c results/snpeff/custom_db/snpeff.config {config["variant_annotation"]["snpeff"]["extra"]}",
+        extra=f"-c {snpeff_db}/../snpeff.config {config["variant_annotation"]["snpeff"]["extra"]}",
     message:
         "annotate variants using snpEff"
     wrapper:

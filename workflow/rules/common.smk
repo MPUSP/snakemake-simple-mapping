@@ -11,6 +11,8 @@ samples = (
     .sort_index()
 )
 
+# db location
+snpeff_db = Path("results/snpeff/custom_db") / config["get_genome"]["assembly"]
 
 # validate sample sheet and config file
 validate(samples, schema="../../config/schemas/samples.schema.yml")
@@ -61,9 +63,9 @@ def get_bam(wildcards):
 # get variant files to make consensus
 def get_variants(wildcards):
     return expand(
-        "results/{caller}/{annotater}/{sample}.vcf.gz",
+        "results/{caller}/{annotator}/{sample}.vcf.gz",
         caller=wildcards.caller,
-        annotater=wildcards.annotater,
+        annotator=wildcards.annotator,
         sample=samples.index,
     )
 
@@ -110,10 +112,10 @@ def get_multiqc_input(wildcards):
         )
         if config["variant_annotation"]["tool"] not in [None, []]:
             result += expand(
-                "results/{caller}/{annotater}/{sample}.vcf",
+                "results/{caller}/{annotator}/{sample}.vcf",
                 sample=samples.index,
                 caller=config["variant_calling"]["tool"],
-                annotater=config["variant_annotation"]["tool"],
+                annotator=config["variant_annotation"]["tool"],
             )
             if "vep" in config["variant_annotation"]["tool"]:
                 result += expand(
@@ -136,9 +138,9 @@ def get_targets():
     result += ["results/multiqc/multiqc_report.html"]
     if config["variant_annotation"]["tool"] not in [None, []]:
         result += expand(
-            "results/report/{caller}/{annotater}/report.pdf",
+            "results/report/{caller}/{annotator}/report.pdf",
             caller=config["variant_calling"]["tool"],
-            annotater=config["variant_annotation"]["tool"],
+            annotator=config["variant_annotation"]["tool"],
         )
     return result
 

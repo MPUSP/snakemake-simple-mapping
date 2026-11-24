@@ -180,9 +180,9 @@ properties:
     type: object
     properties:
       tool:
-        type: [string, array]
+        type: array
         description: the variant caller to use, one of 'freebayes', 'bcftools', both, or none (empty list)
-        default: freebayes
+        default: ["freebayes"]
         items:
           type: string
           enum:
@@ -244,9 +244,9 @@ properties:
     type: object
     properties:
       tool:
-        type: [string, array]
+        type: array
         description: annotation tool to use, one of 'vep', 'snpeff', both, or none (empty list)
-        default: vep
+        default: ["vep"]
         items:
           type: string
           enum:
