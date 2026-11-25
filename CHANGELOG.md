@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.8.3](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.8.2...v1.8.3) (2026-11-25)
+
+
+### Bug Fixes
+
+* allow all combinations of variant callers and effect predictors ([b69145f](https://github.com/MPUSP/snakemake-simple-mapping/commit/b69145f0cbad10ecb71371717ac86f303496e9a8))
+* allow all combinations of variant callers and effect predictors ([eab5c90](https://github.com/MPUSP/snakemake-simple-mapping/commit/eab5c90c9d8ef3355f9e63c035324fa9f9f57927))
+* review comments ([a1f5e5b](https://github.com/MPUSP/snakemake-simple-mapping/commit/a1f5e5bb0194a46d7f31e0ec4a946d82e4cbbd24))
+
 ## [1.8.2](https://github.com/MPUSP/snakemake-simple-mapping/compare/v1.8.1...v1.8.2) (2026-10-07)
 
 
